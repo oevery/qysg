@@ -234,7 +234,7 @@
             }
 
             var author = "";
-            var $authorLink = $tempContainer.find("a[href*='f=author']").first();
+            var $authorLink = $tempContainer.find(".novel_info a[href*='f=author']").first();
             if ($authorLink.length > 0) {
                 author = $authorLink.text().trim();
             }
@@ -249,13 +249,13 @@
             }
 
             var kind = "";
-            var $category = $tempContainer.find("a[href*='/lists/']").first();
+            var $category = $tempContainer.find(".novel_info a[href*='/lists/']").first();
             if ($category.length > 0) {
                 kind = "分类:" + $category.text().trim();
             }
 
             var intro = "";
-            var $intro = $tempContainer.find(".novel-introduction, .intro").first();
+            var $intro = $tempContainer.find(".jianjie p").first();
             if ($intro.length > 0) {
                 intro = $intro.text().trim();
             }
