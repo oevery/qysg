@@ -1,0 +1,3 @@
+[submodule "qysg"]
+	path = qysg
+	url = https://github.com/autobcb/qysg
