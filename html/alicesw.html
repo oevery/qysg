@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>爱丽丝书屋</title>
+</head>
+
+<body>
+
+</body>
+<script src="https://vc.jd.com/web/js/jquery-3.1.1.min.js"></script>
+<script>
+  var isCookieJar = true;
+
+  class FlutterJSBridge {
+    constructor() {
+      this.init();
+    }
+
+    init() {
+      if (window.flutter_inappwebview) {
+        this.isReady = true;
+        this.CookieJar();
+      } else {
+        window.addEventListener('flutterInAppWebViewPlatformReady', () => {
+          this.isReady = true;
+          this.CookieJar();
+        });
+      }
+    }
+
+    async CookieJar() {
+      try {
+        await window.flutter_inappwebview.callHandler('CookieJar', isCookieJar);
+      } catch (error) { }
+    }
+
+    async log(str) {
+      try {
+        return await window.flutter_inappwebview.callHandler('log', str);
+      } catch (error) {
+        return false;
+      }
+    }
+
+    async text(type, str) {
+      try {
+        return await window.flutter_inappwebview.callHandler('text', type, str);
+      } catch (error) {
+        return false;
+      }
+    }
+
+    async webview(url, js, html, body, header) {
+      try {
+        return await window.flutter_inappwebview.callHandler('webview', url, js, html, body, header, "", "");
+      } catch (error) {
+        return "";
+      }
+    }
+
+    async openurl(url) {
+      try {
+        return await window.flutter_inappwebview.callHandler('openurl', url, "");
+      } catch (error) {
+        return false;
+      }
+    }
+  }
+
+  class Http {
+    constructor() { }
+
+    async Get(url, headers, followRedirects) {
+      try {
+        return await window.flutter_inappwebview.callHandler('http', "get", url, "", headers, followRedirects, "");
+      } catch (error) {
+        return null;
+      }
+    }
+
+    async Post(url, headers, body, contenttype, followRedirects) {
+      try {
+        return await window.flutter_inappwebview.callHandler('http', "post", url, body, headers, followRedirects, contenttype);
+      } catch (error) {
+        return null;
+      }
+    }
+  }
+
+  class Cache {
+    constructor() { }
+
+    async get(key) {
+      try {
+        return await window.flutter_inappwebview.callHandler('cache.get', key);
+      } catch (error) {
+        return null;
+      }
+    }
+
+    async set(key, value) {
+      try {
+        return await window.flutter_inappwebview.callHandler('cache.set', key, value);
+      } catch (error) {
+        return null;
+      }
+    }
+  }
+
+  class Cookie {
+    constructor() { }
+
+    async get(url) {
+      try {
+        return await window.flutter_inappwebview.callHandler('cookie.get', url);
+      } catch (error) {
+        return null;
+      }
+    }
+
+    async set(url, value) {
+      try {
+        return await window.flutter_inappwebview.callHandler('cookie.set', url, value);
+      } catch (error) {
+        return null;
+      }
+    }
+  }
+
+  function parseHTMLSafely(htmlStr) {
+    try {
+      var tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlStr;
+      return $(tempDiv);
+    } catch (e) {
+      return $('<div>');
+    }
+  }
+
+  function removeHTMLSafely(tempContainer) {
+    try {
+      if (tempContainer && tempContainer[0]) {
+        tempContainer.remove();
+      }
+    } catch (e) { }
+  }
+
+  function removeHTMLTags(htmlString) {
+    let result = htmlString.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+    result = result.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '');
+    return result;
+  }
+</script>
+
+<script>
+  const flutterBridge = new FlutterJSBridge();
+  const cache = new Cache();
+  const http = new Http();
+  const cookie = new Cookie();
+
+  // 基础网址，不要以斜杠结尾
+  var baseurl = "https://www.alicesw.com";
+  var header = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+  };
+
+  function getFormattedUrl(path) {
+    if (!path) return "";
+    if (path.startsWith('http')) {
+      return path;
+    }
+    var formattedBaseUrl = baseurl.replace(/\/+$/, ''); // 移除 baseurl 末尾的斜杠
+    var formattedPath = path.replace(/^\/+/, ''); // 移除 path 开头的斜杠
+    return `${formattedBaseUrl}/${formattedPath}`;
+  }
+
+  // 搜索函数
+  async function search(keyword, page) {
+    try {
+      var searchUrl = getFormattedUrl(`/search.html?q=${encodeURIComponent(keyword)}&f=_all&p=${page}`);
+      var get = await http.Get(searchUrl, JSON.stringify(header), true);
+
+      flutterBridge.text(0, get.data);
+
+      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+      var books = [];
+
+      var $bookItems = $tempContainer.find(".list-group-item");
+
+      $bookItems.each(function () {
+        var $item = $(this);
+        var $titleLink = $item.find("h5 a").first();
+        if ($titleLink.length === 0) return;
+
+        var name = $titleLink.text().trim().replace(/^\d+\.\s*/, '');
+        var bookUrl = getFormattedUrl($titleLink.attr('href'));
+
+        if (!name || !bookUrl) return;
+
+        var author = "";
+        var $authorLink = $item.find("a[href*='f=author']").first();
+        if ($authorLink.length > 0) {
+          author = $authorLink.text().trim();
+        }
+
+        var intro = $item.find(".content-txt").first().text().trim() || "";
+
+        var tocUrl = "";
+        var bookIdMatch = bookUrl.match(/\/novel\/(\d+)\.html/);
+        if (bookIdMatch) {
+          tocUrl = getFormattedUrl(`/other/chapters/id/${bookIdMatch[1]}.html`);
+        }
+
+        books.push({
+          "bookUrl": bookUrl,
+          "name": name,
+          "author": author,
+          "kind": "",
+          "coverUrl": "",
+          "intro": intro,
+          "tocUrl": tocUrl || bookUrl,
+          "wordCount": "",
+          "type": 0,
+          "latestChapterTitle": ""
+        });
+      });
+
+      removeHTMLSafely($tempContainer);
+      return JSON.stringify(books);
+    } catch (e) {
+      flutterBridge.log("搜索错误: " + e.message);
+      return "[]";
+    }
+  }
+
+  // 书籍详情函数
+  async function info(bookurl) {
+    try {
+      var get = await http.Get(bookurl, JSON.stringify(header), true);
+      flutterBridge.text(1, get.data);
+
+      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+
+      var name = "";
+      var $title = $tempContainer.find(".novel_title").first();
+      if ($title.length > 0) {
+        name = $title.text().trim();
+      }
+
+      var author = "";
+      var $authorLink = $tempContainer.find(".novel_info a[href*='f=author']").first();
+      if ($authorLink.length > 0) {
+        author = $authorLink.text().trim();
+      }
+
+      var coverUrl = "";
+      var $cover = $tempContainer.find(".box_intro img.lazyload_book_cover").first();
+      if ($cover.length > 0) {
+        var src = $cover.attr('src') || $cover.attr('data-src');
+        coverUrl = getFormattedUrl(src);
+      }
+
+      var kind = "";
+      var $category = $tempContainer.find(".novel_info a[href*='/lists/']").first();
+      if ($category.length > 0) {
+        kind = $category.text().trim();
+      }
+
+      var intro = "";
+      var $intro = $tempContainer.find(".jianjie p").first();
+      if ($intro.length > 0) {
+        intro = $intro.text().trim();
+      }
+
+      var tocUrl = "";
+      var $tocLink = $tempContainer.find("a[href*='/other/chapters/id/']").first();
+      if ($tocLink.length > 0) {
+        tocUrl = getFormattedUrl($tocLink.attr('href'));
+      }
+
+      if (!tocUrl && bookurl) {
+        var match = bookurl.match(/\/novel\/(\d+)\.html/);
+        if (match) {
+          tocUrl = getFormattedUrl(`/other/chapters/id/${match[1]}.html`);
+        }
+      }
+
+      var book = {
+        "bookUrl": bookurl,
+        "name": name,
+        "author": author,
+        "kind": kind,
+        "coverUrl": coverUrl,
+        "intro": intro,
+        "tocUrl": tocUrl || bookurl,
+        "wordCount": "",
+        "type": 0,
+        "latestChapterTitle": ""
+      };
+
+      removeHTMLSafely($tempContainer);
+      return JSON.stringify(book);
+    } catch (e) {
+      return "{}";
+    }
+  }
+
+  // 目录列表函数
+  async function chapter(tocurl) {
+    try {
+      var get = await http.Get(tocurl, JSON.stringify(header), true);
+      flutterBridge.text(2, get.data);
+
+      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+      var chapters = [];
+
+      // 使用更具体的选择器
+      var $chapterLinks = $tempContainer.find(".mulu_list a[href^='/book/']");
+
+      $chapterLinks.each(function (index) {
+        var $link = $(this);
+        var chapterTitle = $link.text().trim();
+        var chapterUrl = getFormattedUrl($link.attr('href'));
+
+        if (!chapterTitle || !chapterUrl) return;
+
+        chapters.push({
+          "name": chapterTitle,
+          "chapterId": chapterUrl,
+          "index": chapters.length,
+          "isPay": false,
+          "isVip": false,
+          "isVolume": false,
+          "tag": ""
+        });
+      });
+
+      removeHTMLSafely($tempContainer);
+      return JSON.stringify(chapters);
+    } catch (e) {
+      flutterBridge.log("目录解析错误: " + e.message);
+      return "[]";
+    }
+  }
+
+  // 章节内容函数
+  async function content(url) {
+    try {
+      var get = await http.Get(url, JSON.stringify(header), true);
+      flutterBridge.text(3, get.data);
+
+      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+
+      var result = "";
+      var $content = $tempContainer.find("div.read-content, .j_readContent, .user_ad_content").first();
+
+      if ($content.length > 0) {
+        var html = $content.html();
+        html = html.replace(/<br\s*\/?>/gi, "\r\n");
+        html = html.replace(/<\/p>/gi, "\r\n\r\n");
+        html = html.replace(/<[^>]+>/g, "");
+        var $temp = $('<div>').html(html);
+        result = $temp.text();
+        result = result.trim();
+      }
+
+      removeHTMLSafely($tempContainer);
+      return result;
+    } catch (e) {
+      return "";
+    }
+  }
+
+  // 发现页分类函数
+  async function getfinds() {
+    var sort = [
+      { "title": "本日排行", "url": baseurl + "/all/order/hits_day+desc.html?page={{page}}", "type": 0 },
+      { "title": "本周排行", "url": baseurl + "/all/order/hits_week+desc.html?page={{page}}", "type": 0 },
+      { "title": "本月排行", "url": baseurl + "/all/order/hits_month+desc.html?page={{page}}", "type": 0 },
+      { "title": "总排行", "url": baseurl + "/all/order/hits+desc.html?page={{page}}", "type": 0 },
+      { "title": "科幻", "url": baseurl + "/lists/71.html?page={{page}}", "type": 0 },
+      { "title": "校园", "url": baseurl + "/lists/61.html?page={{page}}", "type": 0 },
+      { "title": "玄幻", "url": baseurl + "/lists/62.html?page={{page}}", "type": 0 },
+      { "title": "乡村", "url": baseurl + "/lists/63.html?page={{page}}", "type": 0 },
+      { "title": "都市", "url": baseurl + "/lists/64.html?page={{page}}", "type": 0 },
+      { "title": "乱伦", "url": baseurl + "/lists/65.html?page={{page}}", "type": 0 },
+      { "title": "历史", "url": baseurl + "/lists/67.html?page={{page}}", "type": 0 },
+      { "title": "武侠", "url": baseurl + "/lists/68.html?page={{page}}", "type": 0 },
+      { "title": "系统", "url": baseurl + "/lists/69.html?page={{page}}", "type": 0 },
+      { "title": "明星", "url": baseurl + "/lists/72.html?page={{page}}", "type": 0 },
+      { "title": "同人", "url": baseurl + "/lists/73.html?page={{page}}", "type": 0 },
+      { "title": "强奸", "url": baseurl + "/lists/74.html?page={{page}}", "type": 0 },
+      { "title": "奇幻", "url": baseurl + "/lists/75.html?page={{page}}", "type": 0 },
+      { "title": "经典", "url": baseurl + "/lists/79.html?page={{page}}", "type": 0 },
+      { "title": "穿越", "url": baseurl + "/lists/70.html?page={{page}}", "type": 0 },
+      { "title": "凌辱", "url": baseurl + "/lists/46.html?page={{page}}", "type": 0 },
+      { "title": "反差", "url": baseurl + "/lists/22.html?page={{page}}", "type": 0 },
+      { "title": "堕落", "url": baseurl + "/lists/18.html?page={{page}}", "type": 0 },
+      { "title": "纯爱", "url": baseurl + "/lists/19.html?page={{page}}", "type": 0 },
+      { "title": "伪娘", "url": baseurl + "/lists/52.html?page={{page}}", "type": 0 },
+      { "title": "萝莉", "url": baseurl + "/lists/48.html?page={{page}}", "type": 0 },
+      { "title": "熟女", "url": baseurl + "/lists/56.html?page={{page}}", "type": 0 },
+      { "title": "禁忌", "url": baseurl + "/lists/51.html?page={{page}}", "type": 0 },
+      { "title": "NTR", "url": baseurl + "/lists/54.html?page={{page}}", "type": 0 },
+      { "title": "媚黑", "url": baseurl + "/lists/53.html?page={{page}}", "type": 0 },
+      { "title": "绿帽", "url": baseurl + "/lists/55.html?page={{page}}", "type": 0 },
+      { "title": "调教", "url": baseurl + "/lists/58.html?page={{page}}", "type": 0 },
+      { "title": "女主", "url": baseurl + "/lists/59.html?page={{page}}", "type": 0 },
+      { "title": "正太", "url": baseurl + "/lists/50.html?page={{page}}", "type": 0 },
+      { "title": "下克上", "url": baseurl + "/lists/43.html?page={{page}}", "type": 0 },
+      { "title": "百合", "url": baseurl + "/lists/47.html?page={{page}}", "type": 0 },
+      { "title": "重口", "url": baseurl + "/lists/21.html?page={{page}}", "type": 0 },
+      { "title": "其他", "url": baseurl + "/lists/57.html?page={{page}}", "type": 0 }
+    ];
+    return JSON.stringify(sort);
+  }
+
+  // 发现页书籍列表函数
+  async function find(url, page) {
+    try {
+      // APP传入的URL包含{{page}}占位符,需要替换为实际页码
+      if (url.includes('{{page}}')) {
+        url = url.replace('{{page}}', page);
+      }
+
+      var get = await http.Get(url, JSON.stringify(header), true);
+      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+      var books = [];
+
+      // 发现页使用ul/li结构,不是table
+      var $rows = $tempContainer.find(".rec_rullist ul");
+
+      $rows.each(function () {
+        var $row = $(this);
+
+        // li.two 包含书名和链接
+        var $titleLink = $row.find("li.two a").first();
+        if ($titleLink.length === 0) return;
+
+        var name = $titleLink.text().trim();
+        var bookUrl = $titleLink.attr('href');
+
+        if (!name || !bookUrl) return;
+        if (!bookUrl.startsWith('http')) {
+          bookUrl = baseurl + bookUrl;
+        }
+
+        // li.four 包含作者
+        var author = $row.find("li.four").text().trim();
+
+        // li.sev 包含分类
+        var kind = $row.find("li.sev").text().trim();
+
+        // li.three 包含最新章节
+        var latestChapter = $row.find("li.three").text().trim();
+
+        books.push({
+          "bookUrl": bookUrl,
+          "name": name,
+          "author": author,
+          "kind": kind,
+          "coverUrl": "",
+          "intro": "",
+          "tocUrl": bookUrl,
+          "wordCount": "",
+          "type": 0,
+          "latestChapterTitle": latestChapter
+        });
+      });
+
+      removeHTMLSafely($tempContainer);
+      return JSON.stringify(books);
+    } catch (e) {
+      return "[]";
+    }
+  }
+
+  // 登录相关函数
+  async function getloginurl() {
+    var loginUrl = getFormattedUrl("/user/user/login.html");
+    try {
+      // 检查 Cookie,有 Cookie 返回首页,无 Cookie 返回登录页
+      var cookies = await cookie.get(baseurl);
+
+      if (cookies && cookies.length > 50) {
+        return baseurl; // 已登录,返回首页
+      }
+
+      return loginUrl;  // 未登录,返回登录页
+    } catch (e) {
+      return loginUrl;
+    }
+  }
+
+  async function login() {
+    // webview登录完成后调用,验证登录状态
+    try {
+      var homeGet = await http.Get(baseurl, JSON.stringify(header), true);
+
+      // 检查页面中是否包含登录成功的标志
+      if (homeGet.data.includes("退出登录") ||
+        homeGet.data.includes("个人中心") ||
+        homeGet.data.includes("user/user/logout")) {
+
+        // 登录成功,保存到缓存
+        await cache.set("alicesw_login_status", "true");
+        await cache.set("alicesw_login_time", Date.now().toString());
+
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function checklogin() {
+    try {
+      // 优先检查缓存
+      var loginStatus = await cache.get("alicesw_login_status");
+      if (loginStatus === "true") {
+        return true;
+      }
+
+      // 检查 Cookie
+      var cookies = await cookie.get(baseurl);
+      if (cookies && cookies.length > 50) {
+        // 有 Cookie,保存到缓存
+        await cache.set("alicesw_login_status", "true");
+        await cache.set("alicesw_login_time", Date.now().toString());
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  window.search = search;
+  window.info = info;
+  window.chapter = chapter;
+  window.content = content;
+  window.getfinds = getfinds;
+  window.find = find;
+  window.getloginurl = getloginurl;
+  window.login = login;
+  window.checklogin = checklogin;
+  async function gethelp() {
+    return "oevery: https://github.com/oevery/qysg";
+  }
+</script>
+</html>
