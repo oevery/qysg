@@ -1,11 +1,13 @@
-{
-  "bookSourceUrl": "https://www.alicesw.com",
-  "bookSourceName": "爱丽丝书屋",
-  "enabledExplore": true,
-  "enabled": true,
-  "bookSourceGroup": "",
-  "author": "oevery",
-  "help": true,
-  "html": "https://qysg.pages.dev/html/alicesw",
-  "login": true
-}
+[
+  {
+    "bookSourceUrl": "https://www.alicesw.com",
+    "bookSourceName": "爱丽丝书屋",
+    "enabledExplore": true,
+    "enabled": true,
+    "bookSourceGroup": "",
+    "author": "oevery",
+    "help": true,
+    "html": "https://qysg.pages.dev/html/alicesw",
+    "login": true
+  }
+]
