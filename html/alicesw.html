@@ -6,11 +6,11 @@
   <title>爱丽丝书屋</title>
 </head>
 
-<body>
+<body></body>
 
-</body>
 <script src="https://vc.jd.com/web/js/jquery-3.1.1.min.js"></script>
 <script src="../js/common.js"></script>
+<script src="../js/util.js"></script>
 
 <script>
   const flutterBridge = new FlutterJSBridge();
@@ -19,54 +19,44 @@
   const cookie = new Cookie();
 
   // 基础网址，不要以斜杠结尾
-  var baseurl = "https://www.alicesw.com";
-  var header = {
+  const baseurl = "https://www.alicesw.com";
+  const header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
   };
-
-  function getFormattedUrl(path) {
-    if (!path) return "";
-    if (path.startsWith('http')) {
-      return path;
-    }
-    var formattedBaseUrl = baseurl.replace(/\/+$/, ''); // 移除 baseurl 末尾的斜杠
-    var formattedPath = path.replace(/^\/+/, ''); // 移除 path 开头的斜杠
-    return `${formattedBaseUrl}/${formattedPath}`;
-  }
 
   // 搜索函数
   async function search(keyword, page) {
     try {
-      var searchUrl = getFormattedUrl(`/search.html?q=${encodeURIComponent(keyword)}&f=_all&p=${page}`);
-      var get = await http.Get(searchUrl, JSON.stringify(header), true);
+      const searchUrl = getFormattedUrl(`/search.html?q=${encodeURIComponent(keyword)}&f=_all&p=${page}`);
+      const get = await http.Get(searchUrl, JSON.stringify(header), true);
 
       flutterBridge.text(0, get.data);
 
-      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
-      var books = [];
+      const $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+      let books = [];
 
-      var $bookItems = $tempContainer.find(".list-group-item");
+      const $bookItems = $tempContainer.find(".list-group-item");
 
       $bookItems.each(function () {
-        var $item = $(this);
-        var $titleLink = $item.find("h5 a").first();
+        const $item = $(this);
+        const $titleLink = $item.find("h5 a").first();
         if ($titleLink.length === 0) return;
 
-        var name = $titleLink.text().trim().replace(/^\d+\.\s*/, '');
-        var bookUrl = getFormattedUrl($titleLink.attr('href'));
+        const name = $titleLink.text().trim().replace(/^\d+\.\s*/, '');
+        const bookUrl = getFormattedUrl($titleLink.attr('href'));
 
         if (!name || !bookUrl) return;
 
-        var author = "";
-        var $authorLink = $item.find("a[href*='f=author']").first();
+        let author = "";
+        const $authorLink = $item.find("a[href*='f=author']").first();
         if ($authorLink.length > 0) {
           author = $authorLink.text().trim();
         }
 
-        var intro = $item.find(".content-txt").first().text().trim() || "";
+        let intro = $item.find(".content-txt").first().text().trim() || "";
 
-        var tocUrl = "";
-        var bookIdMatch = bookUrl.match(/\/novel\/(\d+)\.html/);
+        let tocUrl = "";
+        const bookIdMatch = bookUrl.match(/\/novel\/(\d+)\.html/);
         if (bookIdMatch) {
           tocUrl = getFormattedUrl(`/other/chapters/id/${bookIdMatch[1]}.html`);
         }
@@ -96,56 +86,56 @@
   // 书籍详情函数
   async function info(bookurl) {
     try {
-      var get = await http.Get(bookurl, JSON.stringify(header), true);
+      const get = await http.Get(bookurl, JSON.stringify(header), true);
       flutterBridge.text(1, get.data);
 
-      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+      const $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
 
-      var name = "";
-      var $title = $tempContainer.find(".novel_title").first();
+      let name = "";
+      const $title = $tempContainer.find(".novel_title").first();
       if ($title.length > 0) {
         name = $title.text().trim();
       }
 
-      var author = "";
-      var $authorLink = $tempContainer.find(".novel_info a[href*='f=author']").first();
+      let author = "";
+      const $authorLink = $tempContainer.find(".novel_info a[href*='f=author']").first();
       if ($authorLink.length > 0) {
         author = $authorLink.text().trim();
       }
 
-      var coverUrl = "";
-      var $cover = $tempContainer.find(".box_intro img.lazyload_book_cover").first();
+      let coverUrl = "";
+      const $cover = $tempContainer.find(".box_intro img.lazyload_book_cover").first();
       if ($cover.length > 0) {
-        var src = $cover.attr('src') || $cover.attr('data-src');
+        const src = $cover.attr('src') || $cover.attr('data-src');
         coverUrl = getFormattedUrl(src);
       }
 
-      var kind = "";
-      var $category = $tempContainer.find(".novel_info a[href*='/lists/']").first();
+      let kind = "";
+      const $category = $tempContainer.find(".novel_info a[href*='/lists/']").first();
       if ($category.length > 0) {
         kind = $category.text().trim();
       }
 
-      var intro = "";
-      var $intro = $tempContainer.find(".jianjie p").first();
+      let intro = "";
+      const $intro = $tempContainer.find(".jianjie p").first();
       if ($intro.length > 0) {
         intro = $intro.text().trim();
       }
 
-      var tocUrl = "";
-      var $tocLink = $tempContainer.find("a[href*='/other/chapters/id/']").first();
+      let tocUrl = "";
+      const $tocLink = $tempContainer.find("a[href*='/other/chapters/id/']").first();
       if ($tocLink.length > 0) {
         tocUrl = getFormattedUrl($tocLink.attr('href'));
       }
 
       if (!tocUrl && bookurl) {
-        var match = bookurl.match(/\/novel\/(\d+)\.html/);
+        const match = bookurl.match(/\/novel\/(\d+)\.html/);
         if (match) {
           tocUrl = getFormattedUrl(`/other/chapters/id/${match[1]}.html`);
         }
       }
 
-      var book = {
+      const book = {
         "bookUrl": bookurl,
         "name": name,
         "author": author,
@@ -168,19 +158,19 @@
   // 目录列表函数
   async function chapter(tocurl) {
     try {
-      var get = await http.Get(tocurl, JSON.stringify(header), true);
+      const get = await http.Get(tocurl, JSON.stringify(header), true);
       flutterBridge.text(2, get.data);
 
-      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
-      var chapters = [];
+      const $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+      let chapters = [];
 
       // 使用更具体的选择器
-      var $chapterLinks = $tempContainer.find(".mulu_list a[href^='/book/']");
+      const $chapterLinks = $tempContainer.find(".mulu_list a[href^='/book/']");
 
       $chapterLinks.each(function (index) {
-        var $link = $(this);
-        var chapterTitle = $link.text().trim();
-        var chapterUrl = getFormattedUrl($link.attr('href'));
+        const $link = $(this);
+        const chapterTitle = $link.text().trim();
+        const chapterUrl = getFormattedUrl($link.attr('href'));
 
         if (!chapterTitle || !chapterUrl) return;
 
@@ -206,22 +196,21 @@
   // 章节内容函数
   async function content(url) {
     try {
-      var get = await http.Get(url, JSON.stringify(header), true);
+      const get = await http.Get(url, JSON.stringify(header), true);
       flutterBridge.text(3, get.data);
 
-      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+      const $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
 
-      var result = "";
-      var $content = $tempContainer.find("div.read-content, .j_readContent, .user_ad_content").first();
+      let result = "";
+      const $content = $tempContainer.find("div.read-content, .j_readContent, .user_ad_content").first();
 
       if ($content.length > 0) {
-        var html = $content.html();
+        const html = $content.html();
         html = html.replace(/<br\s*\/?>/gi, "\r\n");
         html = html.replace(/<\/p>/gi, "\r\n\r\n");
         html = html.replace(/<[^>]+>/g, "");
-        var $temp = $('<div>').html(html);
-        result = $temp.text();
-        result = result.trim();
+        const $temp = $('<div>').html(html);
+        result = $temp.text().trim();
       }
 
       removeHTMLSafely($tempContainer);
@@ -233,7 +222,7 @@
 
   // 发现页分类函数
   async function getfinds() {
-    var sort = [
+    const sort = [
       { "title": "本日排行", "url": baseurl + "/all/order/hits_day+desc.html?page={{page}}", "type": 0 },
       { "title": "本周排行", "url": baseurl + "/all/order/hits_week+desc.html?page={{page}}", "type": 0 },
       { "title": "本月排行", "url": baseurl + "/all/order/hits_month+desc.html?page={{page}}", "type": 0 },
@@ -283,36 +272,33 @@
         url = url.replace('{{page}}', page);
       }
 
-      var get = await http.Get(url, JSON.stringify(header), true);
-      var $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
-      var books = [];
+      const get = await http.Get(url, JSON.stringify(header), true);
+      const $tempContainer = parseHTMLSafely(removeHTMLTags(get.data));
+      let books = [];
 
       // 发现页使用ul/li结构,不是table
-      var $rows = $tempContainer.find(".rec_rullist ul");
+      const $rows = $tempContainer.find(".rec_rullist ul");
 
       $rows.each(function () {
-        var $row = $(this);
+        const $row = $(this);
 
         // li.two 包含书名和链接
-        var $titleLink = $row.find("li.two a").first();
+        const $titleLink = $row.find("li.two a").first();
         if ($titleLink.length === 0) return;
 
-        var name = $titleLink.text().trim();
-        var bookUrl = $titleLink.attr('href');
+        const name = $titleLink.text().trim();
+        const bookUrl = getFormattedUrl($titleLink.attr('href'));
 
         if (!name || !bookUrl) return;
-        if (!bookUrl.startsWith('http')) {
-          bookUrl = baseurl + bookUrl;
-        }
 
         // li.four 包含作者
-        var author = $row.find("li.four").text().trim();
+        const author = $row.find("li.four").text().trim();
 
         // li.sev 包含分类
-        var kind = $row.find("li.sev").text().trim();
+        const kind = $row.find("li.sev").text().trim();
 
         // li.three 包含最新章节
-        var latestChapter = $row.find("li.three").text().trim();
+        const latestChapter = $row.find("li.three").text().trim();
 
         books.push({
           "bookUrl": bookUrl,
@@ -337,10 +323,10 @@
 
   // 登录相关函数
   async function getloginurl() {
-    var loginUrl = getFormattedUrl("/user/user/login.html");
+    const loginUrl = getFormattedUrl("/user/user/login.html");
     try {
       // 检查 Cookie,有 Cookie 返回首页,无 Cookie 返回登录页
-      var cookies = await cookie.get(baseurl);
+      const cookies = await cookie.get(baseurl);
 
       if (cookies && cookies.length > 50) {
         return baseurl; // 已登录,返回首页
@@ -355,7 +341,7 @@
   async function login() {
     // webview登录完成后调用,验证登录状态
     try {
-      var homeGet = await http.Get(baseurl, JSON.stringify(header), true);
+      const homeGet = await http.Get(baseurl, JSON.stringify(header), true);
 
       // 检查页面中是否包含登录成功的标志
       if (homeGet.data.includes("退出登录") ||
@@ -378,13 +364,13 @@
   async function checklogin() {
     try {
       // 优先检查缓存
-      var loginStatus = await cache.get("alicesw_login_status");
+      const loginStatus = await cache.get("alicesw_login_status");
       if (loginStatus === "true") {
         return true;
       }
 
       // 检查 Cookie
-      var cookies = await cookie.get(baseurl);
+      const cookies = await cookie.get(baseurl);
       if (cookies && cookies.length > 50) {
         // 有 Cookie,保存到缓存
         await cache.set("alicesw_login_status", "true");
