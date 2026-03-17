@@ -9,8 +9,8 @@
 <body></body>
 
 <script src="https://vc.jd.com/web/js/jquery-3.1.1.min.js"></script>
-<script src="../js/common.js"></script>
-<script src="../js/util.js"></script>
+<script src="https://qysg.pages.dev/js/common.js"></script>
+<script src="https://qysg.pages.dev/js/util.js"></script>
 
 <script>
   const flutterBridge = new FlutterJSBridge();
@@ -205,7 +205,7 @@
       const $content = $tempContainer.find("div.read-content, .j_readContent, .user_ad_content").first();
 
       if ($content.length > 0) {
-        const html = $content.html();
+        let html = $content.html();
         html = html.replace(/<br\s*\/?>/gi, "\r\n");
         html = html.replace(/<\/p>/gi, "\r\n\r\n");
         html = html.replace(/<[^>]+>/g, "");
