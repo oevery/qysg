@@ -97,10 +97,10 @@ export default defineSource({
       if (!tocUrl) {
         const match = bookUrl.match(/\/novel\/(\d+)\.html/)
         if (match) {
-          tocUrl = resolveUrl(baseUrl, `/other/chapters/id/${match[1]}.html`)
+          tocUrl = `/other/chapters/id/${match[1]}.html`
         }
       }
-      book.tocUrl = tocUrl || bookUrl
+      book.tocUrl = resolveUrl(baseUrl, tocUrl) || bookUrl
 
       const $cover = $tempContainer.find('.box_intro img.lazyload_book_cover').first()
       const coverUrl = $cover.attr('src') || $cover.attr('data-src')
