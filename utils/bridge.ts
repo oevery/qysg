@@ -1,8 +1,20 @@
-var isCookieJar = true; // 不需要CookieJar请修改此处
+// @ts-nocheck
+/**
+ * 轻悦时光 WebView 运行时桥接代码
+ *
+ * 此文件由 esbuild 编译后注入到每个书源 HTML 的 <script> 标签中。
+ * 提供 FlutterJSBridge / Http / Cache / Cookie 等运行时类，
+ * 作为书源 JS 代码与 Flutter App 原生层之间的通信桥梁。
+ *
+ * ⚠ 此文件使用 @ts-nocheck，因为它以 var 声明全局变量供 WebView 使用。
+ * 对应的 TypeScript 类型声明见 types/global.d.ts。
+ */
+
+var isCookieJar = __COOKIE_JAR__;
 
 class FlutterJSBridge {
   constructor() {
-    this.init(); //前台webview 里必须删除这行
+    this.init(); // 前台 webview 里必须删除这行
   }
 
   init() {
@@ -245,7 +257,7 @@ class FlutterJSBridge {
   }
 
   /*
-  * @param str为图片链接
+  * @param str为图片链接 
   * @param header 请求的header头，此参数必须是json字符串
   * 此函数是让用户输入图片中的验证码，当链接为空则直接让用户输入验证码
   */
@@ -365,12 +377,12 @@ class Cache {
     return await this.set("LoginInfo", info)
   }
 
-  //获取书本变量
+  //获取书本变量 
   async getbookVariable(bookurl) {
     return await this.get(bookurl)
   }
 
-  //写入书本变量
+  //写入书本变量 
   async setbookVariable(bookurl, value) {
     return await this.set(bookurl, value)
   }
@@ -396,7 +408,6 @@ class Cookie {
       return null;
     }
   }
-
 
   //通过url保存当前url的所有cookie
   async set(url, value) {
@@ -435,7 +446,7 @@ function parseHTMLSafely(htmlStr) {
     tempDiv.innerHTML = htmlStr;
     return $(tempDiv);
   } catch (e) {
-    flutterBridge.log('HTML解析错误:' + e.message)
+    flutterBridge.log("HTML解析错误:" + e.message);
     return $('<div>');
   }
 }
@@ -460,3 +471,20 @@ function removeHTMLTags(htmlString) {
   result = result.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '');
   return result;
 }
+
+// url处理函数，将相对路径转为绝对路径并且编码
+function resolveUrl(base, relative) {
+  try {
+    if (!base || !relative) return '';
+    return new URL(relative, base).href;
+  } catch (e) {
+    flutterBridge.log("URL解析错误:" + e.message);
+    return relative; // 解析失败则返回原始字符串
+  }
+}
+
+// 全局桥接实例和工具类
+var flutterBridge = new FlutterJSBridge()
+var cache = new Cache()
+var http = new Http()
+var cookie = new Cookie()
