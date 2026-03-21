@@ -455,7 +455,7 @@ export class Http {
    * @param opts - 请求选项
    * @returns HTTP 响应对象或 null
    */
-  async head(url: string, opts: HttpOptions = {}): Promise<HttpResponse | null> {
+  async head(url: string, opts: Pick<HttpOptions, 'headers' | 'followRedirects'> = {}): Promise<HttpResponse | null> {
     const headers = JSON.stringify(Http.autoFillHeaders(url, opts.headers || {}))
     const followRedirects = opts.followRedirects ?? true
     try {
