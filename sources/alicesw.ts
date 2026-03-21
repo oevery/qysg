@@ -265,6 +265,9 @@ export default defineSource({
           latestChapterTitle: latestChapter,
         })
       })
+
+      removeHTMLSafely($tempContainer)
+      return JSON.stringify(books)
     }
     catch (e) {
       flutterBridge.log(`获取发现页错误: ${e.message}`)
