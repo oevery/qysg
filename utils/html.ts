@@ -89,6 +89,9 @@ export function sanitizeHtml(html: string): string {
   return result
 }
 
+const CRLF = '\r\n'
+const DOUBLE_CRLF = '\r\n\r\n'
+
 const CONTENT_SKIP_TAGS = new Set(['script', 'style', 'nav', 'footer', 'header', 'iframe', 'noscript'])
 
 /**
@@ -119,8 +122,6 @@ export function extractContent(container: Q | Element): string {
   if (!el)
     return ''
 
-  const CRLF = '\r\n'
-  const DOUBLE_CRLF = '\r\n\r\n'
   const parts: string[] = []
 
   function walk(parent: Element) {
