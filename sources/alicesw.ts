@@ -179,11 +179,15 @@ export default defineSource({
   },
 
   async getfinds() {
-    const sort: Find[] = [
+    const ranks: Find[] = [
+      { title: '排行榜', url: '' },
       { title: '本日排行', url: `${baseUrl}/all/order/hits_day+desc.html?page={{page}}`, type: 0 },
       { title: '本周排行', url: `${baseUrl}/all/order/hits_week+desc.html?page={{page}}`, type: 0 },
       { title: '本月排行', url: `${baseUrl}/all/order/hits_month+desc.html?page={{page}}`, type: 0 },
       { title: '总排行', url: `${baseUrl}/all/order/hits+desc.html?page={{page}}`, type: 0 },
+    ]
+    const kinds: Find[] = [
+      { title: '分类', url: '' },
       { title: '科幻', url: `${baseUrl}/lists/71.html?page={{page}}`, type: 0 },
       { title: '校园', url: `${baseUrl}/lists/61.html?page={{page}}`, type: 0 },
       { title: '玄幻', url: `${baseUrl}/lists/62.html?page={{page}}`, type: 0 },
@@ -218,7 +222,8 @@ export default defineSource({
       { title: '重口', url: `${baseUrl}/lists/21.html?page={{page}}`, type: 0 },
       { title: '其他', url: `${baseUrl}/lists/57.html?page={{page}}`, type: 0 },
     ]
-    return JSON.stringify(sort)
+    const finds = [...ranks, ...kinds]
+    return JSON.stringify(finds)
   },
 
   async find(url, page) {
