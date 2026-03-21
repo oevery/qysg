@@ -3,11 +3,6 @@ import { defineSource } from '../utils/define'
 import { extractContent, q, sanitizeHtml } from '../utils/html'
 
 const baseUrl = 'https://www.69xku.com'
-const headers = {
-  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0',
-  'Origin': baseUrl,
-  'Referer': `${baseUrl}/`,
-}
 
 export default defineSource({
   name: '69库',
@@ -21,9 +16,8 @@ export default defineSource({
     try {
       const searchUrl = resolveUrl(baseUrl, '/search/')
       const contentType = 'application/x-www-form-urlencoded'
-      const searchHeaders = { ...headers, 'Content-Type': contentType }
       const body = `searchkey=${encodeURIComponent(key)}&action=login&searchtype=all&submit=`
-      const res = await http.Post(searchUrl, searchHeaders, body, contentType, true)
+      const res = await http.post(searchUrl, { headers: { 'Content-Type': contentType }, body })
       flutterBridge.text(0, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
 
@@ -68,7 +62,7 @@ export default defineSource({
 
   async info(bookUrl) {
     try {
-      const res = await http.Get(bookUrl, headers, true)
+      const res = await http.get(bookUrl)
       flutterBridge.text(1, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
 
@@ -95,7 +89,7 @@ export default defineSource({
 
   async chapter(tocUrl) {
     try {
-      const res = await http.Get(tocUrl, headers, true)
+      const res = await http.get(tocUrl)
       flutterBridge.text(2, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
 
@@ -129,7 +123,7 @@ export default defineSource({
 
   async content(url) {
     try {
-      const res = await http.Get(url, headers, true)
+      const res = await http.get(url)
       flutterBridge.text(3, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
       const content = extractContent($tempContainer.find('#rtext'))
@@ -183,7 +177,7 @@ export default defineSource({
         url = url.replace('%7B%7Bpage%7D%7D', page.toString())
       }
 
-      const res = await http.Get(url, headers, true)
+      const res = await http.get(url)
 
       flutterBridge.text(0, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))

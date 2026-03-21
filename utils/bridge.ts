@@ -382,6 +382,24 @@ export interface HttpResponse {
 }
 
 /**
+ * HTTP 请求选项
+ * - `headers` 必须是一个普通对象，内部会被 JSON.stringify 后传入原生层
+ * - `body` 必须是字符串，且当不为空时会被视为 POST 请求（请务必在 headers 中带上 content-type）
+ * - `contentType` 仅在 POST 请求时有效，用于指定 Content-Type，可从 `headers` 中自动获取
+ * - `followRedirects` 是否自动跟随重定向，默认为 true
+ */
+export interface HttpOptions {
+  /** 请求头对象，内部会被 JSON.stringify 后传入原生层 */
+  headers?: Record<string, string>
+  /** 请求体，当不为空时会被视为 POST 请求 */
+  body?: string
+  /** Content-Type，仅在 POST 请求时有效，可从 headers 中自动获取 */
+  contentType?: string
+  /** 是否自动跟随重定向，默认为 true */
+  followRedirects?: boolean
+}
+
+/**
  * HTTP 请求客户端
  *
  * - webview 下 isCookieJar 必定为 true，会自动处理 cookie
@@ -394,29 +412,37 @@ export class Http {
   constructor() { }
 
   /**
-   * 发送 GET 请求
+   * 根据 URL 自动填充 headers 中的 ua，origin，referer 等字段（如果没有的话），以提高成功率
    * @param url - 请求 URL
-   * @param headers - 请求头对象（内部会 JSON.stringify）
-   * @param followRedirects - 是否跟随重定向
+   * @param headers - 请求头对象
+   * @returns 填充后的请求头对象
    */
-  async Get(url: string, headers: Record<string, string>, followRedirects: boolean): Promise<HttpResponse | null> {
-    try {
-      return await window.flutter_inappwebview.callHandler('http', 'get', url, '', JSON.stringify(headers), followRedirects, '')
+  static autoFillHeaders(url: string, headers: Record<string, string>): Record<string, string> {
+    const filledHeaders = { ...headers }
+    if (!filledHeaders['User-Agent']) {
+      filledHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
     }
-    catch {
-      return null
+    if (!filledHeaders.Origin) {
+      const origin = new URL(url).origin
+      filledHeaders.Origin = origin
     }
+    if (!filledHeaders.Referer) {
+      filledHeaders.Referer = `${new URL(url).origin}/`
+    }
+    return filledHeaders
   }
 
   /**
-   * 发送 HEAD 请求
+   * 发送 GET 请求
    * @param url - 请求 URL
-   * @param headers - 请求头对象
-   * @param followRedirects - 是否跟随重定向
+   * @param opts - 请求选项
+   * @returns HTTP 响应对象或 null
    */
-  async Head(url: string, headers: Record<string, string>, followRedirects: boolean): Promise<HttpResponse | null> {
+  async get(url: string, opts: Pick<HttpOptions, 'headers' | 'followRedirects'> = {}): Promise<HttpResponse | null> {
+    const headers = JSON.stringify(Http.autoFillHeaders(url, opts.headers || {}))
+    const followRedirects = opts.followRedirects ?? true
     try {
-      return await window.flutter_inappwebview.callHandler('http', 'head', url, '', JSON.stringify(headers), followRedirects, '')
+      return await window.flutter_inappwebview.callHandler('http', 'get', url, '', headers, followRedirects, '')
     }
     catch {
       return null
@@ -426,14 +452,33 @@ export class Http {
   /**
    * 发送 POST 请求
    * @param url - 请求 URL
-   * @param headers - 请求头对象
-   * @param body - 请求体
-   * @param contenttype - Content-Type
-   * @param followRedirects - 是否跟随重定向
+   * @param opts - 请求选项
+   * @returns HTTP 响应对象或 null
    */
-  async Post(url: string, headers: Record<string, string>, body: string, contenttype: string, followRedirects: boolean): Promise<HttpResponse | null> {
+  async head(url: string, opts: HttpOptions = {}): Promise<HttpResponse | null> {
+    const headers = JSON.stringify(Http.autoFillHeaders(url, opts.headers || {}))
+    const followRedirects = opts.followRedirects ?? true
     try {
-      return await window.flutter_inappwebview.callHandler('http', 'post', url, body, JSON.stringify(headers), followRedirects, contenttype)
+      return await window.flutter_inappwebview.callHandler('http', 'head', url, '', headers, followRedirects, '')
+    }
+    catch {
+      return null
+    }
+  }
+
+  /**
+   * 发送 POST 请求
+   * @param url - 请求 URL
+   * @param opts - 请求选项
+   * @returns HTTP 响应对象或 null
+   */
+  async post(url: string, opts: HttpOptions = {}): Promise<HttpResponse | null> {
+    const headers = JSON.stringify(Http.autoFillHeaders(url, opts.headers || {}))
+    const body = opts.body || ''
+    const contentType = opts.contentType || (opts.headers?.['Content-Type'] || '')
+    const followRedirects = opts.followRedirects ?? true
+    try {
+      return await window.flutter_inappwebview.callHandler('http', 'post', url, body, headers, followRedirects, contentType)
     }
     catch {
       return null

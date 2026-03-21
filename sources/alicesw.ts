@@ -3,10 +3,6 @@ import { defineSource } from '../utils/define'
 import { extractContent, q, sanitizeHtml } from '../utils/html'
 
 const baseUrl = 'https://www.alicesw.com'
-const headers = {
-  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0',
-  'Referer': baseUrl,
-}
 
 export default defineSource({
   name: '爱丽丝书屋',
@@ -17,7 +13,7 @@ export default defineSource({
   async search(key, page) {
     try {
       const searchUrl = resolveUrl(baseUrl, `/search.html?q=${key}&f=_all&p=${page}`)
-      const res = await http.Get(searchUrl, headers, true)
+      const res = await http.get(searchUrl)
       flutterBridge.text(0, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
 
@@ -67,7 +63,7 @@ export default defineSource({
 
   async info(bookUrl) {
     try {
-      const res = await http.Get(bookUrl, headers, true)
+      const res = await http.get(bookUrl)
       flutterBridge.text(1, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
       const book: Book = {
@@ -106,7 +102,7 @@ export default defineSource({
 
   async chapter(tocUrl) {
     try {
-      const res = await http.Get(tocUrl, headers, true)
+      const res = await http.get(tocUrl)
       flutterBridge.text(2, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
 
@@ -142,7 +138,7 @@ export default defineSource({
 
   async content(url) {
     try {
-      const res = await http.Get(url, headers, true)
+      const res = await http.get(url)
       flutterBridge.text(3, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
       const content = extractContent($tempContainer.find('div.read-content, .j_readContent, .user_ad_content'))
@@ -209,7 +205,7 @@ export default defineSource({
         url = url.replace('{{page}}', page.toString())
       }
 
-      const res = await http.Get(url, headers, true)
+      const res = await http.get(url)
       const $tempContainer = q(sanitizeHtml(res.data))
 
       const books: Book[] = []
@@ -267,7 +263,7 @@ export default defineSource({
 
   async login() {
     try {
-      const res = await http.Get(baseUrl, headers, true)
+      const res = await http.get(baseUrl)
       if (res.data.includes('退出登录') || res.data.includes('个人中心') || res.data.includes('user/user/logout')) {
         await cache.set('alicesw_login_status', 'true')
         await cache.set('alicesw_login_time', Date.now().toString())
