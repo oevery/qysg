@@ -16,7 +16,7 @@ export interface SourceMeta {
   id: string
   /** 书源网站主页 URL */
   url: string
-  /** 是否加载 jQuery（默认 `true`） */
+  /** 是否加载 jQuery（默认 `false`） */
   jquery?: boolean
   /** 是否启用 CookieJar（默认 `true`） */
   cookieJar?: boolean

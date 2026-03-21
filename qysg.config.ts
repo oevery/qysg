@@ -12,7 +12,7 @@ export const META_DEFAULTS: ResolvedMeta = {
   name: '',
   id: '',
   url: '',
-  jquery: true,
+  jquery: false,
   cookieJar: true,
   group: '',
   scripts: [],
