@@ -36,8 +36,8 @@ export default defineSource({
 
       const $bookItems = $tempContainer.findAll('.bookbox')
 
-      $bookItems.forEach((item) => {
-        const $titleLink = item.find('.bookname a')
+      $bookItems.forEach(($item) => {
+        const $titleLink = $item.find('.bookname a')
 
         const name = $titleLink.text()
         const bookUrl = resolveUrl(baseUrl, $titleLink.attr('href'))
@@ -48,14 +48,14 @@ export default defineSource({
         books.push({
           bookUrl,
           name,
-          author: item.find('.author').text().replace(/作者：/, ''),
+          author: $item.find('.author').text().replace(/作者：/, ''),
           kind: '',
           coverUrl: '',
           intro: '',
           tocUrl: bookUrl,
           wordCount: '',
           type: '0',
-          latestChapterTitle: item.find('.cat a').text(),
+          latestChapterTitle: $item.find('.cat a').text(),
         })
       })
       return JSON.stringify(books)
@@ -74,15 +74,15 @@ export default defineSource({
 
       const book: Book = {
         bookUrl,
-        name: $tempContainer.find('meta[property="og:novel:book_name"]').attr('content') || '',
-        author: $tempContainer.find('meta[property="og:novel:author"]').attr('content') || '',
-        kind: $tempContainer.find('meta[property="og:novel:category"]').attr('content') || '',
-        coverUrl: $tempContainer.find('.bookcover .thumbnail').attr('src') || '',
-        intro: $tempContainer.find('.bookinfo .bookintro').text() || '',
+        name: $tempContainer.find('meta[property="og:novel:book_name"]').attr('content'),
+        author: $tempContainer.find('meta[property="og:novel:author"]').attr('content'),
+        kind: $tempContainer.find('meta[property="og:novel:category"]').attr('content'),
+        coverUrl: $tempContainer.find('.bookcover .thumbnail').attr('src'),
+        intro: $tempContainer.find('.bookinfo .bookintro').text(),
         tocUrl: bookUrl,
         wordCount: '',
         type: '0',
-        latestChapterTitle: $tempContainer.find('meta[property="og:novel:lastest_chapter_name"]').attr('content') || '',
+        latestChapterTitle: $tempContainer.find('meta[property="og:novel:lastest_chapter_name"]').attr('content'),
       }
 
       return JSON.stringify(book)
@@ -102,9 +102,9 @@ export default defineSource({
       const chapters: Chapter[] = []
       const $chapterItems = $tempContainer.findAll('#list-chapterAll dd a')
 
-      $chapterItems.forEach((item, index) => {
-        const title = item.text()
-        const chapterUrl = resolveUrl(baseUrl, item.attr('href'))
+      $chapterItems.forEach(($item, index) => {
+        const title = $item.text()
+        const chapterUrl = resolveUrl(baseUrl, $item.attr('href'))
         if (!title || !chapterUrl)
           return
 
@@ -192,8 +192,8 @@ export default defineSource({
 
       const $bookItems = $tempContainer.findAll('.bookbox')
 
-      $bookItems.forEach((item) => {
-        const $titleLink = item.find('.bookname a')
+      $bookItems.forEach(($item) => {
+        const $titleLink = $item.find('.bookname a')
 
         const name = $titleLink.text()
         const bookUrl = resolveUrl(baseUrl, $titleLink.attr('href'))
@@ -204,14 +204,14 @@ export default defineSource({
         books.push({
           bookUrl,
           name,
-          author: item.find('.author').text().replace(/作者：/, ''),
+          author: $item.find('.author').text().replace(/作者：/, ''),
           kind: '',
           coverUrl: '',
           intro: '',
           tocUrl: bookUrl,
           wordCount: '',
           type: '0',
-          latestChapterTitle: item.find('.cat a').text(),
+          latestChapterTitle: $item.find('.cat a').text(),
         })
       })
       return JSON.stringify(books)

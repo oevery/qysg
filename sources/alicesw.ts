@@ -1,5 +1,6 @@
 import type { Book, Chapter, Find } from '../utils/define'
 import { defineSource } from '../utils/define'
+import { extractContent, q, sanitizeHtml } from '../utils/html'
 
 const baseUrl = 'https://www.alicesw.com'
 const headers = {
@@ -11,8 +12,6 @@ export default defineSource({
   name: '爱丽丝书屋',
   id: 'alicesw',
   url: baseUrl,
-  jquery: true,
-  cookieJar: true,
   enabledLogin: true,
 
   async search(key, page) {
@@ -20,17 +19,14 @@ export default defineSource({
       const searchUrl = resolveUrl(baseUrl, `/search.html?q=${key}&f=_all&p=${page}`)
       const res = await http.Get(searchUrl, headers, true)
       flutterBridge.text(0, res.data)
-      const $tempContainer = parseHTMLSafely(removeHTMLTags(res.data))
+      const $tempContainer = q(sanitizeHtml(res.data))
 
       const books: Book[] = []
 
-      const $bookItems = $tempContainer.find('.list-group-item')
+      const $bookItems = $tempContainer.findAll('.list-group-item')
 
-      $bookItems.each((_, item) => {
-        const $item = $(item)
-        const $titleLink = $item.find('h5 a').first()
-        if ($titleLink.length === 0)
-          return
+      $bookItems.forEach(($item) => {
+        const $titleLink = $item.find('h5 a')
 
         const name = $titleLink.text().trim().replace(/^\d+\.\s*/, '')
         const bookUrl = resolveUrl(baseUrl, $titleLink.attr('href'))
@@ -38,13 +34,8 @@ export default defineSource({
         if (!name || !bookUrl)
           return
 
-        let author = ''
-        const $authorLink = $item.find('a[href*=\'f=author\']').first()
-        if ($authorLink.length > 0) {
-          author = $authorLink.text().trim()
-        }
-
-        const intro = $item.find('.content-txt').first().text().trim() || ''
+        const author = $item.find('a[href*=\'f=author\']').text()
+        const intro = $item.find('.content-txt').text() || ''
 
         let tocUrl = ''
         const bookIdMatch = bookUrl.match(/\/novel\/(\d+)\.html/)
@@ -66,7 +57,6 @@ export default defineSource({
         })
       })
 
-      removeHTMLSafely($tempContainer)
       return JSON.stringify(books)
     }
     catch (e) {
@@ -79,21 +69,21 @@ export default defineSource({
     try {
       const res = await http.Get(bookUrl, headers, true)
       flutterBridge.text(1, res.data)
-      const $tempContainer = parseHTMLSafely(removeHTMLTags(res.data))
+      const $tempContainer = q(sanitizeHtml(res.data))
       const book: Book = {
         bookUrl,
-        name: $tempContainer.find('.novel_title').first().text().trim() || '',
-        author: $tempContainer.find('.novel_info a[href*=\'f=author\']').first().text().trim() || '',
-        kind: $tempContainer.find('.novel_info a[href*=\'/lists/\']').first().text().trim() || '',
+        name: $tempContainer.find('.novel_title').text(),
+        author: $tempContainer.find('.novel_info a[href*=\'f=author\']').text(),
+        kind: $tempContainer.find('.novel_info a[href*=\'/lists/\']').text(),
         coverUrl: '',
-        intro: $tempContainer.find('.jianjie p').first().text().trim() || '',
+        intro: $tempContainer.find('.jianjie p').text(),
         tocUrl: '',
         wordCount: '',
         type: '0',
         latestChapterTitle: '',
       }
 
-      let tocUrl = $tempContainer.find('a[href*=\'/other/chapters/id/\']').first().attr('href')
+      let tocUrl = $tempContainer.find('a[href*=\'/other/chapters/id/\']').attr('href')
       if (!tocUrl) {
         const match = bookUrl.match(/\/novel\/(\d+)\.html/)
         if (match) {
@@ -102,11 +92,10 @@ export default defineSource({
       }
       book.tocUrl = resolveUrl(baseUrl, tocUrl) || bookUrl
 
-      const $cover = $tempContainer.find('.box_intro img.lazyload_book_cover').first()
+      const $cover = $tempContainer.find('.box_intro img.lazyload_book_cover')
       const coverUrl = $cover.attr('src') || $cover.attr('data-src')
       book.coverUrl = resolveUrl(baseUrl, coverUrl)
 
-      removeHTMLSafely($tempContainer)
       return JSON.stringify(book)
     }
     catch (e) {
@@ -119,14 +108,13 @@ export default defineSource({
     try {
       const res = await http.Get(tocUrl, headers, true)
       flutterBridge.text(2, res.data)
-      const $tempContainer = parseHTMLSafely(removeHTMLTags(res.data))
+      const $tempContainer = q(sanitizeHtml(res.data))
 
       const chapters: Chapter[] = []
 
-      const $chapterItems = $tempContainer.find('.mulu_list a[href^=\'/book/\']')
+      const $chapterItems = $tempContainer.findAll('.mulu_list a[href^=\'/book/\']')
 
-      $chapterItems.each((index, item) => {
-        const $item = $(item)
+      $chapterItems.forEach(($item, index) => {
         const title = $item.text().trim()
         const url = resolveUrl(baseUrl, $item.attr('href'))
 
@@ -144,7 +132,6 @@ export default defineSource({
         })
       })
 
-      removeHTMLSafely($tempContainer)
       return JSON.stringify(chapters)
     }
     catch (e) {
@@ -157,19 +144,8 @@ export default defineSource({
     try {
       const res = await http.Get(url, headers, true)
       flutterBridge.text(3, res.data)
-      const $tempContainer = parseHTMLSafely(removeHTMLTags(res.data))
-      const $content = $tempContainer.find('div.read-content, .j_readContent, .user_ad_content').first()
-      let content = ''
-      if ($content.length > 0) {
-        let html = $content.html() || ''
-        html = html.replace(/<br\s*\/?>/gi, '\r\n')
-        html = html.replace(/<\/p>/gi, '\r\n\r\n')
-        html = html.replace(/<[^>]+>/g, '')
-        const $temp = $('<div>').html(html)
-        content = $temp.text().trim()
-        removeHTMLSafely($temp)
-      }
-      removeHTMLSafely($tempContainer)
+      const $tempContainer = q(sanitizeHtml(res.data))
+      const content = extractContent($tempContainer.find('div.read-content, .j_readContent, .user_ad_content'))
       return content
     }
     catch (e) {
@@ -234,18 +210,14 @@ export default defineSource({
       }
 
       const res = await http.Get(url, headers, true)
-      const $tempContainer = parseHTMLSafely(removeHTMLTags(res.data))
+      const $tempContainer = q(sanitizeHtml(res.data))
 
       const books: Book[] = []
 
-      const $bookItems = $tempContainer.find('.rec_rullist ul')
+      const $bookItems = $tempContainer.findAll('.rec_rullist ul')
 
-      $bookItems.each((_, item) => {
-        const $item = $(item)
-        const $titleLink = $item.find('li.two a').first()
-
-        if ($titleLink.length === 0)
-          return
+      $bookItems.forEach(($item) => {
+        const $titleLink = $item.find('li.two a')
 
         const name = $titleLink.text().trim()
         const bookUrl = resolveUrl(baseUrl, $titleLink.attr('href'))
@@ -253,9 +225,9 @@ export default defineSource({
         if (!name || !bookUrl)
           return
 
-        const author = $item.find('li.four').text().trim()
-        const kind = $item.find('li.sev').text().trim()
-        const latestChapter = $item.find('li.three').text().trim()
+        const author = $item.find('li.four').text()
+        const kind = $item.find('li.sev').text()
+        const latestChapter = $item.find('li.three').text()
 
         books.push({
           bookUrl,
@@ -271,7 +243,6 @@ export default defineSource({
         })
       })
 
-      removeHTMLSafely($tempContainer)
       return JSON.stringify(books)
     }
     catch (e) {
