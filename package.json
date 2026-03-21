@@ -7,6 +7,7 @@
   "description": "轻悦时光书源",
   "author": "oevery",
   "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/oevery/qysg",
   "keywords": [],
   "main": "index.js",
   "scripts": {

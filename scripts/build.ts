@@ -26,6 +26,7 @@ import { BASE_URL, META_DEFAULTS, TIMEZONE } from '../qysg.config'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
+const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf-8'))
 const SOURCES_DIR = join(ROOT, 'sources')
 const TEMPLATES_DIR = join(ROOT, 'templates')
 const UTILS_DIR = join(ROOT, 'utils')
@@ -146,7 +147,7 @@ async function buildSource(
   ])
 
   const buildTime = `${new Date().toLocaleString('zh-CN', { timeZone: TIMEZONE })} (${TIMEZONE})`
-  const html = ejs.render(htmlTemplate, { meta, bridgeCode: minBridge, sourceCode: minSource, buildTime })
+  const html = ejs.render(htmlTemplate, { meta, bridgeCode: minBridge, sourceCode: minSource, buildTime, pkg })
 
   const htmlDir = join(DIST_DIR, 'html')
   mkdirSync(htmlDir, { recursive: true })
