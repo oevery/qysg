@@ -20,7 +20,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { defu } from 'defu'
 import ejs from 'ejs'
 import * as esbuild from 'esbuild'
-import { BASE_URL, META_DEFAULTS } from '../qysg.config'
+import { BASE_URL, META_DEFAULTS, TIMEZONE } from '../qysg.config'
 
 // ─── 路径常量 ────────────────────────────────────────────────
 
@@ -145,7 +145,8 @@ async function buildSource(
     minifyJS(sourceCode),
   ])
 
-  const html = ejs.render(htmlTemplate, { meta, bridgeCode: minBridge, sourceCode: minSource })
+  const buildTime = `${new Date().toLocaleString('zh-CN', { timeZone: TIMEZONE })} (${TIMEZONE})`
+  const html = ejs.render(htmlTemplate, { meta, bridgeCode: minBridge, sourceCode: minSource, buildTime })
 
   const htmlDir = join(DIST_DIR, 'html')
   mkdirSync(htmlDir, { recursive: true })
