@@ -156,10 +156,10 @@ export interface SourceFunctions {
   /**
    * 获取书籍详情
    *
-   * @param bookurl - 书籍详情页 URL
+   * @param bookUrl - 书籍详情页 URL
    * @returns `Book` 的 JSON 字符串
    */
-  info?: (bookurl: string) => Promise<string>
+  info?: (bookUrl: string) => Promise<string>
 
   /**
    * 获取章节目录
@@ -215,10 +215,10 @@ export interface SourceFunctions {
   /**
    * 处理付费章节（执行完成后 App 会刷新目录和正文）
    *
-   * @param bookurl - 书籍 URL（即 `Book.bookUrl`）
+   * @param bookUrl - 书籍 URL（即 `Book.bookUrl`）
    * @param url - 付费章节 URL（即 `Chapter.chapterId`）
    */
-  pay?: (bookurl: string, url: string) => Promise<void>
+  pay?: (bookUrl: string, url: string) => Promise<void>
 
   /**
    * 解密图片内容（漫画书源）

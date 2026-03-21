@@ -103,6 +103,22 @@ async function importMeta(sourceFile: string): Promise<ResolvedMeta> {
 // ─── 单个书源构建 ───────────────────────────────────────────
 
 /**
+ * 压缩 JavaScript 代码（桥接代码 + 书源代码）
+ * @param code - 待压缩的 JavaScript 代码字符串
+ * @returns 压缩后的代码字符串
+ */
+async function minifyJS(code: string): Promise<string> {
+  const result = await esbuild.transform(code, {
+    minifyWhitespace: true,
+    minifyIdentifiers: true,
+    minifySyntax: false,
+    target: 'es2017',
+    charset: 'utf8',
+  })
+  return result.code
+}
+
+/**
  * 构建单个书源：import 元数据 → 打包 → 渲染 HTML → 写入 dist/
  *
  * @param sourceFile - 源文件绝对路径（如 `sources/alicesw.ts`）
@@ -122,7 +138,14 @@ async function buildSource(
 
   // 根据书源配置替换桥接代码中的 CookieJar 占位符
   const finalBridge = bridgeCode.replace('__COOKIE_JAR__', String(meta.cookieJar))
-  const html = ejs.render(htmlTemplate, { meta, bridgeCode: finalBridge, sourceCode })
+
+  // 压缩内联 JS
+  const [minBridge, minSource] = await Promise.all([
+    minifyJS(finalBridge),
+    minifyJS(sourceCode),
+  ])
+
+  const html = ejs.render(htmlTemplate, { meta, bridgeCode: minBridge, sourceCode: minSource })
 
   const htmlDir = join(DIST_DIR, 'html')
   mkdirSync(htmlDir, { recursive: true })

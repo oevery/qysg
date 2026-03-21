@@ -1,5 +1,5 @@
 [
-<% sources.forEach(function(source, i) { %>
+<% sources.forEach(function(source, i) { -%>
   {
     "bookSourceUrl": "<%= source.url %>",
     "bookSourceName": "<%= source.name %>",
@@ -11,5 +11,5 @@
     "author": "<%= source.author %>",
     "html": "<%= baseUrl %>/html/<%= source.id %>.html"
   }<% if (i < sources.length - 1) { %>,<% } %>
-<% }) %>
+<% }) -%>
 ]

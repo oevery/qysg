@@ -5,20 +5,18 @@
   <title><%= meta.name %></title>
 </head>
 <body></body>
-<% if (meta.jquery) { %>
+<% if (meta.jquery) { -%>
 <script src="https://registry.npmmirror.com/jquery/3.7.1/files/dist/jquery.min.js"></script>
-<% } %>
-<% if (meta.scripts && meta.scripts.length > 0) { %>
-<% meta.scripts.forEach(function(src) { %>
+<% } -%>
+<% if (meta.scripts && meta.scripts.length > 0) { -%>
+<% meta.scripts.forEach(function(src) { -%>
 <script src="<%= src %>"></script>
-<% }) %>
-<% } %>
+<% }) -%>
+<% } -%>
 <script>
-<%- bridgeCode %>
+<%- bridgeCode -%>
 </script>
-
 <script>
-<%- sourceCode %>
+<%- sourceCode -%>
 </script>
-
 </html>
