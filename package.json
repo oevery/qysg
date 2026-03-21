@@ -24,7 +24,7 @@
     "@types/jquery": "^4.0.0",
     "@types/node": "^25.5.0",
     "esbuild": "^0.27.4",
-    "eslint": "^10.0.3",
+    "eslint": "^10.1.0",
     "lint-staged": "^16.4.0",
     "simple-git-hooks": "^2.13.1",
     "tsx": "^4.21.0"
