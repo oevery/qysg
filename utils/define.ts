@@ -95,7 +95,7 @@ export interface Chapter {
 /**
  * 发现页分类项，由 `getfinds` 返回
  *
- * `url` 和 `js` 只能填一个。
+ * `url` 和 `js` 只能填一个
  */
 export interface Find {
   /** 标题 */
@@ -109,7 +109,7 @@ export interface Find {
    * - `0` — 正常解析发现页
    * - `1` — 用 WebView 打开 URL
    */
-  type: 0 | 1
+  type?: 0 | 1
   /**
    * 布局宽度
    * - `0` — 默认（一行 3 个）
