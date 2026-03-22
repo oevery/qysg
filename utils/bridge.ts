@@ -3,6 +3,7 @@
 /* eslint-disable no-var */
 /* eslint-disable vars-on-top */
 
+import { author, homepage } from '../package.json'
 import { DEFAULT_UA } from '../qysg.config'
 
 /**
@@ -175,9 +176,10 @@ export class FlutterJSBridge {
   // ── 日志与提示 ──
 
   /** 输出日志到 App（前台 webview 请勿使用） */
-  async log(str: string): Promise<boolean> {
+  async log(str: any): Promise<boolean> {
     try {
-      return await window.flutter_inappwebview.callHandler('log', str)
+      const logStr = typeof str === 'string' ? str : JSON.stringify(str)
+      return await window.flutter_inappwebview.callHandler('log', logStr)
     }
     catch {
       return false
@@ -401,6 +403,21 @@ export interface HttpOptions {
   followRedirects?: boolean
 }
 
+function autoFillHeaders(url: string, headers?: Record<string, string>): Record <string, string> {
+  const origin = new URL(url).origin
+  const filledHeaders = { ...headers }
+  if (!filledHeaders['User-Agent']) {
+    filledHeaders['User-Agent'] = DEFAULT_UA
+  }
+  if (!filledHeaders.Origin) {
+    filledHeaders.Origin = origin
+  }
+  if (!filledHeaders.Referer) {
+    filledHeaders.Referer = `${origin}/`
+  }
+  return filledHeaders
+}
+
 /**
  * HTTP 请求客户端
  *
@@ -419,20 +436,6 @@ export class Http {
    * @param headers - 请求头对象
    * @returns 填充后的请求头对象
    */
-  static autoFillHeaders(url: string, headers: Record<string, string>): Record<string, string> {
-    const filledHeaders = { ...headers }
-    if (!filledHeaders['User-Agent']) {
-      filledHeaders['User-Agent'] = DEFAULT_UA
-    }
-    if (!filledHeaders.Origin) {
-      const origin = new URL(url).origin
-      filledHeaders.Origin = origin
-    }
-    if (!filledHeaders.Referer) {
-      filledHeaders.Referer = `${new URL(url).origin}/`
-    }
-    return filledHeaders
-  }
 
   /**
    * 发送 GET 请求
@@ -441,7 +444,7 @@ export class Http {
    * @returns HTTP 响应对象或 null
    */
   async get(url: string, opts: Pick<HttpOptions, 'headers' | 'followRedirects'> = {}): Promise<HttpResponse | null> {
-    const headers = JSON.stringify(Http.autoFillHeaders(url, opts.headers || {}))
+    const headers = JSON.stringify(autoFillHeaders(url, opts.headers || {}))
     const followRedirects = opts.followRedirects ?? true
     try {
       return await window.flutter_inappwebview.callHandler('http', 'get', url, '', headers, followRedirects, '')
@@ -458,7 +461,7 @@ export class Http {
    * @returns HTTP 响应对象或 null
    */
   async head(url: string, opts: Pick<HttpOptions, 'headers' | 'followRedirects'> = {}): Promise<HttpResponse | null> {
-    const headers = JSON.stringify(Http.autoFillHeaders(url, opts.headers || {}))
+    const headers = JSON.stringify(autoFillHeaders(url, opts.headers || {}))
     const followRedirects = opts.followRedirects ?? true
     try {
       return await window.flutter_inappwebview.callHandler('http', 'head', url, '', headers, followRedirects, '')
@@ -475,7 +478,7 @@ export class Http {
    * @returns HTTP 响应对象或 null
    */
   async post(url: string, opts: HttpOptions = {}): Promise<HttpResponse | null> {
-    const headers = JSON.stringify(Http.autoFillHeaders(url, opts.headers || {}))
+    const headers = JSON.stringify(autoFillHeaders(url, opts.headers || {}))
     const body = opts.body || ''
     const contentType = opts.contentType || (opts.headers?.['Content-Type'] || '')
     const followRedirects = opts.followRedirects ?? true
@@ -620,4 +623,12 @@ export function resolveUrl(base: string, relative: string): string {
     flutterBridge.log(`URL解析错误:${e.message}`)
     return relative // 解析失败则返回原始字符串
   }
+}
+
+/**
+ * 获取帮助信息（如联系方式等），App 会以弹窗形式展示
+ * @returns 帮助信息字符串
+ */
+export function gethelp(): string {
+  return `作者: ${author} | 主页: ${homepage}`
 }

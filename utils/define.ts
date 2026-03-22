@@ -250,6 +250,12 @@ export interface SourceFunctions {
    * @returns 语音文件 URL
    */
   getttsurl?: (speakText: string, speechRate: number) => Promise<string>
+
+  /**
+   * 获取帮助信息（如联系方式等），App 会以弹窗形式展示
+   * @returns 帮助信息字符串
+   */
+  gethelp?: () => Promise<string>
 }
 
 // ─── 工厂函数 ────────────────────────────────────────────────
@@ -274,6 +280,7 @@ export const SOURCE_FUNCTIONS = [
   'imagedecrypt',
   'shouldOverrideUrlLoading',
   'getttsurl',
+  'gethelp',
 ] as const
 
 /** 书源函数名联合类型 */

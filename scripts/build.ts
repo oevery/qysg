@@ -55,7 +55,7 @@ async function bundleFile(entryFile: string): Promise<string> {
     write: false,
     target: 'es2017',
     charset: 'utf8',
-    treeShaking: false,
+    treeShaking: true,
   })
   return result.outputFiles[0].text
     .replace(RE_USE_STRICT, '') // 移除 "use strict"

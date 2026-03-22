@@ -1,4 +1,5 @@
 import type { SourceMeta } from './utils/define'
+import { author } from './package.json'
 
 /** 部署后 HTML 文件的 URL 前缀，可通过环境变量覆盖 */
 export const BASE_URL = 'https://qysg.pages.dev'
@@ -25,5 +26,5 @@ export const META_DEFAULTS: ResolvedMeta = {
   enabledFind: true,
   enabledHelp: true,
   enabledLogin: false,
-  author: 'oevery',
+  author,
 }
