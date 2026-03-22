@@ -5,6 +5,7 @@
  * 减少各书源文件中的重复代码。
  */
 
+import type { DebugType } from './bridge'
 import type { Chapter } from './define'
 import type { Q } from './html'
 import { q, sanitizeHtml } from './html'
@@ -15,9 +16,9 @@ import { q, sanitizeHtml } from './html'
  * 适用于已通过 `http.post()` 等自定义方式获取到 HTML 的场景。
  *
  * @param data - HTML 字符串
- * @param debugType - 调试类型（0 搜索 / 1 详情 / 2 目录 / 3 正文），传入则发送源码到 App
+ * @param debugType - 调试类型，传入则发送源码到 App
  */
-export function parsePage(data: string, debugType?: 0 | 1 | 2 | 3): Q {
+export function parsePage(data: string, debugType?: DebugType): Q {
   if (debugType !== undefined)
     flutterBridge.text(debugType, data)
   return q(sanitizeHtml(data))
@@ -29,9 +30,9 @@ export function parsePage(data: string, debugType?: 0 | 1 | 2 | 3): Q {
  * 等价于 `http.get(url)` → `flutterBridge.text()` → `q(sanitizeHtml())`
  *
  * @param url - 请求 URL
- * @param debugType - 调试类型（0 搜索 / 1 详情 / 2 目录 / 3 正文），传入则发送源码到 App
+ * @param debugType - 调试类型，传入则发送源码到 App
  */
-export async function fetchPage(url: string, debugType?: 0 | 1 | 2 | 3): Promise<Q> {
+export async function fetchPage(url: string, debugType?: DebugType): Promise<Q> {
   const res = await http.get(url)
   return parsePage(res.data, debugType)
 }

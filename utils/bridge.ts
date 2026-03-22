@@ -29,6 +29,9 @@ declare const __COOKIE_JAR__: boolean
 
 var isCookieJar = __COOKIE_JAR__
 
+/** 书源调试输出类型：0 搜索源码 / 1 详情源码 / 2 目录源码 / 3 正文源码 */
+export type DebugType = 0 | 1 | 2 | 3
+
 /** JS 与 Flutter 原生层通信桥接器 */
 export class FlutterJSBridge {
   /** 桥接器是否已就绪 */
@@ -188,10 +191,10 @@ export class FlutterJSBridge {
 
   /**
    * 书源调试时可输出 HTML 代码到前台
-   * @param type - 0 搜索源码，1 详情源码，2 目录源码，3 正文源码
+   * @param type - 调试输出类型
    * @param str - HTML 代码字符串
    */
-  async text(type: 0 | 1 | 2 | 3, str: string): Promise<boolean> {
+  async text(type: DebugType, str: string): Promise<boolean> {
     try {
       return await window.flutter_inappwebview.callHandler('text', type, str)
     }
