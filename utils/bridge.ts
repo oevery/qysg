@@ -455,7 +455,7 @@ export class Http {
   }
 
   /**
-   * 发送 POST 请求
+   * 发送 HEAD 请求
    * @param url - 请求 URL
    * @param opts - 请求选项
    * @returns HTTP 响应对象或 null
