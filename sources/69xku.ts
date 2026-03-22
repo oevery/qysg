@@ -4,6 +4,30 @@ import { extractContent, q, sanitizeHtml } from '../utils/html'
 
 const baseUrl = 'https://www.69xku.com'
 
+function parseBooks($container: ReturnType<typeof q>): Book[] {
+  const books: Book[] = []
+  $container.findAll('.bookbox').forEach(($item) => {
+    const $titleLink = $item.find('.bookname a')
+    const name = $titleLink.text()
+    const bookUrl = resolveUrl(baseUrl, $titleLink.attr('href'))
+    if (!name || !bookUrl)
+      return
+    books.push({
+      bookUrl,
+      name,
+      author: $item.find('.author').text().replace(/作者：/, ''),
+      kind: '',
+      coverUrl: '',
+      intro: '',
+      tocUrl: bookUrl,
+      wordCount: '',
+      type: '0',
+      latestChapterTitle: $item.find('.cat a').text(),
+    })
+  })
+  return books
+}
+
 export default defineSource({
   name: '69库',
   id: '69xku',
@@ -26,33 +50,7 @@ export default defineSource({
         throw new Error('触发搜索间隔限制 (搜索间隔: 30 秒)')
       }
 
-      const books: Book[] = []
-
-      const $bookItems = $tempContainer.findAll('.bookbox')
-
-      $bookItems.forEach(($item) => {
-        const $titleLink = $item.find('.bookname a')
-
-        const name = $titleLink.text()
-        const bookUrl = resolveUrl(baseUrl, $titleLink.attr('href'))
-
-        if (!name || !bookUrl)
-          return
-
-        books.push({
-          bookUrl,
-          name,
-          author: $item.find('.author').text().replace(/作者：/, ''),
-          kind: '',
-          coverUrl: '',
-          intro: '',
-          tocUrl: bookUrl,
-          wordCount: '',
-          type: '0',
-          latestChapterTitle: $item.find('.cat a').text(),
-        })
-      })
-      return JSON.stringify(books)
+      return JSON.stringify(parseBooks($tempContainer))
     }
     catch (e) {
       flutterBridge.log(`搜索错误: ${e.message}`)
@@ -182,33 +180,7 @@ export default defineSource({
       flutterBridge.text(0, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
 
-      const books: Book[] = []
-
-      const $bookItems = $tempContainer.findAll('.bookbox')
-
-      $bookItems.forEach(($item) => {
-        const $titleLink = $item.find('.bookname a')
-
-        const name = $titleLink.text()
-        const bookUrl = resolveUrl(baseUrl, $titleLink.attr('href'))
-
-        if (!name || !bookUrl)
-          return
-
-        books.push({
-          bookUrl,
-          name,
-          author: $item.find('.author').text().replace(/作者：/, ''),
-          kind: '',
-          coverUrl: '',
-          intro: '',
-          tocUrl: bookUrl,
-          wordCount: '',
-          type: '0',
-          latestChapterTitle: $item.find('.cat a').text(),
-        })
-      })
-      return JSON.stringify(books)
+      return JSON.stringify(parseBooks($tempContainer))
     }
     catch (e) {
       flutterBridge.log(`获取发现页错误: ${e.message}`)
