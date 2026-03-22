@@ -93,6 +93,8 @@ const CRLF = '\r\n'
 const DOUBLE_CRLF = '\r\n\r\n'
 
 const CONTENT_SKIP_TAGS = new Set(['script', 'style', 'nav', 'footer', 'header', 'iframe', 'noscript'])
+const RE_CONTENT_SKIP_CLASS = /\b(?:ad|ads|advert|nav|sidebar|footer|header|menu|toolbar)\b/i
+const RE_CONTENT_AD_TEXT = /(?:收藏|永久|地址|网址|书签|请记住|最新|访问|发布)[^\n]{0,20}[a-z\d][-a-z\d]*\.[a-z]{2,}/i
 
 /**
  * 判断一个元素是否应该在提取内容时被跳过，主要用于过滤掉不相关的导航、广告等元素
@@ -106,18 +108,32 @@ function contentNodeShouldSkip(el: Element): boolean {
   if (tag === 'a' && el.getAttribute('href')?.startsWith('javascript:'))
     return true
   const cls = el.className?.toLowerCase() ?? ''
-  const regex = /\b(?:ad|ads|advert|nav|sidebar|footer|header|menu|toolbar)\b/
-  if (regex.test(cls))
+  if (RE_CONTENT_SKIP_CLASS.test(cls))
     return true
   return false
 }
 
 /**
+ * 判断文本内容是否可能是广告，主要通过检测常见的广告关键词和 URL 模式来识别
+ * @param text 要检查的文本内容
+ * @returns 如果文本内容可能是广告则返回 `true`，否则返回 `false`
+ */
+function contentNodeTextIsAd(text: string): boolean {
+  return text.length < 40 && RE_CONTENT_AD_TEXT.test(text)
+}
+
+interface ExtractContentOptions {
+  /** 是否对内容进行净化，去除广告 */
+  sanitize?: boolean
+}
+
+/**
  * 从HTML容器中提取文本内容，保留段落和换行结构，并将图片标签转换为特定格式的文本
  * @param container HTML容器，可以是 `Q` 对象或原生 `Element`
+ * @param opts 提取内容的选项
  * @returns 提取后的纯文本内容，段落之间以双换行分隔，图片以特定格式表示
  */
-export function extractContent(container: Q | Element): string {
+export function extractContent(container: Q | Element, opts: ExtractContentOptions = { sanitize: false }): string {
   const el = container instanceof Q ? container.raw : container
   if (!el)
     return ''
@@ -128,7 +144,7 @@ export function extractContent(container: Q | Element): string {
     for (const node of Array.from(parent.childNodes)) {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = node.textContent?.trim()
-        if (text)
+        if (text && (!opts.sanitize || !contentNodeTextIsAd(text)))
           parts.push(text)
         continue
       }

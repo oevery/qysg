@@ -126,7 +126,7 @@ export default defineSource({
       const res = await http.get(url)
       flutterBridge.text(3, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
-      const content = extractContent($tempContainer.find('#rtext'))
+      const content = extractContent($tempContainer.find('#rtext'), { sanitize: true })
       return content
     }
     catch (e) {
