@@ -1,8 +1,10 @@
 import type { SourceMeta } from './utils/define'
-import process from 'node:process'
 
 /** 部署后 HTML 文件的 URL 前缀，可通过环境变量覆盖 */
-export const BASE_URL = process.env.BASE_URL || 'https://qysg.pages.dev'
+export const BASE_URL = 'https://qysg.pages.dev'
+
+/** 默认 UA */
+export const DEFAULT_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
 
 /** 构建时间使用的时区 */
 export const TIMEZONE = 'Asia/Shanghai'
