@@ -1,6 +1,7 @@
 import type { Book, Chapter, Find } from '../utils/define'
 import { defineSource } from '../utils/define'
-import { extractContent, q, sanitizeHtml } from '../utils/html'
+import { fetchPage, parseChapters, parsePage, resolvePagination } from '../utils/helpers'
+import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://wap.po18x.vip'
 
@@ -21,8 +22,7 @@ export default defineSource({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body,
       })
-      flutterBridge.text(0, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = parsePage(res.data, 0)
 
       const books: Book[] = []
       const $items = $tempContainer.findAll('.searchresult .sone')
@@ -60,9 +60,7 @@ export default defineSource({
 
   async info(bookUrl) {
     try {
-      const res = await http.get(bookUrl)
-      flutterBridge.text(1, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = await fetchPage(bookUrl, 1)
 
       const name = $tempContainer.find('.cataloginfo h3').text()
       const author = $tempContainer.find('.infotype a[href*="/author/"]').text()
@@ -116,27 +114,10 @@ export default defineSource({
 
       // 遍历所有分页
       while (currentUrl) {
-        const res = await http.get(currentUrl)
-        if (pageIndex === 0)
-          flutterBridge.text(2, res.data)
-        const $tempContainer = q(sanitizeHtml(res.data))
+        const $tempContainer = await fetchPage(currentUrl, pageIndex === 0 ? 2 : undefined)
 
         const $chapterItems = $tempContainer.findAll('ul.chapters li a')
-        $chapterItems.forEach(($item) => {
-          const title = $item.text()
-          const url = resolveUrl(baseUrl, $item.attr('href'))
-          if (!title || !url)
-            return
-          chapters.push({
-            name: title,
-            chapterId: url,
-            index: chapters.length,
-            isPay: false,
-            isVip: false,
-            isVolume: false,
-            tag: '',
-          })
-        })
+        chapters.push(...parseChapters(baseUrl, $chapterItems, chapters.length))
 
         // 查找下一页链接
         const $nextPage = $tempContainer.findAll('.page a')
@@ -166,9 +147,7 @@ export default defineSource({
 
   async content(url) {
     try {
-      const res = await http.get(url)
-      flutterBridge.text(3, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = await fetchPage(url, 3)
       const content = extractContent($tempContainer.find('#novelcontent p'))
       return content
     }
@@ -221,13 +200,8 @@ export default defineSource({
 
   async find(url, page) {
     try {
-      if (url.includes('{{page}}'))
-        url = url.replace('{{page}}', page.toString())
-      if (url.includes('%7B%7Bpage%7D%7D'))
-        url = url.replace('%7B%7Bpage%7D%7D', page.toString())
-
-      const res = await http.get(url)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const finalUrl = resolvePagination(url, page)
+      const $tempContainer = await fetchPage(finalUrl)
 
       const books: Book[] = []
 

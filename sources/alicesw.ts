@@ -1,6 +1,7 @@
-import type { Book, Chapter, Find } from '../utils/define'
+import type { Book, Find } from '../utils/define'
 import { defineSource } from '../utils/define'
-import { extractContent, q, sanitizeHtml } from '../utils/html'
+import { fetchPage, parseChapters, resolvePagination } from '../utils/helpers'
+import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://www.alicesw.com'
 
@@ -13,9 +14,7 @@ export default defineSource({
   async search(key, page) {
     try {
       const searchUrl = resolveUrl(baseUrl, `/search.html?q=${key}&f=_all&p=${page}`)
-      const res = await http.get(searchUrl)
-      flutterBridge.text(0, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = await fetchPage(searchUrl, 0)
 
       const books: Book[] = []
 
@@ -63,9 +62,7 @@ export default defineSource({
 
   async info(bookUrl) {
     try {
-      const res = await http.get(bookUrl)
-      flutterBridge.text(1, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = await fetchPage(bookUrl, 1)
       const book: Book = {
         bookUrl,
         name: $tempContainer.find('.novel_title').text(),
@@ -102,33 +99,9 @@ export default defineSource({
 
   async chapter(tocUrl) {
     try {
-      const res = await http.get(tocUrl)
-      flutterBridge.text(2, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
-
-      const chapters: Chapter[] = []
-
+      const $tempContainer = await fetchPage(tocUrl, 2)
       const $chapterItems = $tempContainer.findAll('.mulu_list a[href^=\'/book/\']')
-
-      $chapterItems.forEach(($item, index) => {
-        const title = $item.text().trim()
-        const url = resolveUrl(baseUrl, $item.attr('href'))
-
-        if (!title || !url)
-          return
-
-        chapters.push({
-          name: title,
-          chapterId: url,
-          index,
-          isPay: false,
-          isVip: false,
-          isVolume: false,
-          tag: '',
-        })
-      })
-
-      return JSON.stringify(chapters)
+      return JSON.stringify(parseChapters(baseUrl, $chapterItems))
     }
     catch (e) {
       flutterBridge.log(`获取章节目录错误: ${e.message}`)
@@ -138,9 +111,7 @@ export default defineSource({
 
   async content(url) {
     try {
-      const res = await http.get(url)
-      flutterBridge.text(3, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = await fetchPage(url, 3)
       const content = extractContent($tempContainer.find('div.read-content, .j_readContent, .user_ad_content'))
       return content
     }
@@ -200,13 +171,7 @@ export default defineSource({
 
   async find(url, page) {
     try {
-      // 替换{{page}}占位符为实际页码
-      if (url.includes('{{page}}')) {
-        url = url.replace('{{page}}', page.toString())
-      }
-
-      const res = await http.get(url)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = await fetchPage(resolvePagination(url, page))
 
       const books: Book[] = []
 

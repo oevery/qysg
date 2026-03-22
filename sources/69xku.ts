@@ -1,6 +1,8 @@
-import type { Book, Chapter, Find } from '../utils/define'
+import type { Book, Find } from '../utils/define'
+import type { q } from '../utils/html'
 import { defineSource } from '../utils/define'
-import { extractContent, q, sanitizeHtml } from '../utils/html'
+import { fetchPage, parseChapters, parsePage, resolvePagination } from '../utils/helpers'
+import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://www.69xku.com'
 
@@ -42,8 +44,7 @@ export default defineSource({
       const contentType = 'application/x-www-form-urlencoded'
       const body = `searchkey=${key}&action=login&searchtype=all&submit=`
       const res = await http.post(searchUrl, { headers: { 'Content-Type': contentType }, body })
-      flutterBridge.text(0, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = parsePage(res.data, 0)
 
       if (res.data.includes('搜索间隔')) {
         flutterBridge.showToast('搜索间隔: 30 秒，请稍后再试')
@@ -60,9 +61,7 @@ export default defineSource({
 
   async info(bookUrl) {
     try {
-      const res = await http.get(bookUrl)
-      flutterBridge.text(1, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = await fetchPage(bookUrl, 1)
 
       const book: Book = {
         bookUrl,
@@ -87,31 +86,9 @@ export default defineSource({
 
   async chapter(tocUrl) {
     try {
-      const res = await http.get(tocUrl)
-      flutterBridge.text(2, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
-
-      const chapters: Chapter[] = []
+      const $tempContainer = await fetchPage(tocUrl, 2)
       const $chapterItems = $tempContainer.findAll('#list-chapterAll dd a')
-
-      $chapterItems.forEach(($item, index) => {
-        const title = $item.text()
-        const chapterUrl = resolveUrl(baseUrl, $item.attr('href'))
-        if (!title || !chapterUrl)
-          return
-
-        chapters.push({
-          name: title,
-          chapterId: chapterUrl,
-          index,
-          isPay: false,
-          isVip: false,
-          isVolume: false,
-          tag: '',
-        })
-      })
-
-      return JSON.stringify(chapters)
+      return JSON.stringify(parseChapters(baseUrl, $chapterItems))
     }
     catch (e) {
       flutterBridge.log(`获取章节目录错误: ${e.message}`)
@@ -121,9 +98,7 @@ export default defineSource({
 
   async content(url) {
     try {
-      const res = await http.get(url)
-      flutterBridge.text(3, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const $tempContainer = await fetchPage(url, 3)
       const content = extractContent($tempContainer.find('#rtext'), { sanitize: true })
       return content
     }
@@ -166,19 +141,8 @@ export default defineSource({
 
   async find(url, page) {
     try {
-      // 替换{{page}}占位符为实际页码
-      if (url.includes('{{page}}')) {
-        url = url.replace('{{page}}', page.toString())
-      }
-      // 替换编码后的{{page}}占位符为实际页码
-      if (url.includes('%7B%7Bpage%7D%7D')) {
-        url = url.replace('%7B%7Bpage%7D%7D', page.toString())
-      }
-
-      const res = await http.get(url)
-
-      flutterBridge.text(0, res.data)
-      const $tempContainer = q(sanitizeHtml(res.data))
+      const finalUrl = resolvePagination(url, page)
+      const $tempContainer = await fetchPage(finalUrl, 0)
 
       return JSON.stringify(parseBooks($tempContainer))
     }
