@@ -3,6 +3,8 @@
 /* eslint-disable no-var */
 /* eslint-disable vars-on-top */
 
+import { DEFAULT_UA } from '../qysg.config'
+
 /**
  * 轻悦时光 WebView 运行时桥接代码
  *
@@ -69,7 +71,7 @@ export class FlutterJSBridge {
   // ── 设备信息 ──
 
   /** 获取应用编译版本 */
-  async getbuildNumber(): Promise<number> {
+  async getBuildNumber(): Promise<number> {
     try {
       return await window.flutter_inappwebview.callHandler('buildNumber')
     }
@@ -79,7 +81,7 @@ export class FlutterJSBridge {
   }
 
   /** 获取应用版本（如 `"1.2.3"`） */
-  async getversion(): Promise<string> {
+  async getVersion(): Promise<string> {
     try {
       return await window.flutter_inappwebview.callHandler('version')
     }
@@ -89,7 +91,7 @@ export class FlutterJSBridge {
   }
 
   /** 获取设备唯一 ID */
-  async getDeviceid(): Promise<string> {
+  async getDeviceId(): Promise<string> {
     try {
       return await window.flutter_inappwebview.callHandler('id')
     }
@@ -151,7 +153,7 @@ export class FlutterJSBridge {
   }
 
   /** UTF-8 字符串转 Base64 */
-  async base64encode(str: string): Promise<string> {
+  async base64Encode(str: string): Promise<string> {
     try {
       return await window.flutter_inappwebview.callHandler('base64encode', str)
     }
@@ -161,7 +163,7 @@ export class FlutterJSBridge {
   }
 
   /** Base64 转 UTF-8 字符串 */
-  async base64decode(str: string): Promise<string> {
+  async base64Decode(str: string): Promise<string> {
     try {
       return await window.flutter_inappwebview.callHandler('base64decode', str)
     }
@@ -209,7 +211,7 @@ export class FlutterJSBridge {
   // ── 浏览器控制 ──
 
   /** 通过 URL 打开外部应用 */
-  async openurl(url: string): Promise<boolean> {
+  async openUrl(url: string): Promise<boolean> {
     try {
       return await window.flutter_inappwebview.callHandler('openurl', url, '')
     }
@@ -219,7 +221,7 @@ export class FlutterJSBridge {
   }
 
   /** 通过 URL 打开外部应用并附带 MIME 类型 */
-  async openurlwithMimeType(url: string, mimeType: string): Promise<boolean> {
+  async openUrlWithMimeType(url: string, mimeType: string): Promise<boolean> {
     try {
       return await window.flutter_inappwebview.callHandler('openurl', url, mimeType)
     }
@@ -232,11 +234,11 @@ export class FlutterJSBridge {
    * 启动前台 WebView 访问链接并获取结束时的 HTML，可用于手工过盾
    * @param url - 网址
    * @param title - 标题
-   * @param header - 请求的 header 头，必须是 JSON 字符串
+   * @param headers - 请求头对象
    */
-  async startBrowser(url: string, title: string, header: string): Promise<string> {
+  async startBrowser(url: string, title: string, headers: Record<string, string>): Promise<string> {
     try {
-      return await window.flutter_inappwebview.callHandler('startBrowser', url, title, header)
+      return await window.flutter_inappwebview.callHandler('startBrowser', url, title, JSON.stringify(headers))
     }
     catch {
       return ''
@@ -247,11 +249,11 @@ export class FlutterJSBridge {
    * 启动前台 WebView 并对每次打开的 URL 进行拦截
    * @param url - 网址
    * @param title - 标题
-   * @param header - 请求的 header 头，必须是 JSON 字符串
+   * @param headers - 请求头对象
    */
-  async startBrowserWithShouldOverrideUrlLoading(url: string, title: string, header: string): Promise<string> {
+  async startBrowserWithShouldOverrideUrlLoading(url: string, title: string, headers: Record<string, string>): Promise<string> {
     try {
-      return await window.flutter_inappwebview.callHandler('startBrowserWithShouldOverrideUrlLoading', url, title, header)
+      return await window.flutter_inappwebview.callHandler('startBrowserWithShouldOverrideUrlLoading', url, title, JSON.stringify(headers))
     }
     catch {
       return ''
@@ -286,11 +288,11 @@ export class FlutterJSBridge {
    * @param js - 用来取返回值的 JS 语句，没有就返回整个源代码
    * @param html - 直接用 WebView 载入的 HTML（为空则直接访问 url）
    * @param body - 当参数不为空时为 POST 请求，此时请务必在 header 中带上 content-type
-   * @param header - 请求的 header 头，必须是 JSON 字符串
+   * @param headers - 请求头对象
    */
-  async webview(url: string, js: string, html: string, body: string, header: string): Promise<string> {
+  async webview(url: string, js: string, html: string, body: string, headers: Record<string, string>): Promise<string> {
     try {
-      return await window.flutter_inappwebview.callHandler('webview', url, js, html, body, header, '', '')
+      return await window.flutter_inappwebview.callHandler('webview', url, js, html, body, JSON.stringify(headers), '', '')
     }
     catch {
       return ''
@@ -302,13 +304,13 @@ export class FlutterJSBridge {
    * @param url - 目标 URL
    * @param js - 用来取返回值的 JS 语句，没有就返回整个源代码
    * @param html - 直接用 WebView 载入的 HTML（为空则直接访问 URL）
-   * @param body - 当参数不为空时为 POST 请求，此时请务必在 header 中带上 content-type
-   * @param header - 请求的 header 头，必须是 JSON 字符串
+   * @param body - 当参数不为空时为 POST 请求，此时请务必在 headers 中带上 content-type
+   * @param headers - 请求头对象
    * @param overrideUrlRegex - 正则表达式，匹配到则返回该 URL，否则返回 JS 获取的内容
    */
-  async webViewGetOverrideUrl(url: string, js: string, html: string, body: string, header: string, overrideUrlRegex: string): Promise<string> {
+  async webViewGetOverrideUrl(url: string, js: string, html: string, body: string, headers: Record<string, string>, overrideUrlRegex: string): Promise<string> {
     try {
-      return await window.flutter_inappwebview.callHandler('webview', url, js, html, body, header, overrideUrlRegex, '')
+      return await window.flutter_inappwebview.callHandler('webview', url, js, html, body, JSON.stringify(headers), overrideUrlRegex, '')
     }
     catch {
       return ''
@@ -320,13 +322,13 @@ export class FlutterJSBridge {
    * @param url - 目标 URL
    * @param js - 用来取返回值的 JS 语句，没有就返回整个源代码
    * @param html - 直接用 WebView 载入的 HTML（为空则直接访问 URL）
-   * @param body - 当参数不为空时为 POST 请求，此时请务必在 header 中带上 content-type
-   * @param header - 请求的 header 头，必须是 JSON 字符串
+   * @param body - 当参数不为空时为 POST 请求，此时请务必在 headers 中带上 content-type
+   * @param headers - 请求头对象
    * @param urlregex - 正则表达式，匹配到则返回该资源 URL，否则返回 JS 获取的内容
    */
-  async webViewGetSource(url: string, js: string, html: string, body: string, header: string, urlregex: string): Promise<string> {
+  async webViewGetSource(url: string, js: string, html: string, body: string, headers: Record<string, string>, urlregex: string): Promise<string> {
     try {
-      return await window.flutter_inappwebview.callHandler('webview', url, js, html, body, header, '', urlregex)
+      return await window.flutter_inappwebview.callHandler('webview', url, js, html, body, JSON.stringify(headers), '', urlregex)
     }
     catch {
       return ''
@@ -420,7 +422,7 @@ export class Http {
   static autoFillHeaders(url: string, headers: Record<string, string>): Record<string, string> {
     const filledHeaders = { ...headers }
     if (!filledHeaders['User-Agent']) {
-      filledHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
+      filledHeaders['User-Agent'] = DEFAULT_UA
     }
     if (!filledHeaders.Origin) {
       const origin = new URL(url).origin
