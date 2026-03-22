@@ -16,7 +16,7 @@ export default defineSource({
     try {
       const searchUrl = resolveUrl(baseUrl, '/search/')
       const contentType = 'application/x-www-form-urlencoded'
-      const body = `searchkey=${encodeURIComponent(key)}&action=login&searchtype=all&submit=`
+      const body = `searchkey=${key}&action=login&searchtype=all&submit=`
       const res = await http.post(searchUrl, { headers: { 'Content-Type': contentType }, body })
       flutterBridge.text(0, res.data)
       const $tempContainer = q(sanitizeHtml(res.data))
