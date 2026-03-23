@@ -1,7 +1,7 @@
 import type { Book, Find } from '../utils/define'
 import type { q } from '../utils/html'
 import { defineSource } from '../utils/define'
-import { fetchPage, parseChapters, parsePage, replacePlaceholders, resolveUrl } from '../utils/helpers'
+import { fetchPage, parseChapters, replacePlaceholders, resolveUrl } from '../utils/helpers'
 import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://www.69xku.com'
@@ -56,10 +56,14 @@ export default defineSource({
       const searchUrl = resolveUrl(baseUrl, '/search/')
       const contentType = 'application/x-www-form-urlencoded'
       const body = `searchkey=${key}&action=login&searchtype=all&submit=`
-      const res = await http.post(searchUrl, { headers: { 'Content-Type': contentType }, body })
-      const $tempContainer = parsePage(res.data, 0)
+      const $tempContainer = await fetchPage(searchUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': contentType },
+        body,
+        debugType: 0,
+      })
 
-      if (res.data.includes('搜索间隔')) {
+      if ($tempContainer.text().includes('搜索间隔')) {
         flutterBridge.showToast('搜索间隔: 30 秒，请稍后再试')
         throw new Error('触发搜索间隔限制 (搜索间隔: 30 秒)')
       }

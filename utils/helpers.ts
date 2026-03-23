@@ -5,7 +5,7 @@
  * 减少各书源文件中的重复代码。
  */
 
-import type { DebugType } from './bridge'
+import type { DebugType, HttpOptions } from './bridge'
 import type { Chapter } from './define'
 import type { Q } from './html'
 import { q, sanitizeHtml } from './html'
@@ -24,16 +24,39 @@ export function parsePage(data: string, debugType?: DebugType): Q {
   return q(sanitizeHtml(data))
 }
 
+/** fetchPage 选项 */
+export interface FetchPageOptions extends HttpOptions {
+  /** 请求方法，默认 `'GET'` */
+  method?: 'GET' | 'POST'
+  /**
+   * 调试类型，传入则发送源码到 App
+   *
+   * 0 搜索源码 / 1 详情源码 / 2 目录源码 / 3 正文源码
+   */
+  debugType?: DebugType
+}
+
 /**
- * GET 请求页面并解析为 Q 对象
- *
- * 等价于 `http.get(url)` → `flutterBridge.text()` → `q(sanitizeHtml())`
+ * 请求页面并解析为 Q 对象，支持 GET / POST
  *
  * @param url - 请求 URL
- * @param debugType - 调试类型，传入则发送源码到 App
+ * @param optsOrDebugType - 选项对象，或直接传入 debugType 数字（向后兼容）
+ * 0 搜索源码 / 1 详情源码 / 2 目录源码 / 3 正文源码
+ *
+ * @example
+ * ```ts
+ * // GET（简写）
+ * await fetchPage(url, 0)
+ * // GET（对象）
+ * await fetchPage(url, { debugType: 0 })
+ * // POST
+ * await fetchPage(url, { method: 'POST', body: 'key=val', debugType: 0 })
+ * ```
  */
-export async function fetchPage(url: string, debugType?: DebugType): Promise<Q> {
-  const res = await http.get(url)
+export async function fetchPage(url: string, optsOrDebugType?: FetchPageOptions | DebugType): Promise<Q> {
+  const opts: FetchPageOptions = typeof optsOrDebugType === 'object' ? optsOrDebugType : { debugType: optsOrDebugType }
+  const { method = 'GET', debugType, ...httpOpts } = opts
+  const res = method === 'POST' ? await http.post(url, httpOpts) : await http.get(url, httpOpts)
   return parsePage(res.data, debugType)
 }
 
