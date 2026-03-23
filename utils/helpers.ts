@@ -8,7 +8,6 @@
 import type { DebugType } from './bridge'
 import type { Chapter } from './define'
 import type { Q } from './html'
-import { author, homepage } from '../package.json'
 import { q, sanitizeHtml } from './html'
 
 /**
@@ -113,12 +112,4 @@ export function resolveUrl(base: string, relative: string): string {
   catch {
     return relative
   }
-}
-
-/**
- * 获取帮助信息（如联系方式等），App 会以弹窗形式展示
- * @returns 帮助信息字符串
- */
-export function getHelp(): string {
-  return `作者: ${author} | 主页: ${homepage}`
 }

@@ -3,8 +3,8 @@
 /* eslint-disable no-var */
 /* eslint-disable vars-on-top */
 
+import { author, homepage } from '../package.json'
 import { DEFAULT_UA } from '../qysg.config'
-import { getHelp } from './helpers'
 
 /**
  * 轻悦时光 WebView 运行时桥接代码
@@ -611,5 +611,13 @@ var http = new Http()
 var cache = new AppCache()
 var cookie = new AppCookie()
 
-// 全局函数，App 通过 `window.gethelp()` 调用获取帮助信息
+/**
+ * 获取帮助信息（如联系方式等），App 会以弹窗形式展示
+ * @returns 帮助信息字符串
+ */
+export function getHelp(): string {
+  return `作者: ${author} | 主页: ${homepage}`
+}
+
+/** 全局函数，App 通过 `window.gethelp()` 调用获取帮助信息 */
 window.gethelp = getHelp
