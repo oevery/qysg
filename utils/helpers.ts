@@ -8,6 +8,7 @@
 import type { DebugType } from './bridge'
 import type { Chapter } from './define'
 import type { Q } from './html'
+import { author, homepage } from '../package.json'
 import { q, sanitizeHtml } from './html'
 
 /**
@@ -95,4 +96,29 @@ export function parseChapters(baseUrl: string, $items: Q[], startIndex = 0): Cha
     })
   })
   return chapters
+}
+
+/**
+ * url 处理函数，将相对路径转为绝对路径并且编码
+ * @param base - 基础 URL（如书源主页 URL）
+ * @param relative - 需要处理的 URL（可能是相对路径）
+ * @returns 处理后的绝对 URL
+ */
+export function resolveUrl(base: string, relative: string): string {
+  try {
+    if (!base || !relative)
+      return ''
+    return new URL(relative, base).href
+  }
+  catch {
+    return relative
+  }
+}
+
+/**
+ * 获取帮助信息（如联系方式等），App 会以弹窗形式展示
+ * @returns 帮助信息字符串
+ */
+export function getHelp(): string {
+  return `作者: ${author} | 主页: ${homepage}`
 }

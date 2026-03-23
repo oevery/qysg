@@ -1,6 +1,6 @@
 import type { Book, Chapter, Find } from '../utils/define'
 import { defineSource } from '../utils/define'
-import { fetchPage, parseChapters, parsePage, replacePlaceholders } from '../utils/helpers'
+import { fetchPage, parseChapters, parsePage, replacePlaceholders, resolveUrl } from '../utils/helpers'
 import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://wap.po18x.vip'

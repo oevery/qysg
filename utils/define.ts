@@ -287,7 +287,7 @@ export interface SourceFunctions {
    * 获取帮助信息（如联系方式等），App 会以弹窗形式展示
    * @returns 帮助信息字符串
    */
-  gethelp?: () => Promise<string>
+  gethelp?: () => Promise<string> | string
 }
 
 // ─── 工厂函数 ────────────────────────────────────────────────

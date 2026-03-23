@@ -1,5 +1,5 @@
 /**
- * 测试辅助：模拟书源运行时的全局对象（flutterBridge、http、cache、cookie、resolveUrl）
+ * 测试辅助：模拟书源运行时的全局对象（flutterBridge、http、cache、cookie）
  *
  * 在测试文件中 import 即可注入全局 mock，使书源代码可在 Node/happy-dom 中运行。
  */
@@ -90,18 +90,6 @@ export function createCookieMock() {
   }
 }
 
-/** resolveUrl 的真实实现（与 bridge.ts 一致） */
-function resolveUrlImpl(base: string, relative: string): string {
-  try {
-    if (!base || !relative)
-      return ''
-    return new URL(relative, base).href
-  }
-  catch {
-    return relative
-  }
-}
-
 /** 将所有 mock 注入到 globalThis，使书源代码可直接运行 */
 export function setupGlobalMocks() {
   const mocks = {
@@ -109,7 +97,6 @@ export function setupGlobalMocks() {
     http: createHttpMock(),
     cache: createCacheMock(),
     cookie: createCookieMock(),
-    resolveUrl: resolveUrlImpl,
   }
 
   Object.assign(globalThis, mocks)

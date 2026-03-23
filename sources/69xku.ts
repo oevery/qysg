@@ -1,7 +1,7 @@
 import type { Book, Find } from '../utils/define'
 import type { q } from '../utils/html'
 import { defineSource } from '../utils/define'
-import { fetchPage, parseChapters, parsePage, replacePlaceholders } from '../utils/helpers'
+import { fetchPage, parseChapters, parsePage, replacePlaceholders, resolveUrl } from '../utils/helpers'
 import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://www.69xku.com'

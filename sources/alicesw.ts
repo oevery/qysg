@@ -1,6 +1,6 @@
 import type { Book, Find } from '../utils/define'
 import { defineSource } from '../utils/define'
-import { fetchPage, parseChapters, replacePlaceholders } from '../utils/helpers'
+import { fetchPage, parseChapters, replacePlaceholders, resolveUrl } from '../utils/helpers'
 import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://www.alicesw.com'

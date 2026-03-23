@@ -1,7 +1,5 @@
 import type { AppCache, AppCookie, FlutterJSBridge, Http } from '../utils/bridge'
 
-type Bridge = typeof import('../utils/bridge')
-
 declare global {
   /** Flutter WebView 与原生层通信桥接器实例 */
   const flutterBridge: FlutterJSBridge
@@ -11,6 +9,4 @@ declare global {
   const cookie: AppCookie
   /** HTTP 请求客户端 */
   const http: Http
-
-  const resolveUrl: Bridge['resolveUrl']
 }

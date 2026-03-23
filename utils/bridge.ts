@@ -3,8 +3,8 @@
 /* eslint-disable no-var */
 /* eslint-disable vars-on-top */
 
-import { author, homepage } from '../package.json'
 import { DEFAULT_UA } from '../qysg.config'
+import { getHelp } from './helpers'
 
 /**
  * 轻悦时光 WebView 运行时桥接代码
@@ -21,6 +21,7 @@ interface FlutterInAppWebView {
 declare global {
   interface Window {
     flutter_inappwebview: FlutterInAppWebView
+    gethelp: () => Promise<string> | string
   }
 }
 
@@ -610,28 +611,5 @@ var http = new Http()
 var cache = new AppCache()
 var cookie = new AppCookie()
 
-/**
- * url 处理函数，将相对路径转为绝对路径并且编码
- * @param base - 基础 URL（如书源主页 URL）
- * @param relative - 需要处理的 URL（可能是相对路径）
- * @returns 处理后的绝对 URL
- */
-export function resolveUrl(base: string, relative: string): string {
-  try {
-    if (!base || !relative)
-      return ''
-    return new URL(relative, base).href
-  }
-  catch (e) {
-    flutterBridge.log(`URL解析错误:${e.message}`)
-    return relative // 解析失败则返回原始字符串
-  }
-}
-
-/**
- * 获取帮助信息（如联系方式等），App 会以弹窗形式展示
- * @returns 帮助信息字符串
- */
-export function gethelp(): string {
-  return `作者: ${author} | 主页: ${homepage}`
-}
+// 全局函数，App 通过 `window.gethelp()` 调用获取帮助信息
+window.gethelp = getHelp
