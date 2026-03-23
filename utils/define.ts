@@ -8,6 +8,36 @@
 
 // ─── 元数据类型 ─────────────────────────────────────────────
 
+/** 测试种子数据，用于 `pnpm record` 直接发送 HTTP 请求录制 Fixture HTML */
+export interface TestSeeds {
+  /**
+   * 搜索请求配置
+   *
+   * `url` 和 `body` 中的 `{{key}}` 会被替换为 URL 编码后的关键词（默认 `'我的'`），
+   * `{{page}}` 替换为页码（默认 `1`）。
+   */
+  search?: {
+    url: string
+    key?: string
+    page?: number
+    method?: 'get' | 'post'
+    headers?: Record<string, string>
+    body?: string
+  }
+  /** 书籍详情页 URL */
+  info?: string
+  /** 章节目录 URL */
+  chapter?: string
+  /** 正文 URL */
+  content?: string
+  /**
+   * 发现页 URL（可含 `{{page}}` 占位符）
+   *
+   * 不指定时自动从 `getfinds()` 获取第一个 URL 以 `baseUrl` 开头的项
+   */
+  find?: string
+}
+
 /** 书源元数据，描述书源的基本信息和构建选项 */
 export interface SourceMeta {
   /** 书源显示名称（如 `"爱丽丝书屋"`） */
@@ -33,6 +63,8 @@ export interface SourceMeta {
   /** 是否启用登录功能（默认 `false`） */
   enabledLogin?: boolean
   author?: string
+  /** 测试种子数据，用于 `pnpm record` 录制 Fixture（构建时忽略） */
+  testSeeds?: TestSeeds
 }
 
 // ─── 书源数据类型 ────────────────────────────────────────────

@@ -10,8 +10,8 @@ export const DEFAULT_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit
 /** 构建时间使用的时区 */
 export const TIMEZONE = 'Asia/Shanghai'
 
-/** 从源码提取并填充默认值后的完整元数据（所有可选字段已确定） */
-export type ResolvedMeta = Required<SourceMeta>
+/** 从源码提取并填充默认值后的完整元数据（所有可选字段已确定，testSeeds 仅用于测试录制） */
+export type ResolvedMeta = Required<Omit<SourceMeta, 'testSeeds'>>
 
 /** 元数据默认值 */
 export const META_DEFAULTS: ResolvedMeta = {

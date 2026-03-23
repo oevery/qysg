@@ -1,6 +1,6 @@
 import type { Book, Chapter, Find } from '../utils/define'
 import { defineSource } from '../utils/define'
-import { fetchPage, parseChapters, parsePage, resolvePagination } from '../utils/helpers'
+import { fetchPage, parseChapters, parsePage, replacePlaceholders } from '../utils/helpers'
 import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://wap.po18x.vip'
@@ -9,6 +9,19 @@ export default defineSource({
   name: 'PO18脸红心跳',
   id: 'po18x',
   url: baseUrl,
+
+  testSeeds: {
+    search: {
+      url: `${baseUrl}/s.php`,
+      method: 'post',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 's={{key}}&type=articlename',
+    },
+    info: `${baseUrl}/book/123027/`,
+    chapter: `${baseUrl}/123/123027/`,
+    content: `${baseUrl}/123/123027/24648456.html`,
+    find: `${baseUrl}/sort/1_{{page}}/`,
+  },
 
   async search(key, page) {
     if (page > 1)
@@ -81,9 +94,7 @@ export default defineSource({
       const intro = $tempContainer.find('.intro p').text()
 
       // 获取章节目录 URL
-      let tocUrl = $tempContainer.find('.info_menu1 .gochapter a').attr('href')
-      if (!tocUrl)
-        tocUrl = bookUrl.replace(/\/book\//, '/176/')
+      const tocUrl = $tempContainer.find('.info_menu1 .gochapter a').attr('href')
 
       const book: Book = {
         bookUrl,
@@ -200,7 +211,7 @@ export default defineSource({
 
   async find(url, page) {
     try {
-      const finalUrl = resolvePagination(url, page)
+      const finalUrl = replacePlaceholders(url, { page })
       const $tempContainer = await fetchPage(finalUrl)
 
       const books: Book[] = []

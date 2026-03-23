@@ -1,6 +1,6 @@
 import type { Book, Find } from '../utils/define'
 import { defineSource } from '../utils/define'
-import { fetchPage, parseChapters, resolvePagination } from '../utils/helpers'
+import { fetchPage, parseChapters, replacePlaceholders } from '../utils/helpers'
 import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://www.alicesw.com'
@@ -10,6 +10,14 @@ export default defineSource({
   id: 'alicesw',
   url: baseUrl,
   enabledLogin: true,
+
+  testSeeds: {
+    search: { url: `${baseUrl}/search.html?q={{key}}&f=_all&p={{page}}` },
+    info: `${baseUrl}/novel/49989.html`,
+    chapter: `${baseUrl}/other/chapters/id/49989.html`,
+    content: `${baseUrl}/book/51226/7c7c49563a3ec.html`,
+    find: `${baseUrl}/other/rank_hits/order/hits_day.html`,
+  },
 
   async search(key, page) {
     try {
@@ -171,7 +179,8 @@ export default defineSource({
 
   async find(url, page) {
     try {
-      const $tempContainer = await fetchPage(resolvePagination(url, page))
+      const finalUrl = replacePlaceholders(url, { page })
+      const $tempContainer = await fetchPage(finalUrl, 0)
 
       const books: Book[] = []
 

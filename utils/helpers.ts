@@ -38,13 +38,34 @@ export async function fetchPage(url: string, debugType?: DebugType): Promise<Q> 
 }
 
 /**
+ * 替换模板中的 `{{name}}` 占位符（同时处理 URL 编码后的 `%7B%7Bname%7D%7D` 变体）
+ *
+ * @param template - 含占位符的字符串
+ * @param vars - 键值对，值会被转为字符串后替换对应的 `{{key}}`
+ *
+ * @example
+ * ```ts
+ * replacePlaceholders('/search?q={{key}}&p={{page}}', { key: '测试', page: 1 })
+ * // => '/search?q=测试&p=1'
+ * ```
+ */
+export function replacePlaceholders(template: string, vars: Record<string, string | number>): string {
+  let result = template
+  for (const [name, value] of Object.entries(vars)) {
+    const pattern = new RegExp(`\\{\\{${name}\\}\\}|%7B%7B${name}%7D%7D`, 'g')
+    result = result.replace(pattern, String(value))
+  }
+  return result
+}
+
+/**
  * 替换 URL 中的 `{{page}}` 分页占位符（同时处理 URL 编码后的变体）
  *
  * @param url - 含 `{{page}}` 占位符的 URL
  * @param page - 页码
  */
 export function resolvePagination(url: string, page: number): string {
-  return url.replace(/\{\{page\}\}|%7B%7Bpage%7D%7D/g, page.toString())
+  return replacePlaceholders(url, { page })
 }
 
 /**

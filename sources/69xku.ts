@@ -1,7 +1,7 @@
 import type { Book, Find } from '../utils/define'
 import type { q } from '../utils/html'
 import { defineSource } from '../utils/define'
-import { fetchPage, parseChapters, parsePage, resolvePagination } from '../utils/helpers'
+import { fetchPage, parseChapters, parsePage, replacePlaceholders } from '../utils/helpers'
 import { extractContent } from '../utils/html'
 
 const baseUrl = 'https://www.69xku.com'
@@ -34,6 +34,19 @@ export default defineSource({
   name: '69库',
   id: '69xku',
   url: baseUrl,
+
+  testSeeds: {
+    search: {
+      url: `${baseUrl}/search/`,
+      method: 'post',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'searchkey={{key}}&action=login&searchtype=all&submit=',
+    },
+    info: `${baseUrl}/book/3571/`,
+    chapter: `${baseUrl}/book/3571/`,
+    content: `${baseUrl}/book/3571/599078.html`,
+    find: `${baseUrl}/sort/1/{{page}}/`,
+  },
 
   async search(key, page) {
     if (page > 1)
@@ -141,7 +154,7 @@ export default defineSource({
 
   async find(url, page) {
     try {
-      const finalUrl = resolvePagination(url, page)
+      const finalUrl = replacePlaceholders(url, { page })
       const $tempContainer = await fetchPage(finalUrl, 0)
 
       return JSON.stringify(parseBooks($tempContainer))
