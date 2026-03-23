@@ -1,5 +1,6 @@
 import type { Book, Chapter, Find } from '../utils/define'
 import { defineSource } from '../utils/define'
+import { percentEncodeGBK } from '../utils/encoding'
 import { fetchPage, parseChapters, parsePage, replacePlaceholders, resolveUrl } from '../utils/helpers'
 import { extractContent } from '../utils/html'
 
@@ -15,7 +16,7 @@ export default defineSource({
       url: `${baseUrl}/s.php`,
       method: 'post',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 's={{key}}&type=articlename',
+      body: `s=${percentEncodeGBK('我的')}&type=articlename`,
     },
     info: `${baseUrl}/book/123027/`,
     chapter: `${baseUrl}/123/123027/`,
@@ -29,7 +30,7 @@ export default defineSource({
 
     try {
       const searchUrl = resolveUrl(baseUrl, '/s.php')
-      const gbkKey = await flutterBridge.utf8ToGbkUrlEncoded(key)
+      const gbkKey = percentEncodeGBK(key)
       const body = `s=${gbkKey}&type=articlename`
       const res = await http.post(searchUrl, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
