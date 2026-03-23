@@ -12,6 +12,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsx scripts/build.ts",
+    "new": "tsx scripts/new.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "record": "tsx scripts/record.ts",
