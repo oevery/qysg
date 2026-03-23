@@ -124,10 +124,10 @@ export default defineSource({
   async getfinds() {
     const ranks: Find[] = [
       { title: '排行榜', url: '' },
-      { title: '本日排行', url: `${baseUrl}/all/order/hits_day+desc.html?page={{page}}`, type: 0 },
-      { title: '本周排行', url: `${baseUrl}/all/order/hits_week+desc.html?page={{page}}`, type: 0 },
-      { title: '本月排行', url: `${baseUrl}/all/order/hits_month+desc.html?page={{page}}`, type: 0 },
-      { title: '总排行', url: `${baseUrl}/all/order/hits+desc.html?page={{page}}`, type: 0 },
+      { title: '本日排行', url: `${baseUrl}/other/rank_hits/order/hits_day.html`, type: 0 },
+      { title: '本周排行', url: `${baseUrl}/other/rank_hits/order/hits_week.html`, type: 0 },
+      { title: '本月排行', url: `${baseUrl}/other/rank_hits/order/hits_month.html`, type: 0 },
+      { title: '总排行', url: `${baseUrl}/other/rank_hits/order/hits.html`, type: 0 },
     ]
     const kinds: Find[] = [
       { title: '分类', url: '' },
