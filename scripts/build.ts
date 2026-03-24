@@ -96,6 +96,11 @@ async function importMeta(sourceFile: string): Promise<ResolvedMeta> {
       cookieJar: config.cookieJar,
       group: config.group || undefined,
       scripts: config.scripts,
+      enabled: config.enabled,
+      enabledFind: config.enabledFind,
+      enabledHelp: config.enabledHelp,
+      enabledLogin: config.enabledLogin,
+      author: config.author,
     } as any,
     META_DEFAULTS,
   )
