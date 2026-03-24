@@ -1,0 +1,2678 @@
+
+
+<!DOCTYPE HTML>
+<head>
+<link rel="Shortcut Icon" href="/favicon.ico"  type="image/x-icon" />
+<link rel="Bookmark" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.0/font/bootstrap-icons.css">
+<meta name="juicyads-site-verification" content="81a9836dcb90a872e2de583f641344e6">
+<meta name="trafficjunky-site-verification" content="uuq8wyw58" />
+<meta name="exoclick-site-verification" content="2aee36b3278f016004781373b43e5280">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/js/jquery-2.min.js"></script>
+<style>#preload-01 { background: url(../images/navbg_03.png) no-repeat -9999px -9999px; }</style>
+<!-- Starting ad_banner.php --><!-- Ad banner: 1 ads loaded --><div id="apk-ad-banner" class="apk-ad-banner">
+    <div class="apk-ad-content" id="apk-ad-content">
+                    <div class="apk-ad-slide" style="display: flex;" data-index="0">
+                <a href="https://cdn.xaavideo.com" class="apk-ad-link" target="_blank" rel="noopener noreferrer">
+                    <img src="https://xaavideo.com/logo_s.png" alt="Ad Icon" class="apk-ad-icon">
+                </a>
+                <p class="apk-ad-text">
+                    <a href="https://cdn.xaavideo.com" class="apk-ad-link" target="_blank" rel="noopener noreferrer">
+                        全新播放體驗，超多A片，支持下載！                    </a>
+                </p>
+                <button class="apk-ad-close" aria-label="關閉廣告">×</button>
+            </div>
+            </div>
+</div>
+
+<style>
+.apk-ad-banner {
+    display: block !important;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
+    text-align: center;
+    box-shadow: none;
+}
+.apk-ad-banner.apk-ad-hidden {
+    display: none !important;
+}
+.apk-ad-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.apk-ad-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease-in-out;
+}
+.apk-ad-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+.apk-ad-text {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+}
+.apk-ad-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.apk-ad-link:hover {
+    text-decoration: underline;
+}
+.apk-ad-close {
+    background: none !important;
+    border: none !important;
+    font-size: 18px;
+    line-height: 30px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #ffffff;
+    padding: 6px 10px;
+    min-width: 30px;
+}
+.apk-ad-close:hover {
+    color: #ff0000;
+}
+body.apk-ad-visible {
+    padding-top: 50px;
+}
+@media (max-width: 767px) {
+    .apk-ad-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .apk-ad-icon {
+        width: 32px;
+        height: 32px;
+        margin-right: 6px;
+        vertical-align: middle;
+    }
+    .apk-ad-text {
+        margin: 0;
+        display: inline-flex;
+        align-items: center;
+    }
+    .apk-ad-link {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    .apk-ad-close {
+        font-size: 16px;
+        line-height: 28px;
+        padding: 8px 12px;
+        min-width: 36px;
+    }
+    body.apk-ad-visible {
+        padding-top: 50px;
+    }
+}
+</style>
+
+<script>
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Ad banner script running, slides count: ' + document.querySelectorAll('.apk-ad-slide').length);
+        var slides = document.querySelectorAll('.apk-ad-slide');
+        if (slides.length === 0) {
+            console.log('No ad slides found');
+            return;
+        }
+
+        // 添加 body 類以推下頭部
+        document.body.classList.add('apk-ad-visible');
+
+        var currentSlide = 0;
+        var slideInterval;
+
+        function showSlide(index) {
+            console.log('Showing slide: ' + index);
+            slides.forEach(function(slide, i) {
+                slide.style.display = i === index ? 'flex' : 'none';
+                slide.style.opacity = i === index ? '1' : '0';
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function startCarousel() {
+            if (slides.length > 1) {
+                console.log('Starting carousel with ' + slides.length + ' slides');
+                slideInterval = setInterval(nextSlide, 5000);
+            } else {
+                console.log('Only one slide, carousel not started');
+            }
+        }
+
+        function stopCarousel() {
+            console.log('Stopping carousel');
+            if (slideInterval) {
+                clearInterval(slideInterval);
+            }
+        }
+
+        showSlide(currentSlide);
+        startCarousel();
+
+        // 關閉按鈕事件
+        var closeButtons = document.querySelectorAll('.apk-ad-close');
+        console.log('Found ' + closeButtons.length + ' close buttons');
+        closeButtons.forEach(function(button, index) {
+            button.addEventListener('click', function(event) {
+                event.stopPropagation();
+                console.log('Close button ' + index + ' clicked');
+                try {
+                    var banner = document.getElementById('apk-ad-banner');
+                    if (banner) {
+                        banner.classList.add('apk-ad-hidden');
+                        banner.style.display = 'none';
+                        console.log('Banner hidden');
+                    } else {
+                        console.error('Banner element not found');
+                    }
+                    document.body.classList.remove('apk-ad-visible');
+                    console.log('Removed apk-ad-visible class');
+                    document.cookie = 'hide_apk_ad=1; max-age=' + (7 * 24 * 60 * 60) + '; path=/; SameSite=Lax';
+                    console.log('Cookie set: hide_apk_ad=1');
+                    stopCarousel();
+                    setTimeout(function() {
+                        if (banner && window.getComputedStyle(banner).display !== 'none') {
+                            console.error('Banner still visible after hide attempt');
+                        }
+                    }, 100);
+                } catch (error) {
+                    console.error('Error in close button handler: ' + error.message);
+                }
+            });
+        });
+
+        var adContent = document.getElementById('apk-ad-content');
+        if (adContent) {
+            adContent.addEventListener('mouseenter', stopCarousel);
+            adContent.addEventListener('mouseleave', startCarousel);
+        } else {
+            console.log('Ad content element not found');
+        }
+    });
+})();
+</script>
+<!-- Ending ad_banner.php --><meta name="robots" content="all"/>
+<meta name="googlebot" content="all"/>
+<meta name="baiduspider" content="all"/>
+<meta name="Keywords" content="时间可以停止" />
+<meta name="Description" content="兰陵小生 的h小说《时间可以停止》。阅读《时间可以停止》的最新章节、 《时间可以停止》全文、免费txt小说下载。欢迎来到疯情书库。" />
+<TITLE>时间可以停止 兰陵小生- 疯情书库</TITLE>
+<link href="/css/book.css?20210205" rel="stylesheet" />
+<link href="/css/menu.css" rel="stylesheet" />
+<script type="text/javascript" src="/js/qiandaoye.js"></script>
+<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="/js/guide-tab.js"></script>
+
+<script type="text/javascript">var cmsUrl = "http://aabook.xyz";</script>
+<script src="/js/commu.js" type="text/javascript" language="javascript"></script>
+ 
+<script type="text/javascript"> 
+var c, _ = Function;
+window.onload=function()
+{ 
+var num = $('.dongtai_list_l').length;
+if(num > 5){
+  with (o = document.getElementById("dongtai_list")) { innerHTML += innerHTML; onmouseover = _("c=1"); onmouseout = _("c=0"); } 
+  (F = _("if(#%46||!c)#++,#%=o.scrollHeight>>1;setTimeout(F,#%46?10:3000);".replace(/#/g, "o.scrollTop")))(); 
+  }
+}
+function sousuoOnfocus(){
+        var s = document.getElementById("sousuo").value;
+        if(s=='搜索')
+        {
+            document.getElementById("sousuo").value="";
+        }
+        $('.search-l').animate({width:"280px"});
+        $('.search-l').css('box-shadow','0px 1px 8px #ffff00');
+    }    
+    
+function sousuoOnBlur(){
+        var f = document.getElementById("sousuo").value;
+        if(f==null || f=='')
+        {
+            document.getElementById("sousuo").value="搜索";
+        }
+        $('.search-l').animate({width:"200px"});
+        $('.search-l').css('box-shadow','none');
+}
+</script> 
+
+<!--[if IE 6]><script type="text/javascript" src="/js/DD_belatedPNG.js">
+</script>
+<script>
+ DD_belatedPNG.fix(".pngFix,.pngFix:hover,.pngFix img");
+</script>
+<![endif]-->
+<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/8a468c0ebf54706b27613292e/b3867f2f91ace7f741a79ec70.js");</script>
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//counter.aabook.net/matomo/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Code -->
+</head>
+<body>
+<script>
+  function loadGoogleAnalytics() {
+    // 检查是否能访问Google服务
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', '//www.google-analytics.com/analytics.js', true);
+    xhr.timeout = 1000; // 设置超时1秒
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          // 如果可以访问，加载GA脚本
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', 'UA-67871248-1', 'auto');
+          ga('send', 'pageview');
+        } else {
+          console.log('Google Analytics不可用，跳过加载');
+        }
+      }
+    };
+    xhr.ontimeout = function () {
+      console.log('Google Analytics加载超时，跳过');
+    };
+    xhr.send();
+  }
+
+  // 页面加载完成后执行
+  window.onload = function() {
+    loadGoogleAnalytics();
+  };
+</script>
+<div id="top" >
+  <div class="top_inner">
+    <div class="left orangea"><div style="float:left; height:20px; line-height:20px;"><img src="./images/time.gif" align="absmiddle" />
+      <script type="text/javascript"  src="/js/time.js"></script>&nbsp;<span><script type="text/javascript" src="/js/language.js"></script></span>  </div>
+      <div style="float:right; width:650px;">
+      <!--script type="text/javascript" src="./login.php?mode=js"></script-->
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<div id="header">
+<div class="header_l"><br>
+<a href="https://aabook.xyz"><img src="./images/newlogo_03.png" alt="疯情书库"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+<div class="header_m">
+</div>
+<div class="header_r">
+    <a href="https://aabook.xyz/m/?view=wap" class="pngFix" target="_blank"><img src="./images/mobile.png" /></a>
+</div>
+<div style="float:left;padding:18px 20px 0 40px;">
+</div>
+<div class="clear"></div>
+<div style='position: absolute;cursor: pointer;width: 468px; height: 60px;right: 20px;top: 15px;'><a href="https://fky.3fb.site" target="_blank"><img src="https://static.r2dev.store/sis.webp" width=468 height=60></a></div>
+</div>
+<div id="nav">
+<ul class="nav_ul" style="position:relative;">
+
+    <li class="shouye"><a href="/">首页</a></li>
+    <li class="quanbensk"><a href="category.html">书库检索</a></li>
+    <li class="xiaoshuoph"><a  href="toplist.html">排行榜</a></li>
+<!--    <li class="chaoliuzhi"><a href="help.php" target="_blank">帮助</a></li>
+<li class="chaoliuzhi"><a href="" target="_blank">短篇</a></li>-->
+    <!--<li class="chongzhizx"><a href="http://www.talkfiction.net/" target="_blank">讨论区</a></li>
+  	<li class="chongzhizx"><a href="https://www.mimi2022.pw" target="_blank">秘密入口</a></li>-->
+	<li class="chongzhizx"><a href="https://fkxl.xyz/go/btcy" target="_blank">半糖次元</a></li>
+	<li class="chongzhizx"><a href="https://fkxl.xyz/go/zgpz" target="_blank">中国P站</a></li>
+	<li class="chongzhizx"><img style="position: absolute; top: 10px;padding-left: 10px;" src="images/tpd-b-24px.png"><a href="https://theporndude.com/zh" target="_blank" rel="nofollow" style="padding-left:40px;">PornDude</a></li>
+    <div class="clear"></div>
+</ul>
+<div class="sousuo">
+    <form id="searchform" action="/search.html" method="get"  target="_blank">
+        <input type="submit" class="search-btn" value=""/>
+        <input type="text" name="searchword" value="搜索" class="search-l" id="sousuo" onfocus="sousuoOnfocus()" onblur="sousuoOnBlur()" />
+    </form>
+    
+</div>
+<div class="clear"></div>
+</div>
+<style>.m-textalert { border: #fc9 solid 1px; background-color: #ffc;width: 960px;margin: 0 auto;}
+.m-textalert p { padding: 6px 15px; font-size: 14px; line-height: 20px; color: #ff5600;}
+.m-textalert a.wrap { display: block;}
+.m-textalert a.wrap em { color: #4672af; font-weight: normal;}</style>
+<div class="m-textalert"><p><a class="wrap" href="https://myaavideonet.neocities.org/aabook.html" target="_blank" style="display:inline;"><em>请收藏地址发布页</em></a>&nbsp;|&nbsp;最新网址：<em>aabook.net  fqsk.xyz  aavbook.cc  czbook.xyz&nbsp;&nbsp;fqbook.cc&nbsp;&nbsp;aabook.cc&nbsp;&nbsp;aabook.cyou&nbsp;&nbsp;</em></a></p></div>
+
+<div class="sub_nav">
+    <div class="sub_nav_inner">
+        <p style=" float:left;padding-right:30px;font-size:14px;">小说分类 &gt;
+   <a href="category.html?catId=chuanyue">穿越</a>
+   <a href="category.html?catId=yineng">异能</a>
+   <a href="category.html?catId=yanqing">言情</a>
+   <a href="category.html?catId=xuanhuan">玄幻</a>
+   <a href="category.html?catId=xiaoyuan">校园</a>
+   <a href="category.html?catId=xianxia">仙侠</a>
+   <a href="category.html?catId=xiangtu">乡土</a>
+   <a href="category.html?catId=wuxia">武侠</a>
+   <a href="category.html?catId=wangyou">网游</a>
+   <a href="category.html?catId=tongren">同人</a>
+   <a href="category.html?catId=nvzun">女尊</a>
+   <a href="category.html?catId=lishi">历史</a>
+   <a href="category.html?catId=jingsong">惊悚</a>
+   <a href="category.html?catId=gudian">古典</a>
+   <a href="category.html?catId=guanchang">官场</a>
+   <a href="category.html?catId=dushi">都市</a>
+   <a href="category.html?catId=danpian">单篇</a>
+   <a href="category.html?catId=danmei">耽美</a>
+   <a href="category.html?catId=zhichang">职场</a>
+<!--          仙侠>武侠>都市>竞技>网游>惊悚>出版</a> -->
+        <div class="clear"></div>
+    </div>
+</div>
+<SCRIPT LANGUAGE="JavaScript"> 
+var c=0
+function votes(obj) { 
+var limit = document.getElementById("num").innerHTML;
+obj.checked?c++:c--; 
+if(c>limit)obj.checked=false,c--,alert("最多选择 "+limit+" 项，请重新选择"); 
+} 
+</script>
+<script type="text/javascript" src="/js/floatwin.js"></script>
+<style>
+*{margin:0;padding:0;}
+body {font-family:"微软雅黑", "宋体";font-size:12px;color:#666666; height:1500px;}
+ul,ol {list-style:none;}
+.clear {clear:both;}
+.black_overlay{ display: none; position: fixed; top: 0%; left: 0%; width: 100%; height: 100%; background-color: black; z-index:1001; -moz-opacity: 0.6; opacity:.60; filter: alpha(opacity=60);} 
+.white_content  { display: none; position: fixed; top: 50%; left: 50%; width: 588px; height: 388px; margin-left:-325px;margin-top:-225px;padding:25px;border: 6px solid orange; background-color:#fff; z-index:1002; overflow: auto; } 
+.white_content2 { display: none; position: fixed; top: 50%; left: 50%; width: 588px; height: 288px; margin-left:-325px;margin-top:-175px;padding:25px;border: 6px solid orange; background-color:#fff; z-index:1002; overflow: auto; } 
+.white_content3 { display: none; position: fixed; top: 50%; left: 50%; width: 588px; height: 288px; margin-left:-325px;margin-top:-175px;padding:25px;border: 6px solid orange; background-color:#fff; z-index:1002; overflow: auto; } 
+.white_content4 { display: none; position: fixed; top: 50%; left: 50%; width: 628px; height: 450px; margin-left:-325px;margin-top:-255px;padding:25px;border: 6px solid orange; background-color:#fff; z-index:1002; overflow: auto; } 
+.white_content5 { display: none; position: fixed; top: 50%; left: 50%; width: 355px; height: 140px; margin-left:-190px;margin-top:-95px;padding:25px;border: 6px solid orange; background-color:#fff; z-index:1002; overflow: auto; } 
+
+.white_content_con {position:relative;width: 588px; height: 288px;}
+.caozuo_title {height:31px;border-bottom:2px solid orange;}
+.caozuo_title li {float:left;}
+.caozuo_con { }
+.close {position:absolute; right:-10px; top:-10px;}
+.zanmei {width: 523px; height:70px;line-height:40px;font-size:20px;background:url(/images/tanchu_03.gif) repeat-x 0px 50px;font-weight:bold;color:#F93;padding-left:65px;}
+.chengse {color:orange;font-weight:bold;padding-left:3px;padding-right:3px;}
+.fudaipinglun {margin: 5px 0px 5px 5px;width: 335px;height: 80px;color: #999999;padding: 5px;font-size:12px;}
+.queren_btn {width:129px;height:30px;border:none;float:left;cursor:pointer;margin-top:15px;}
+
+#querendashang{background:url(/images/querendashang_07.gif) no-repeat left top;float:right;}
+#querentuijian {background:url(/images/querentuijian.gif) no-repeat left top;}
+#querentoupiao {background:url(/images/querentoupiao.gif) no-repeat left top;}
+#querenzengsong {background:url(/images/querenzengsong.gif) no-repeat left top;}
+
+.queren_btn:hover {position:relative;left:1px;top:1px;}
+.pingluntishi {width:300px;float:left;text-align:left;padding-top:15px;}
+.tips {margin: 15px 0px 15px 0px;background: url(/images/tips_11.gif) left center no-repeat;padding-left: 25px;}
+.tui {position:absolute;left:375px;top:95px;}
+.xiancao {position:absolute;left:400px;top:88px;}
+.shang {position:absolute;left:385px;top:100px;}
+.piao {position:absolute;left:340px;top:115px;}
+.plus {position:absolute;left:0px;top:-5px;}
+
+.bangding_con {position:relative;width: 355px; height: 140px;}
+.bangdingtishi {width: 355px; height:70px;line-height:20px;font-size:14px;background:url(/images/tanchu_03.gif) repeat-x 0px 50px;font-weight:bold;color:#F93;}
+.close2 {position:absolute;right:-10px;top:-10px;}
+#hulve {background:url(/images/hulve.gif);}
+#qubangding {background:url(/images/qubangding.gif);}
+</style> 
+<script> 
+function showModal(message) {
+    document.body.innerHTML += `
+        <div id="modalOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;">
+            <div style="position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);background:white;padding:12px;border-radius:5px;z-index:1001;text-align:center;">
+                <p style="padding:8px;">${message}</p>
+                <button onclick="document.getElementById('modalOverlay').remove()">确定</button>
+            </div>
+        </div>`;
+}
+
+function checkadd() {
+    var str = $("#content").val();
+    // 按原始字符长度计算，与后端一致
+    if (str.length < 10) {
+        showModal("评论内容过少，不能少于10字符");
+        $("#content").focus();
+        return false;
+    }
+    if (str.length > 1000) {
+        showModal("评论内容过多，不能超过1000字符");
+        $("#content").focus();
+        return false;
+    }
+    if ($("#title").val() === '') {
+        showModal("请填写标题");
+        $("#title").focus();
+        return false;
+    }
+    if (str === '') {
+        showModal("请填写评论内容");
+        $("#content").focus();
+        return false;
+    }
+
+    var dd = 6580;
+    var ss = $("#title").val();
+    var cc = $("#content").val();
+    var vc = $("#regcode").val();
+
+    $.ajax({
+        url: "./comment.php",
+        method: "POST",
+        data: { bid: dd, s: ss, c: cc, vc: vc },
+        dataType: "text", // 明确指定返回文本
+        success: function(data) {
+            data = $.trim(data);
+            if (data === "add_ok") {
+                $("#title").val("");
+                $("#content").val("");
+                $("#regcode").val("");
+                window.location.reload();
+            } else {
+                showModal(data); // 去掉 | 前后缀
+                if (data === "验证码已过期，请刷新" || data === "验证码不正确") {
+                    $("#regcode").val(""); // 清空验证码输入
+                    $("#captchaImg").attr("src", "./captcha.php?v=comment_code&" + new Date().getTime()); // 刷新验证码
+                }
+            }
+        },
+        error: function(xhr, status, error) {
+            alert("请求失败，请稍后重试");
+        }
+    });
+
+    return false;
+}
+</script>
+<div id="main">
+    <div class="main_inner">
+<div id='_1659995' class='_f5571cea2daef'></div>
+<center>
+<a href="https://ccd23.chakrivryc7onexrgovarkon.com/bk/36504/ofav1tx" target="_blank"><img id="GGADIMG" src="https://static.r2dev.store/tongchen1200.webp"></a><style>#GGADIMG{width:100%;}</style></center>
+        <div id="maincon" class="box">
+            <div id="maincon_l" >
+                <div class="book_info">
+                    <div class="book_info_top">
+                          <img src="/images/lianzai_03.gif"  class="book_xingzhi"/>  
+                        <div style="height:30px; line-height:30px;padding-bottom:15px; ">
+                            <span >当前位置&gt;&gt;</span>  <a href="https://aabook.xyz">首页</a> > <a href='category.html?catId=yineng'> 异能</a> > 时间可以停止&nbsp;                           </div>
+                        <div class="book_info_top_l">
+                            <img src="img-6580.jpg" width="200" height="265" title="时间可以停止" onClick=imgUploadPop(); style='border: 1px solid #000;'>
+                              <ul class="gezhongpiao">
+                                <li><a href = "javascript:void(0)" onclick=yuepiao();  class="wotouyuepiao"></a></li>
+                                <li><a href = "javascript:void(0)" onclick=shoucang(); class="toutuijianpiao"></a></li>
+<!--                                <li><a href = "javascript:void(0)" onclick=dashang();  class="woyaodashang"></a></li>
+                                <li><a href = "javascript:void(0)" onclick=xiancao();  class="zengsongxiancao"></a></li>
+-->
+                                 <input type="hidden" id="author" value="兰陵小生"/>
+                                  <input type="hidden" id="subject" value="yineng"/>
+                                <div class="clear"></div>
+                            </ul>
+                        </div>
+                        <div class="book_info_top_r">
+                            <div class="book_title">
+                                <h3 class="book_name"><a >时间可以停止</a></h3>
+                                <p class="author">作者：兰陵小生</p>
+                                <div class="clear"></div>
+                            </div>
+                            <ul class="gezhongxinxi">
+                                <li class="zuopinjianjie">
+                                    <p class="xinxi_title">作品简介</p>
+                                    <div class="xinxi_content">
+                                        <p class="jianjieneirong">　　如果可以随心所欲让时间停止，你会做什么呢？权利，金钱，还有无限的肉欲……</p>
+                                        <p class="tixing">本站提醒：本故事纯属虚构，如有雷同，纯属巧合。切勿模仿！</p>
+                                        <p class="biaoqian" style="display:none">标签：</p>
+                                    </div>
+                                </li>
+                                <li class="zuopinxinxi">
+                                    <p class="xinxi_title">作品信息</p>
+                                    <ul class="xinxi_content" style="display:none">
+                                        <li>作品分类：<span class="red">异能</span></li>
+                                        <li>作品状态：<span class="red">连载中</span></li>
+                                        <li>总字数：<span class="red">0字</span></li>
+                                        <li>总点击：<span class="red">0</span></li>
+                                        <li>月点击：<span class="red">0</span></li>
+                                        <li>周点击：<span class="red">0</span></li>
+                                        <li>总推荐：<span class="red">0</span></li>
+                                        <li>月推荐：<span class="red">0</span></li>
+                                        <li>周推荐：<span class="red">0</span></li>
+                                        <div class="clear"></div>
+                                    </ul>
+                                </li>
+<!--                                <li class="zuozhexinxi">
+                                    <p class="xinxi_title">作者信息</p>
+                                    <dl class="xinxi_content" style="display:none">
+                                        <dt>作者的话:</dt>
+                                        <dd>人虽然已青春不再,但我的心永葆年轻,我希望能通过满腔的热忱,生花的妙笔,匠心的描述,将您再进一个引人入胜的玄幻世界。</dd>
+                                    </dl>
+                                </li>-->
+                                <li class="update_time">创建时间  2026-03-24 19:26:50</li>
+                            </ul>
+                            <ul class="gezhonganniu">
+                                <li class="dianjiyuedu"><a href="read-462749.html" target="_blank"></a></li>
+                                 <li class="xiaoshuomulu"><a href="/chapterList-6580.html" target="_blank"></a></li>
+                                <li class="shoucangbenshu"><a href = "javascript:void(0)" onclick=shoucang();></a></li>
+                                <!--<li class="xiazaiyuedu"><a href="#"></a></li>-->
+                                <div class="clear"></div>
+                            </ul>
+                        </div>
+                    </div><p align="center"><a href="https://czlove.xyz/search-%E4%B8%89%E4%B8%8A%E6%82%A0%E4%BA%9C.html" target="_blank"><img src="images/aavideo.jpg" width="90%"></a><br>女优界的杠把子【三上悠亚】视频集下载</p><br>
+                    <div class="shidu">
+                        <h4 class="shidu_title">
+                            <a>《时间可以停止》最新章节</a>
+                            <a class="download" href="/download.php?bid=6580" target="_blank">下载TXT</a>
+                            <div class="clear"></div>
+                        </h4>
+                        <dl class="new_zhangjie1">
+                          <dt>
+                            <span class="dt_l"><a href='read-462767.html' target='_blank'>第19章 窥探隐私 十六岁男生操三十岁阿姨</a><span class="zishu">(5418字)</span></span>
+                            <span class="dt_r">2026-03-24 19:28:06</span>
+                            <div class="clear"></div>
+                          </dt>
+                          <dd>　　深夜，小生独自在电脑上查看侦探给他的各种详细资料。其中的语音文件夹和聊天记录文件夹吸引了她的注意。侦探利用黑客技术和特殊渠道，还原了师师这么多年以来的聊天记录。里面包含当年她与小生交往时到今天的所有社交软件聊天记录。语音文件夹的日期则都是近期对她实行监听的一些记录。
+
+　　打开聊天记录，找到当初刚认识她时那个时段的聊天记录。里面有她和好几个男人频繁聊天的记录。
+
+　　随便打开一个。
+</dd>
+                        </dl>
+                        <dl class="new_zhangjie2">
+                          <dt>
+                            <span class="dt_l"><a href='read-462766.html' target='_blank'>第18章 复仇 肏情敌的老婆</a><span class="zishu">(3722字)</span></span>
+                            <span class="dt_r">2026-03-24 19:28:02</span>
+                            <div class="clear"></div>
+                          </dt>
+                          <dd></dd>
+                        </dl>
+                        <dl class="new_zhangjie2">
+                          <dt>
+                            <span class="dt_l"><a href='read-462765.html' target='_blank'>第17章 处男给了最骚的她</a><span class="zishu">(4412字)</span></span>
+                            <span class="dt_r">2026-03-24 19:27:59</span>
+                            <div class="clear"></div>
+                          </dt>
+                          <dd></dd>
+                        </dl>
+                        <dl class="new_zhangjie2">
+                          <dt>
+                            <span class="dt_l"><a href='read-462764.html' target='_blank'>第16章 老师学生玩4P</a><span class="zishu">(2557字)</span></span>
+                            <span class="dt_r">2026-03-24 19:27:56</span>
+                            <div class="clear"></div>
+                          </dt>
+                          <dd></dd>
+                        </dl>
+                        <dl class="new_zhangjie2">
+                          <dt>
+                            <span class="dt_l"><a href='read-462763.html' target='_blank'>第15章 到学校里破处中学生</a><span class="zishu">(5449字)</span></span>
+                            <span class="dt_r">2026-03-24 19:27:54</span>
+                            <div class="clear"></div>
+                          </dt>
+                          <dd></dd>
+                        </dl>
+                    </div>
+                  <div class="pinglunqu">
+                        <div class="quanbupinglun">
+                            <h4 class="shupingqu_title"><a>《时间可以停止》书评区</a></h4>
+                            <div class="pinglunkuang">
+                                <form name="formcomment" method="post" onsubmit="return checkadd()">
+                                <p class="biaoti_title">标题：</p><input name="communew[title]" type="text" class="biaoti" id="title" value="" maxlength="30" autocomplete="off" />
+                                <p class="duihuakuang_title">内容：</p><textarea class="duihuakuang" name="communew[content]"  id="content" title="评论内容" autocomplete="off" ></textarea>    
+                                <div class="clear"></div>
+                                <div class="submit">
+                                     <input name="forward" type="hidden" value="/book-6580.html" />
+                                     <input type="submit" name="newcommu" value="提交" class="tijiao" />
+                          <img id="captchaImg" src="vcode.php?v=comment_code" alt="点击更换验证码" style="vertical-align:middle;cursor:pointer;" onClick="this.src='vcode.php?v=comment_code&t='+(new Date).getTime()" />
+                                        <p class="yanzhengma" >验证码：<input type="text" name="regcode" size="7" maxlength="4" id="regcode" tabindex="2" value="" class="input" autocomplete="off"></p>
+                                        <div class="clear"></div>
+                                </div>
+                                </form>
+                            </div>
+                            
+                            <div class="quanbupinglun_title">
+                              <p class="qbpl_l"><a href="#">查看所有<span class="pinglunshu">(0)</span>条评论</a></p>
+<!--                              <p class="fubanzhu">副版主：暂缺</p> -->
+                              <div class="clear"></div>
+                            </div>
+                            <ul class="comment">
+                            </ul><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="maincon_r" >
+                <div class="duzhedongtai">
+                    <div class="duzhe_title" > 每日A片</div>
+<style> .aavideoMV a { color: #333;}
+.aavideoMV a:hover { color:#bb4430;}
+.aavideoMV td {height:20px;}
+</style>
+<div class="aavideoMV" style="overflow:auto;height:320px;width:200px;text-align:center;background:#ffffff;">
+                
+<!DOCTYPE HTML>
+<html translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="google" content="notranslate">
+<meta name="rating" content="adult">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+<meta content="telephone=no" name="format-detection" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<link rel="alternate" hreflang="zh-TW" href="https://czlove.xyz/zh_tw/myupdatelist.php">
+<link rel="alternate" hreflang="zh-CN" href="https://czlove.xyz/zh_cn/myupdatelist.php">
+<link rel="alternate" hreflang="en" href="https://czlove.xyz/en/myupdatelist.php">
+<link rel="alternate" hreflang="ja" href="https://czlove.xyz/ja/myupdatelist.php">
+<link rel="alternate" hreflang="ko" href="https://czlove.xyz/ko/myupdatelist.php">
+<link rel="alternate" hreflang="x-default" href="https://czlove.xyz/zh_tw/myupdatelist.php">
+<title>中文字幕AV線上看 - 人妻出軌・女教師・巨乳・素人・近親相姦｜亞洲瘋情每日更新2026最新番號</title>
+<meta name="description" content="亞洲瘋情提供海量中文字幕日本AV高清線上看！熱門分類包含人妻出軌NTR、女教師誘惑、巨乳OL、素人初體驗、近親亂倫、無碼中出等，2026最新番號每日更新，高清無廣告即時播放，台灣香港AV迷最愛的免費/收費日本AV平台，無需下載直接享受極致視覺盛宴！">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "亞洲瘋情",
+  "url": "https://czlove.xyz",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://czlove.xyz/search.php?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<link rel="preconnect" href="https://180cdn.online">
+<link rel="preconnect" href="https://16cdn.online">
+<link rel="preconnect" href="https://fkxl.xyz">
+<link href="/css/combined.css?v=1772244129" rel="stylesheet" type="text/css">
+<link href="/css/index.css?v=1773708769" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script type="389a2a4921a10437b2940fba-text/javascript">function nofind(e){ e.src = '/images/default.png'; }</script>
+</head>
+<body>
+
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <!-- 手機版：漢堡按鈕 -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="首頁">
+      <svg class="ham-icon" id="hamOpen" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 6h16M4 12h16M11 18h9"/></svg>
+      <svg class="ham-icon" id="hamClose" viewBox="0 0 24 24" style="display:none;"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+
+    <!-- Logo -->
+    <a href="/" class="header-logo">
+      <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/alogo.png" alt="Logo" onerror="this.onerror=null;this.src='/images/default.png';">
+    </a>
+
+    <!-- 桌面版：搜索欄 -->
+    <div class="header-search-wrap">
+      <div class="header-search-box">
+        <input type="text" id="headerSearchInput" placeholder="搜尋影片" autocomplete="off">
+        <button class="header-search-btn" id="headerSearchBtn" aria-label="搜索">
+          <svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </button>
+        <div class="header-search-history" id="headerSearchHistory">
+          <div class="header-history-items" id="headerHistoryItems"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右側：用戶狀態區 -->
+    <div class="header-right-area">
+          </div>
+
+  </div>
+</header>
+
+<!-- 桌面版：第二排導航列 -->
+<nav class="desktop-nav" id="desktopNav">
+  <div class="desktop-nav-inner">
+    <a href="/" class="nav-link"><i class="fas fa-home"></i> 首頁</a>
+    <a href="/update.php" class="nav-link"><i class="fas fa-fire"></i> 最新</a>
+    <a href="/payment/charge.php" class="nav-link"><i class="fas fa-wallet"></i> 充值</a>
+    <a href="/cdn-cgi/l/email-protection#97faeef6f6e1fef3f2f8f9f2e3d7f0faf6fefbb9f4f8fa" class="nav-link"><i class="fas fa-envelope"></i> 聯絡</a>
+    <a href="https://xaavideo.com/download" class="nav-link"><i class="fas fa-download"></i> APK</a>
+    <!-- 桌面版語言切換：放在導航列最右側 -->
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang-current" id="langBtn">
+        <span>🇹🇼</span>
+        <span>繁中</span>
+        <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+                <a href="javascript:void(0)" data-lang="zh_tw" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('zh_tw')" class="lang-option active" data-cf-modified-389a2a4921a10437b2940fba-="">
+          <span>🇹🇼</span>
+          <span>繁中</span>
+        </a>
+                <a href="javascript:void(0)" data-lang="zh_cn" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('zh_cn')" class="lang-option" data-cf-modified-389a2a4921a10437b2940fba-="">
+          <span>🇨🇳</span>
+          <span>简中</span>
+        </a>
+                <a href="javascript:void(0)" data-lang="en" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('en')" class="lang-option" data-cf-modified-389a2a4921a10437b2940fba-="">
+          <span>🇺🇸</span>
+          <span>EN</span>
+        </a>
+                <a href="javascript:void(0)" data-lang="ja" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('ja')" class="lang-option" data-cf-modified-389a2a4921a10437b2940fba-="">
+          <span>🇯🇵</span>
+          <span>日本語</span>
+        </a>
+                <a href="javascript:void(0)" data-lang="ko" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('ko')" class="lang-option" data-cf-modified-389a2a4921a10437b2940fba-="">
+          <span>🇰🇷</span>
+          <span>한국어</span>
+        </a>
+              </div>
+    </div>
+  </div>
+</nav>
+
+<!-- 手機版：漢堡菜單 -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/" class="mobile-menu-link"><i class="fas fa-home"></i> 首頁</a>
+  <a href="/update.php" class="mobile-menu-link"><i class="fas fa-fire"></i> 最新</a>
+  <a href="/payment/charge.php" class="mobile-menu-link"><i class="fas fa-wallet"></i> 充值</a>
+  <a href="/cdn-cgi/l/email-protection#1b76627a7a6d727f7e74757e6f5b7c767a727735787476" class="mobile-menu-link"><i class="fas fa-envelope"></i> 聯絡</a>
+  <a href="https://xaavideo.com/download" class="mobile-menu-link"><i class="fas fa-download"></i> APK</a>
+  <!-- 手機版語言切換 -->
+  <div class="mobile-lang-switcher">
+        <a href="javascript:void(0)" data-lang="zh_tw" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('zh_tw')" class="mobile-lang-option active" data-cf-modified-389a2a4921a10437b2940fba-="">
+      <span>🇹🇼</span>
+      <span>繁中</span>
+    </a>
+        <a href="javascript:void(0)" data-lang="zh_cn" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('zh_cn')" class="mobile-lang-option" data-cf-modified-389a2a4921a10437b2940fba-="">
+      <span>🇨🇳</span>
+      <span>简中</span>
+    </a>
+        <a href="javascript:void(0)" data-lang="en" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('en')" class="mobile-lang-option" data-cf-modified-389a2a4921a10437b2940fba-="">
+      <span>🇺🇸</span>
+      <span>EN</span>
+    </a>
+        <a href="javascript:void(0)" data-lang="ja" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('ja')" class="mobile-lang-option" data-cf-modified-389a2a4921a10437b2940fba-="">
+      <span>🇯🇵</span>
+      <span>日本語</span>
+    </a>
+        <a href="javascript:void(0)" data-lang="ko" onclick="if (!window.__cfRLUnblockHandlers) return false; switchLang('ko')" class="mobile-lang-option" data-cf-modified-389a2a4921a10437b2940fba-="">
+      <span>🇰🇷</span>
+      <span>한국어</span>
+    </a>
+      </div>
+</div>
+
+<style>
+.wrapper { padding-top: 70px; }
+@media screen and (min-width: 768px) {
+  .wrapper { padding-top: 114px !important; }
+}
+
+/* Header 右側 */
+.header-right-area { display:flex;align-items:center;min-width:120px;justify-content:flex-end; }
+.header-user-info  { display:flex;align-items:center;gap:10px; }
+
+.header-credit { display:flex;flex-direction:column;align-items:flex-end;text-decoration:none;line-height:1.3;transition:opacity 0.2s; }
+.header-credit:hover { opacity:0.75; }
+.header-credit .credit-num { font-size:14px;font-weight:bold;color:#fff; }
+.header-credit .credit-tip { font-size:11px;color:rgba(255,255,255,0.7); }
+.header-credit.low .credit-num { color:#fff;animation:pulse-credit 1.8s ease-in-out infinite; }
+.header-credit.low .credit-tip { color:rgba(255,255,255,0.7); }
+@keyframes pulse-credit { 0%,100%{opacity:1} 50%{opacity:0.45} }
+
+.header-user-avatar { display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.85);text-decoration:none;flex-shrink:0;transition:background 0.2s,color 0.2s; }
+.header-user-avatar:hover { background:rgba(255,255,255,0.25);color:#fff; }
+
+@media (max-width:767px) {
+  .header-user-info { display:none; }
+  .header-right-area { min-width:40px; }
+}
+
+/* 桌面版語言切換（在 desktop-nav 裡） */
+.desktop-nav, .desktop-nav-inner { overflow:visible !important; }
+.lang-switcher { position:relative;margin-left:auto;flex-shrink:0; }
+.lang-current {
+  display:flex;align-items:center;gap:4px;
+  background:rgba(255,255,255,0.15);border:none;color:#fff;
+  padding:4px 10px;border-radius:6px;cursor:pointer;font-size:13px;
+  white-space:nowrap;transition:background 0.2s;
+}
+.lang-current:hover { background:rgba(255,255,255,0.25); }
+.lang-dropdown {
+  display:none;position:fixed;
+  background:#1a1a2e;border-radius:8px;overflow:hidden;
+  box-shadow:0 4px 16px rgba(0,0,0,0.5);z-index:9999;min-width:110px;
+}
+.lang-dropdown.open { display:block; }
+.lang-option { display:flex;align-items:center;gap:6px;padding:9px 14px;color:#ffffff !important;text-decoration:none;font-size:13px;transition:background 0.15s; }
+.lang-option:hover { background:rgba(255,255,255,0.1);color:#fff !important; }
+.lang-option.active { background:rgba(255,255,255,0.18);color:#fff !important;font-weight:bold; }
+
+/* 手機版語言切換 */
+.mobile-lang-switcher {
+  display:flex;flex-wrap:wrap;gap:8px;
+  padding:14px 20px;border-top:1px solid rgba(255,255,255,0.15);margin-top:8px;
+}
+.mobile-lang-option {
+  display:flex;align-items:center;gap:4px;padding:6px 12px;
+  border-radius:20px;background:rgba(255,255,255,0.15);
+  color:#fff;text-decoration:none;font-size:13px;transition:background 0.2s;
+}
+.mobile-lang-option:hover,
+.mobile-lang-option.active { background:rgba(255,255,255,0.35); }
+</style>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="389a2a4921a10437b2940fba-text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+
+  /* 語言切換下拉 */
+  var langBtn      = document.getElementById('langBtn');
+  var langDropdown = document.getElementById('langDropdown');
+  if (langBtn && langDropdown) {
+    langBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (langDropdown.classList.contains('open')) {
+        langDropdown.classList.remove('open');
+      } else {
+        var rect = langBtn.getBoundingClientRect();
+        langDropdown.style.top   = (rect.bottom + 6) + 'px';
+        langDropdown.style.right = (window.innerWidth - rect.right) + 'px';
+        langDropdown.classList.add('open');
+      }
+    });
+    document.addEventListener('click', function() {
+      langDropdown.classList.remove('open');
+    });
+  }
+
+  /* 漢堡選單 */
+  var hamBtn     = document.getElementById('hamburgerBtn');
+  var hamOpen    = document.getElementById('hamOpen');
+  var hamClose   = document.getElementById('hamClose');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var overlay    = document.getElementById('mobileMenuOverlay');
+  var menuOpen   = false;
+
+  function toggleMobileMenu() {
+    menuOpen = !menuOpen;
+    if (menuOpen) {
+      mobileMenu.classList.add('active');
+      overlay.classList.add('active');
+      hamOpen.style.display  = 'none';
+      hamClose.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    } else {
+      mobileMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      hamOpen.style.display  = 'block';
+      hamClose.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (hamBtn)  hamBtn.addEventListener('click', toggleMobileMenu);
+  if (overlay) overlay.addEventListener('click', toggleMobileMenu);
+  document.querySelectorAll('.mobile-menu-link').forEach(function(link) {
+    link.addEventListener('click', function() { if (menuOpen) toggleMobileMenu(); });
+  });
+
+  /* 桌面版搜索欄 */
+  var searchInput  = document.getElementById('headerSearchInput');
+  var searchBtn    = document.getElementById('headerSearchBtn');
+  var historyPanel = document.getElementById('headerSearchHistory');
+  var historyItems = document.getElementById('headerHistoryItems');
+  var searchHistory = [];
+
+  try {
+    var saved = localStorage.getItem('header_search_history');
+    if (saved) searchHistory = JSON.parse(saved);
+  } catch(e) {}
+
+  function renderHistory() {
+    if (!historyItems || !historyPanel) return;
+    if (searchHistory.length === 0) { historyPanel.classList.remove('active'); return; }
+    var html = '';
+    searchHistory.forEach(function(item) {
+      html += '<div class="header-history-item" data-keyword="' + item.replace(/"/g, '&quot;') + '">' + item + '</div>';
+    });
+    historyItems.innerHTML = html;
+    historyPanel.classList.add('active');
+    document.querySelectorAll('.header-history-item').forEach(function(el) {
+      el.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        searchInput.value = this.getAttribute('data-keyword');
+        doHeaderSearch();
+      });
+    });
+  }
+
+  function doHeaderSearch() {
+    var keyword = searchInput.value.trim();
+    if (!keyword) return;
+    var idx = searchHistory.indexOf(keyword);
+    if (idx > -1) searchHistory.splice(idx, 1);
+    searchHistory.unshift(keyword);
+    if (searchHistory.length > 5) searchHistory.pop();
+    localStorage.setItem('header_search_history', JSON.stringify(searchHistory));
+    window.location.href = '/search.php?q=' + encodeURIComponent(keyword);
+  }
+
+  if (searchBtn) searchBtn.addEventListener('click', doHeaderSearch);
+  if (searchInput) {
+    searchInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') { e.preventDefault(); doHeaderSearch(); } });
+    searchInput.addEventListener('focus', function() { renderHistory(); });
+    searchInput.addEventListener('blur', function() { setTimeout(function() { if (historyPanel) historyPanel.classList.remove('active'); }, 200); });
+  }
+
+});
+
+function switchLang(targetLang) {
+  var path = window.location.pathname;
+  // 移除現有語言前綴
+  path = path.replace(/^\/(zh_tw|zh_cn|en|ja|ko)(\/|$)/, '/');
+  if (path === '') path = '/';
+
+  // .php 頁面：保留原有 query string，追加 lang 參數
+  if (path.match(/\.php$/)) {
+    var qs = window.location.search;
+    if (qs) {
+      window.location.href = path + qs + '&lang=' + targetLang;
+    } else {
+      window.location.href = path + '?lang=' + targetLang;
+    }
+    return;
+  }
+
+  // 偽靜態頁面（.html）：加語言前綴
+  window.location.href = '/' + targetLang + path + window.location.search;
+}
+</script>
+
+<section class="wrapper">
+<div class="mask" id="common_mask"></div>
+
+<!-- ========== HERO（桌面版限定） ========== -->
+<section class="hero-section">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-body">
+    <div class="hero-info">
+      <span class="hero-badge">🔥 今日精選</span>
+      <h2 class="hero-title">韓國演藝圈悲慘事件 Vol.04 傳說中的4號名模 獨家高清無碼流出版</h2>
+      <div class="hero-meta">
+        <span class="hero-sn"></span>
+                  <span class="hero-points-tag">💎 35 點</span>
+              </div>
+      <a href="/zh_tw/https://czlove.xyz/view-2c85912a424c37f80ff3facb3045d727.html" class="hero-btn-watch">
+        ▶ 立即觀看      </a>
+    </div>
+    <div class="hero-cta-card">
+              <p class="cta-guest-title">🎬 解鎖完整影片</p>
+        <p class="cta-guest-desc">登入即可觀看高清完整影片</p>
+        <a href="/login.php" class="cta-btn">登入</a>
+          </div>
+  </div>
+</section>
+<!-- ========== END HERO ========== -->
+
+<!-- ========== 桌面版優惠橫條 ========== -->
+<div class="promo-bar desktop-only" id="promoBar">
+  <span class="promo-bar-icon">⚡</span>
+  <div class="promo-bar-text" id="promoText">
+    <strong id="promoSubject">25週年超級大禮包</strong>
+          <span id="promoMessage">有史最多的一次，充值輸入&quot;happy25year&quot;多送300點</span>
+        <!-- 添加倒计时 -->
+    <span class="promo-countdown" id="promoCountdown" data-endtime="2026-03-31 00:00:00"></span>
+  </div>
+    <a href="/payment/charge.php" class="promo-bar-btn">充值</a>
+</div>
+
+<!-- 手機版彈窗 -->
+<div class="promo-modal-overlay" id="promoModalOverlay">
+  <div class="promo-modal" id="promoModal">
+    <button class="promo-modal-close" id="promoModalClose" aria-label="關閉">✕</button>
+    <div class="promo-modal-icon">⚡</div>
+    <h3 class="promo-modal-title" id="promoModalTitle">
+      25週年超級大禮包    </h3>
+        <p class="promo-modal-msg" id="promoModalMsg">
+      有史最多的一次，充值輸入&quot;happy25year&quot;多送300點    </p>
+        <!-- 添加倒计时 -->
+    <div class="promo-modal-countdown" id="promoModalCountdown" data-endtime="2026-03-31 00:00:00"></div>
+    <a href="/payment/charge.php" class="promo-modal-btn">充值</a>
+  </div>
+</div>
+
+<!-- 倒计时 JavaScript -->
+<script type="389a2a4921a10437b2940fba-text/javascript">
+var __LANG__ = {
+  promoEnded:    '活動已結束',
+  promoRemaining:'剩餘',
+  timeDay:       '天',
+  timeHour:      '時',
+  timeMin:       '分',
+  timeSec:       '秒'
+};
+function updateCountdown() {
+    // 更新桌面版倒计时
+    const desktopCountdown = document.getElementById('promoCountdown');
+    if (desktopCountdown) {
+        const endtime = desktopCountdown.dataset.endtime;
+        if (endtime) {
+            const now = new Date().getTime();
+            const end = new Date(endtime).getTime();
+            const diff = end - now;
+            
+            if (diff <= 0) {
+                desktopCountdown.textContent = __LANG__.promoEnded;
+            } else {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (86400000)) / (3600000));
+                const minutes = Math.floor((diff % 3600000) / 60000);
+                const seconds = Math.floor((diff % 60000) / 1000);
+                
+                let countdownText = '';
+                if (days > 0) countdownText += days + __LANG__.timeDay;
+                countdownText += hours + __LANG__.timeHour + minutes + __LANG__.timeMin + seconds + __LANG__.timeSec;
+                
+                desktopCountdown.textContent = __LANG__.promoRemaining + ' ' + countdownText;
+            }
+        }
+    }
+    
+    // 更新手機版倒计时
+    const mobileCountdown = document.getElementById('promoModalCountdown');
+    if (mobileCountdown) {
+        const endtime = mobileCountdown.dataset.endtime;
+        if (endtime) {
+            const now = new Date().getTime();
+            const end = new Date(endtime).getTime();
+            const diff = end - now;
+            
+            if (diff <= 0) {
+                mobileCountdown.textContent = __LANG__.promoEnded;
+            } else {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (86400000)) / (3600000));
+                const minutes = Math.floor((diff % 3600000) / 60000);
+                const seconds = Math.floor((diff % 60000) / 1000);
+                
+                let countdownText = '';
+                if (days > 0) countdownText += days + __LANG__.timeDay;
+                countdownText += hours + __LANG__.timeHour + minutes + __LANG__.timeMin + seconds + __LANG__.timeSec;
+                
+                mobileCountdown.textContent = __LANG__.promoRemaining + ' ' + countdownText;
+            }
+        }
+    }
+}
+
+// 每秒更新一次
+setInterval(updateCountdown, 1000);
+updateCountdown(); // 立即执行一次
+</script>
+
+<!-- 添加一点样式 -->
+<style>
+.promo-countdown, .promo-modal-countdown {
+    margin-left: 10px;
+    color: #ff6b6b;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.promo-modal-countdown {
+    margin: 10px 0;
+    text-align: center;
+    font-size: 16px;
+}
+</style>
+<!-- ========== END 優惠條 ========== -->
+
+<section class="pSortBtn clearfix"></section>
+
+<!-- ========== 精選 Swiper ========== -->
+<section class="featured-carousel">
+  <div class="section-header">
+    <i class="iLine"></i>
+    <span class="sMark">精選推薦</span>
+  </div>
+  <div class="featured-swiper-outer">
+    <div class="swiper featured-swiper" id="featuredSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-4700a0369005836c481888aca04b234f.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://16cdn.online/secure/aMovie/nst3/ipzz-802//cover.webp"
+                 class="lazyload"
+                 alt="美之女神的極致解禁：楓花戀初次顏射挑戰的真實紀錄"
+                 fetchpriority="high"                 onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 70 點</span>
+                        <span class="featured-card-title">美之女神的極致解禁：楓花戀初次顏射挑戰的真實紀錄</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-70c6b5dbc7122c707d9d8fda5bd0c6d3.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://16cdn.online/secure/aMovie/nst3/snos-093//cover.webp"
+                 class="lazyload"
+                 alt="(無碼破解) 女友的妹妹是最強女優!? 偷偷愛上我後的暗中誘惑 全世界最強出軌誘惑誰受得了 ~ 瀨戶環奈"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 80 點</span>
+                        <span class="featured-card-title">(無碼破解) 女友的妹妹是最強女優!? 偷偷愛上我後的暗中誘惑 全世界最強出軌誘惑誰受得了 ~ 瀨戶環奈</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-02895c6f37473c72ad5d3bde755eec23.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://16cdn.online/secure/aMovie/nst3/snos-056//cover.webp"
+                 class="lazyload"
+                 alt="(無碼破解) 在毫無特別的日常生活中展開，因為酒精的影響而跨越了界線的男女放蕩週末。真實又普通，但卻是最色情的SEX 河北彩伽"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 55 點</span>
+                        <span class="featured-card-title">(無碼破解) 在毫無特別的日常生活中展開，因為酒精的影響而跨越了界線的男女放蕩週末。真實又普通，但卻是最色情的SEX 河北彩伽</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-8c3efe8af4462ab9d044dc20b3881d1d.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://16cdn.online/secure/aMovie/nst3/snos-038//cover.webp"
+                 class="lazyload"
+                 alt="(無碼破解) 出道一周年紀念作！ 2025年最強女優的粉絲感謝祭 和瀬戶環奈做愛的夢想成真 ~ 瀨戶環奈"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 60 點</span>
+                        <span class="featured-card-title">(無碼破解) 出道一周年紀念作！ 2025年最強女優的粉絲感謝祭 和瀬戶環奈做愛的夢想成真 ~ 瀨戶環奈</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-8f74a4e9b1268c5545e3a220cff6a20b.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://180cdn.online/secure/aMovie/nomask/2020061107//cover.webp"
+                 class="lazyload"
+                 alt="明日花キララ騎乗位無碼版"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 70 點</span>
+                        <span class="featured-card-title">明日花キララ騎乗位無碼版</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-cfdb04ea56ec3ced8974ce6205aaa08a.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://180cdn.online/secure/aMovie/fbvi/2020052101//cover.webp"
+                 class="lazyload"
+                 alt="吉澤明步無碼母帶 MXGS-910 (FC2PPV-1374931) 傳奇一姐媚藥按摩無修正"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 55 點</span>
+                        <span class="featured-card-title">吉澤明步無碼母帶 MXGS-910 (FC2PPV-1374931) 傳奇一姐媚藥按摩無修正</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-b56079172e234907250848d31d1913dd.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://16cdn.online/secure/aMovie/hd2/fbvi/2019091922//cover.webp"
+                 class="lazyload"
+                 alt="美雪艾莉絲無碼母帶 DV-1349 早洩改善合宿 (無修正流出) 溫柔大姐姐神作"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 55 點</span>
+                        <span class="featured-card-title">美雪艾莉絲無碼母帶 DV-1349 早洩改善合宿 (無修正流出) 溫柔大姐姐神作</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-5ac4c7318f0061491e9cd3760a94f235.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://180cdn.online/secure/aMovie/nomask/2019041202//cover.webp"
+                 class="lazyload"
+                 alt="彩美旬果無碼母帶流出 ABP-664 蚊香社一姐巨乳傳奇無修正版"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 65 點</span>
+                        <span class="featured-card-title">彩美旬果無碼母帶流出 ABP-664 蚊香社一姐巨乳傳奇無修正版</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-d259d21e587d8f836eaec0df05e9ce6b.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://180cdn.online/secure/aMovie/fbvi/2019030201//cover.webp"
+                 class="lazyload"
+                 alt="園田美櫻無碼母帶流出 FC2PPV-1031642 ABP-601B"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 70 點</span>
+                        <span class="featured-card-title">園田美櫻無碼母帶流出 FC2PPV-1031642 ABP-601B</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-d5071a82322daef27e29d7ea51bc39e7.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://180cdn.online/secure/aMovie/fbvi/2019012509//cover.webp"
+                 class="lazyload"
+                 alt="韓國演藝圈悲慘事件 Vol.19 獨家完整流出版 高清無碼真相"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 30 點</span>
+                        <span class="featured-card-title">韓國演藝圈悲慘事件 Vol.19 獨家完整流出版 高清無碼真相</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-2c85912a424c37f80ff3facb3045d727.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://180cdn.online/secure/aMovie/nomask/2019012404//cover.webp"
+                 class="lazyload"
+                 alt="韓國演藝圈悲慘事件 Vol.04 傳說中的4號名模 獨家高清無碼流出版"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 35 點</span>
+                        <span class="featured-card-title">韓國演藝圈悲慘事件 Vol.04 傳說中的4號名模 獨家高清無碼流出版</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-8f841c0a213c1ead7788344c85ee4511.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://180cdn.online/secure/aMovie/hd2/fbvi/2018102301//cover.webp"
+                 class="lazyload"
+                 alt="成瀨心美無碼母帶流出 第一彈 傳說之始高清無修正版"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 25 點</span>
+                        <span class="featured-card-title">成瀨心美無碼母帶流出 第一彈 傳說之始高清無修正版</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-48cd31f79f0e4bad72430dbdb99c48bc.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://16cdn.online/secure/aMovie/3grade/2016111101//cover.webp"
+                 class="lazyload"
+                 alt="3D肉蒲團之極樂寶鑑 完整無刪減版 香港三級片巔峰 藍光高清流出"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 50 點</span>
+                        <span class="featured-card-title">3D肉蒲團之極樂寶鑑 完整無刪減版 香港三級片巔峰 藍光高清流出</span>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a class="featured-card" href="/zh_tw/https://czlove.xyz/view-bdfbf889c5d87f20406628dcc4de222c.html">
+            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img src="/images/214x300.png"
+                 data-src="https://180cdn.online/secure/aMovie/hd2/3grade/2016110801//cover.webp"
+                 class="lazyload"
+                 alt="色，戒 完整無刪減 NC-17 版 梁朝偉湯唯傳奇迴紋針位 藍光高清"
+                                  onerror="this.src='/images/default.png';">
+                          <span class="featured-points">💎 75 點</span>
+                        <span class="featured-card-title">色，戒 完整無刪減 NC-17 版 梁朝偉湯唯傳奇迴紋針位 藍光高清</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <button class="featured-nav prev" id="featuredPrev" aria-label="上一頁">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    </button>
+    <button class="featured-nav next" id="featuredNext" aria-label="下一頁">
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</section>
+<!-- ========== END 精選 Swiper ========== -->
+
+<section class="main">
+<section class="row globalMarginTop">
+  <section class="mod_a">
+    <section class="th_a">
+      <i class="iLine"></i>
+      <span class="sMark">最新</span>
+      <a href="update.php" target="_self" class="aMore"><em>更多</em><i class="moreArrow"></i></a>
+    </section>
+    <section class="tb_a">
+      <ul class="globalPicList threeList" id="data_list">
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-9b68db399cac0c73172433f4c0ad7b14.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/fns-171/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【中文字幕】深夜超商的處男開發：濱邊彌生 沉迷後輩大肉棒的巨乳前輩 店內全方位瘋狂性愛"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">FNS-171</span>
+                          </a>
+          </div>
+          <span class="sTit">【中文字幕】深夜超商的處男開發：濱邊彌生 沉迷後輩大肉棒的巨乳前輩 店內全方位瘋狂性愛</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-70b73c582e715d079585fc360096bdb8.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/fns-183/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【中文字幕】發情偶像女友的秘密約會：美咲其花 忍不住了就在這裡做吧 瘋狂主動生插中出"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">FNS-183</span>
+                          </a>
+          </div>
+          <span class="sTit">【中文字幕】發情偶像女友的秘密約會：美咲其花 忍不住了就在這裡做吧 瘋狂主動生插中出</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-14a71be923db8fa25940f0a852d69b26.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/snos-106/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【中文字幕】金松季步：日出到日落的8小時連續絕頂 名器容量超載的極限性愛紀錄"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">SNOS-106</span>
+                          </a>
+          </div>
+          <span class="sTit">【中文字幕】金松季步：日出到日落的8小時連續絕頂 名器容量超載的極限性愛紀錄</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-01083d193e837ab189f6a6b1d6c09581.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/snos-122/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【中文字幕】演藝圈禁忌黑幕：紫堂累 元童星寫真女星的藥物感官開發 陷入瘋狂的絕頂性愛"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">SNOS-122</span>
+                          </a>
+          </div>
+          <span class="sTit">【中文字幕】演藝圈禁忌黑幕：紫堂累 元童星寫真女星的藥物感官開發 陷入瘋狂的絕頂性愛</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-78c316f20a9538dfd59c20284f22bbef.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/snos-139/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【中文字幕】美巨乳開發最終形：小日向米優 蒙哥馬利腺與乳腺迴路的極致凌弄 乳頭絕頂性愛"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">SNOS-139</span>
+                          </a>
+          </div>
+          <span class="sTit">【中文字幕】美巨乳開發最終形：小日向米優 蒙哥馬利腺與乳腺迴路的極致凌弄 乳頭絕頂性愛</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-b02336194cc3b2ebf29c65a070b14b59.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/snos-137/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【中文字幕】川越にこ 惹憐少女的性感帶全開發：失神、抽搐、進入異常高潮的快感領域"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">SNOS-137</span>
+                          </a>
+          </div>
+          <span class="sTit">【中文字幕】川越にこ 惹憐少女的性感帶全開發：失神、抽搐、進入異常高潮的快感領域</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-973a7fb0f32eec586fea622fa8f847f5.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/jur-648/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【無碼破解】寢取友人的驕傲嬌妻：新妻優花 週20發瘋狂中出的洗腦性愛 徹底墮落的人妻"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">JUR-648</span>
+                          </a>
+          </div>
+          <span class="sTit">【無碼破解】寢取友人的驕傲嬌妻：新妻優花 週20發瘋狂中出的洗腦性愛 徹底墮落的人妻</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-b7610ca7621834f9f638e797b6b4c6a1.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/snos-127/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【無碼破解】miru 極限活塞壓制：再起不能的超量抽插 水災級失禁噴發的肉欲極限"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">SNOS-127</span>
+                          </a>
+          </div>
+          <span class="sTit">【無碼破解】miru 極限活塞壓制：再起不能的超量抽插 水災級失禁噴發的肉欲極限</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-345d62a6fa297062bd0ea5200166c21b.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/same-218/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【無碼破解/中字】星宮一花：淪為大嫌惡男的肉欲俘虜 身體卻對他的腰力產生依賴的背德性愛"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">SAME-218</span>
+                          </a>
+          </div>
+          <span class="sTit">【無碼破解/中字】星宮一花：淪為大嫌惡男的肉欲俘虜 身體卻對他的腰力產生依賴的背德性愛</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-2aa6ed4e85bf948d6c5f3d77b90a276c.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/mida-557/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【無碼破解】內向社團少女的陷落：七沢みあ 遭色情整體師媚藥開發的絕頂按摩"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">MIDA-557</span>
+                          </a>
+          </div>
+          <span class="sTit">【無碼破解】內向社團少女的陷落：七沢みあ 遭色情整體師媚藥開發的絕頂按摩</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-cbd8074fa4375b02c958e5f23beb5094.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/ipzz-789/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【無碼破解】大富豪的洗腦寵物：長濱三月 x 金松季步 一流寫真女星的媚藥3P肉欲雙修"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">IPZZ-789</span>
+                          </a>
+          </div>
+          <span class="sTit">【無碼破解】大富豪的洗腦寵物：長濱三月 x 金松季步 一流寫真女星的媚藥3P肉欲雙修</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-14f84cea7dfe11028863baf52dbe49bf.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/hd2/nst3/hmn-798/cover.webp"
+                   src="/images/214x300.png"
+                   alt="【無碼破解】完全主觀小惡魔：香水純 俯視挑釁的手淫輔助 步兵流出中出極限誘惑"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">HMN-798</span>
+                          </a>
+          </div>
+          <span class="sTit">【無碼破解】完全主觀小惡魔：香水純 俯視挑釁的手淫輔助 步兵流出中出極限誘惑</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-5c55f09708f3d8bac7d71ebbb81b81ab.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/nst3/snos-151/cover.webp"
+                   src="/images/214x300.png"
+                   alt="新人女搜查官瞬間落網！被輪番玩弄到狼狽不堪 淺野心 完全敗北羞恥調教"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">SNOS-151</span>
+                          </a>
+          </div>
+          <span class="sTit">新人女搜查官瞬間落網！被輪番玩弄到狼狽不堪 淺野心 完全敗北羞恥調教</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-97d8f43cd71e1b3bb23b693b9947fdff.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/nst3/snos-156/cover.webp"
+                   src="/images/214x300.png"
+                   alt="沉默寡言的美少女圖書委員被老師舔遍全身也不敢說！榊原萌 被舔到高潮連連的禁忌教室調教"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">SNOS-156</span>
+                          </a>
+          </div>
+          <span class="sTit">沉默寡言的美少女圖書委員被老師舔遍全身也不敢說！榊原萌 被舔到高潮連連的禁忌教室調教</span>
+        </li>
+        <li>
+          <div class="pic">
+            <a href="/zh_tw/https://czlove.xyz/view-b4cf65139953c332e4d26e034577b941.html" target="_self">
+              <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><img class="lazyload"
+                   data-src="https://16cdn.online/secure/aMovie/nst3/snos-157/cover.webp"
+                   src="/images/214x300.png"
+                   alt="日本最美臉蛋的溫泉密會：新木希空 與絕美愛人的深吻旅行 霧氣中的溺愛性交"
+                   onerror="this.src='/images/default.png';">
+              <span class="sBottom">SNOS-157</span>
+                          </a>
+          </div>
+          <span class="sTit">日本最美臉蛋的溫泉密會：新木希空 與絕美愛人的深吻旅行 霧氣中的溺愛性交</span>
+        </li>
+      </ul>
+    </section>
+  </section>
+</section>
+
+<section class="rowAuto globalMarginTop">
+  <section class="mod_a">
+    <section class="th_a globalPadding">
+      <i class="iLine"></i>
+      <span class="sMark">分類</span>
+    </section>
+    <section class="tb_a">
+      <p class="pGlobalList threeList sortRecommended clearfix">
+        <a href="/category-csubtitle.html" target="_self">
+          csubtitle        </a>
+        <a href="/category-west.html" target="_self">
+          西洋重鹹系列        </a>
+        <a href="/category-nomask.html" target="_self">
+          無碼原版DVD        </a>
+        <a href="/category-wife.html" target="_self">
+          人妻成熟美婦        </a>
+        <a href="/category-family.html" target="_self">
+          近親不倫相奸        </a>
+        <a href="/category-av.html" target="_self">
+          超人氣美女優        </a>
+        <a href="/category-peep.html" target="_self">
+          不倫盜攝偷窺        </a>
+        <a href="/category-3grade.html" target="_self">
+          3grade        </a>
+        <a href="/category-hentai.html" target="_self">
+          成人卡通動漫        </a>
+        <a href="/category-teacher.html" target="_self">
+          女教師女學生        </a>
+        <a href="/category-bigtitty.html" target="_self">
+          粉美巨乳巨尻        </a>
+        <a href="/category-ol.html" target="_self">
+          職業秘書上司        </a>
+        <a href="/category-leg.html" target="_self">
+          女美腿高跟鞋        </a>
+        <a href="/category-hospital.html" target="_self">
+          女醫生女護士        </a>
+        <a href="/category-teen.html" target="_self">
+          痴美少女痴漢        </a>
+      </p>
+    </section>
+  </section>
+</section>
+</section>
+
+<br>
+<!-- 移动端5按钮导航 - 完全替换原有底部 -->
+<footer class="mobile-footer">
+    <!-- 5个导航按钮 - 全宽平均分配 -->
+    <div class="nav-container">
+        <!-- 分类 - 点击打开遮罩 -->
+        <div class="nav-item" id="categoryBtn">
+            <i class="fas fa-compass"></i>
+            <span>分類</span>
+        </div>
+        
+        <!-- 搜索 - 独立搜索功能 -->
+        <div class="nav-item" id="searchBtn">
+            <i class="fas fa-search"></i>
+            <span>搜尋</span>
+        </div>
+        
+        <!-- 首页 -->
+        <div class="nav-item" onclick="if (!window.__cfRLUnblockHandlers) return false; window.location.href='/'" data-cf-modified-389a2a4921a10437b2940fba-="">
+            <i class="fas fa-home"></i>
+            <span>首頁</span>
+        </div>
+        
+        <!-- 客服 - 新页面打开 -->
+        <div class="nav-item" onclick="if (!window.__cfRLUnblockHandlers) return false; window.open('https://monachieve.com/contact/', '_blank')" data-cf-modified-389a2a4921a10437b2940fba-="">
+            <i class="fas fa-headset"></i>
+            <span>客服</span>
+        </div>
+        
+        <!-- 我的/登入 - 根据登录状态显示 -->
+        <div class="nav-item" id="userBtn">
+            <i class="fas fa-user"></i>
+            <span>登入</span>
+        </div>
+    </div>
+</footer>
+
+<!-- 独立搜索框 - 不依赖任何外部JS -->
+<div class="footer-search-overlay" id="footerSearchOverlay" style="display: none;">
+    <div class="footer-search-container">
+        <div class="footer-search-header">
+            <span class="footer-search-title">搜尋影片</span>
+            <button class="footer-search-close" id="footerSearchClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="footer-search-body">
+            <div class="footer-search-input-wrapper">
+                <input type="text" id="footerSearchInput" class="footer-search-input" placeholder="搜尋影片...">
+                <button class="footer-search-submit" id="footerSearchSubmit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="footer-search-history" id="footerSearchHistory" style="display: none;">
+                <div class="footer-search-history-header">
+                    <span>搜索歷史</span>
+                    <button class="footer-search-history-clear" id="footerSearchHistoryClear">清空</button>
+                </div>
+                <ul class="footer-search-history-list" id="footerSearchHistoryList"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分类全屏遮罩层 -->
+<div class="category-mask" id="categoryMask">
+    <div class="category-header">
+        <span class="category-title">分類</span>
+        <button class="category-close" id="closeCategoryBtn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="category-content">
+        <!-- 直接复制原页面的分类列表 -->
+        <p class="headerChannelList">
+                    <a href="/category-csubtitle.html" target="_self" class="category-link">csubtitle</a>
+                    <a href="/category-west.html" target="_self" class="category-link">西洋重鹹系列</a>
+                    <a href="/category-nomask.html" target="_self" class="category-link">無碼原版DVD</a>
+                    <a href="/category-wife.html" target="_self" class="category-link">人妻成熟美婦</a>
+                    <a href="/category-family.html" target="_self" class="category-link">近親不倫相奸</a>
+                    <a href="/category-av.html" target="_self" class="category-link">超人氣美女優</a>
+                    <a href="/category-peep.html" target="_self" class="category-link">不倫盜攝偷窺</a>
+                    <a href="/category-3grade.html" target="_self" class="category-link">3grade</a>
+                    <a href="/category-hentai.html" target="_self" class="category-link">成人卡通動漫</a>
+                    <a href="/category-teacher.html" target="_self" class="category-link">女教師女學生</a>
+                    <a href="/category-bigtitty.html" target="_self" class="category-link">粉美巨乳巨尻</a>
+                    <a href="/category-ol.html" target="_self" class="category-link">職業秘書上司</a>
+                    <a href="/category-leg.html" target="_self" class="category-link">女美腿高跟鞋</a>
+                    <a href="/category-hospital.html" target="_self" class="category-link">女醫生女護士</a>
+                    <a href="/category-teen.html" target="_self" class="category-link">痴美少女痴漢</a>
+                </p>
+    </div>
+</div>
+
+<!-- Font Awesome图标库 -->
+<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?display=swap" media="print" onload="this.media='all'">
+<noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?display=swap">
+</noscript>
+
+
+<script type="389a2a4921a10437b2940fba-text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    // ===== 分类功能 =====
+    const categoryBtn = document.getElementById('categoryBtn');
+    const categoryMask = document.getElementById('categoryMask');
+    const closeBtn = document.getElementById('closeCategoryBtn');
+    
+    if (categoryBtn) {
+        categoryBtn.addEventListener('click', function() {
+            categoryMask.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            categoryMask.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+    
+    // 点击分类链接后自动关闭遮罩
+    document.querySelectorAll('.category-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            categoryMask.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // ===== 独立搜索功能 =====
+    const searchBtn = document.getElementById('searchBtn');
+    const searchOverlay = document.getElementById('footerSearchOverlay');
+    const searchClose = document.getElementById('footerSearchClose');
+    const searchInput = document.getElementById('footerSearchInput');
+    const searchSubmit = document.getElementById('footerSearchSubmit');
+    const searchHistory = document.getElementById('footerSearchHistory');
+    const searchHistoryList = document.getElementById('footerSearchHistoryList');
+    const searchHistoryClear = document.getElementById('footerSearchHistoryClear');
+    
+    // 搜索历史数组
+    let historyItems = [];
+    
+    // 从localStorage加载搜索历史
+    try {
+        const saved = localStorage.getItem('footer_search_history');
+        if (saved) {
+            historyItems = JSON.parse(saved);
+        }
+    } catch(e) {
+        console.log('无法加载搜索历史');
+    }
+    
+    // 更新历史列表显示
+    function updateHistoryList() {
+        if (historyItems.length > 0) {
+            searchHistory.style.display = 'block';
+            let html = '';
+            historyItems.forEach(function(item, index) {
+                html += '<li>' +
+                    '<span onclick="document.getElementById(\'footerSearchInput\').value=\'' + item.replace(/'/g, "\\'") + '\'; performFooterSearch()">' + item + '</span>' +
+                    '<button onclick="removeHistoryItem(' + index + ')"><i class="fas fa-times"></i></button>' +
+                    '</li>';
+            });
+            searchHistoryList.innerHTML = html;
+        } else {
+            searchHistory.style.display = 'none';
+        }
+    }
+    
+    // 执行搜索
+    window.performFooterSearch = function() {
+        const keyword = searchInput.value.trim();
+        if (keyword) {
+            // 保存到历史
+            if (!historyItems.includes(keyword)) {
+                historyItems.unshift(keyword);
+                if (historyItems.length > 5) {
+                    historyItems.pop();
+                }
+                localStorage.setItem('footer_search_history', JSON.stringify(historyItems));
+            }
+            
+            // 跳转到搜索页
+            window.location.href = '/search.php?q=' + encodeURIComponent(keyword);
+        }
+    };
+    
+    // 删除历史项
+    window.removeHistoryItem = function(index) {
+        historyItems.splice(index, 1);
+        localStorage.setItem('footer_search_history', JSON.stringify(historyItems));
+        updateHistoryList();
+    };
+    
+    // 清空所有历史
+    if (searchHistoryClear) {
+        searchHistoryClear.addEventListener('click', function() {
+            historyItems = [];
+            localStorage.removeItem('footer_search_history');
+            updateHistoryList();
+        });
+    }
+    
+    // 打开搜索
+    if (searchBtn) {
+        searchBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            searchOverlay.style.display = 'flex';
+            document.body.classList.add('footer-search-open');
+            setTimeout(function() {
+                searchInput.focus();
+            }, 300);
+            updateHistoryList();
+        });
+    }
+    
+    // 关闭搜索
+    if (searchClose) {
+        searchClose.addEventListener('click', function() {
+            searchOverlay.style.display = 'none';
+            document.body.classList.remove('footer-search-open');
+            searchInput.value = '';
+        });
+    }
+    
+    // 点击搜索按钮
+    if (searchSubmit) {
+        searchSubmit.addEventListener('click', performFooterSearch);
+    }
+    
+    // 输入框回车
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performFooterSearch();
+            }
+        });
+    }
+    
+    // 点击遮罩关闭
+    if (searchOverlay) {
+        searchOverlay.addEventListener('click', function(e) {
+            if (e.target === searchOverlay) {
+                searchOverlay.style.display = 'none';
+                document.body.classList.remove('footer-search-open');
+                searchInput.value = '';
+            }
+        });
+    }
+    
+    // ===== 用户按钮 =====
+    const userBtn = document.getElementById('userBtn');
+    if (userBtn) {
+        userBtn.addEventListener('click', function() {
+                            window.location.href = '/login.php';
+                    });
+    }
+});
+</script>
+
+</section>
+
+<script type="389a2a4921a10437b2940fba-text/javascript" src="/js/zepto.js"></script>
+<script type="389a2a4921a10437b2940fba-text/javascript" src="/js/jquery.lazyload.min.js"></script>
+<script type="389a2a4921a10437b2940fba-text/javascript" src="/js/jquery.cookie.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" type="389a2a4921a10437b2940fba-text/javascript"></script>
+<script type="389a2a4921a10437b2940fba-text/javascript">
+function _dct_(vUrl){}
+
+var promoList = [{"id":10,"subject":"25\u9031\u5e74\u8d85\u7d1a\u5927\u79ae\u5305","message":"\u6709\u53f2\u6700\u591a\u7684\u4e00\u6b21\uff0c\u5145\u503c\u8f38\u5165\"happy25year\"\u591a\u9001300\u9ede"}];
+
+$(document).ready(function () {
+
+    $("img.lazyload").each(function(){
+        var src = $(this).attr("data-src");
+        if (src) $(this).attr("src", src);
+    });
+
+    if (document.getElementById('featuredSwiper')) {
+        var featuredSwiper = new Swiper('#featuredSwiper', {
+            slidesPerView: 'auto',
+            spaceBetween: 12,
+            grabCursor: true,
+            navigation: {
+                prevEl: '#featuredPrev',
+                nextEl: '#featuredNext',
+            },
+            on: {
+                init:           function () { updateNav(this); },
+                slideChange:    function () { updateNav(this); },
+                reachBeginning: function () { updateNav(this); },
+                reachEnd:       function () { updateNav(this); },
+            },
+        });
+        function updateNav(swiper) {
+            var p = document.getElementById('featuredPrev');
+            var n = document.getElementById('featuredNext');
+            if (p) p.style.visibility = swiper.isBeginning ? 'hidden' : 'visible';
+            if (n) n.style.visibility = swiper.isEnd       ? 'hidden' : 'visible';
+        }
+    }
+
+    if (promoList.length > 1) {
+        var promoCurIdx = 0;
+        function renderPromoBar(idx) {
+            var item = promoList[idx];
+            $('#promoSubject').text(item.subject);
+            $('#promoMessage').text(item.message);
+            $('#promoCurrent').text(idx + 1);
+        }
+        $('#promoNext').on('click', function () {
+            promoCurIdx = (promoCurIdx + 1) % promoList.length;
+            renderPromoBar(promoCurIdx);
+        });
+        $('#promoPrev').on('click', function () {
+            promoCurIdx = (promoCurIdx - 1 + promoList.length) % promoList.length;
+            renderPromoBar(promoCurIdx);
+        });
+    }
+
+    var isMobile = window.innerWidth <= 767;
+    if (isMobile && promoList.length > 0) {
+        var latestPromo = promoList[0];
+        var sessionKey  = 'promo_seen_' + latestPromo.id;
+        if (!sessionStorage.getItem(sessionKey)) {
+            setTimeout(function () {
+                $('#promoModalOverlay').addClass('active');
+            }, 800);
+        }
+        $('#promoModalClose').on('click', function () {
+            sessionStorage.setItem(sessionKey, '1');
+            $('#promoModalOverlay').removeClass('active');
+        });
+        $('#promoModalOverlay').on('click', function (e) {
+            if ($(e.target).is('#promoModalOverlay')) {
+                sessionStorage.setItem(sessionKey, '1');
+                $('#promoModalOverlay').removeClass('active');
+            }
+        });
+    }
+
+});
+</script>
+
+<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="389a2a4921a10437b2940fba-|49" defer></script></body>
+</html></div>                </div>
+
+                <div class="zuozhetuijian">
+                    <div class="zztj_title">作者所有作品</div>
+                    <ul class="zztj_list">
+                        <li><a href="book-6580.html" target="_blank">时间可以停止</a></li>
+                    </ul>
+                </div>
+<!--
+                <div class="zuozhetuijian">
+                    <div class="zztj_title">作者推荐</div>
+                    <ul class="zztj_list">
+                        <li><a href="/book/.htm" target='_blank'></a></li>
+                    </ul>
+                </div> -->
+              <div class="tongleizuopin">
+                <div class="tlzp_title">您可能还喜欢</div>
+                <ul class="tlzp_list">
+                  <li><div class="tlzp_l"><img src="img-5215.jpg" alt='帝都糜情' width=45 height=60 /></div><div class="tlzp_r"><h3><a href='book-5215.html' target='_blank' style='color:rgb(85, 121, 83)' >帝都糜情</a></h3><p>作者：学中文的老外</p><p>类别：异能</p></div><div class="clear"></div></li>
+                  <li><div class="tlzp_l"><img src="img-2335.jpg" alt='梦回曾经记忆' width=45 height=60 /></div><div class="tlzp_r"><h3><a href='book-2335.html' target='_blank' style='color:rgb(85, 121, 83)' >梦回曾经记忆</a></h3><p>作者：肉棍夹蛋</p><p>类别：异能</p></div><div class="clear"></div></li>
+                  <li><div class="tlzp_l"><img src="img-4366.jpg" alt='超眼' width=45 height=60 /></div><div class="tlzp_r"><h3><a href='book-4366.html' target='_blank' style='color:rgb(85, 121, 83)' >超眼</a></h3><p>作者：Xiaodi8812</p><p>类别：异能</p></div><div class="clear"></div></li>
+                  <li><div class="tlzp_l"><img src="img-2417.jpg" alt='Family家' width=45 height=60 /></div><div class="tlzp_r"><h3><a href='book-2417.html' target='_blank' style='color:rgb(85, 121, 83)' >Family家</a></h3><p>作者：佚名</p><p>类别：异能</p></div><div class="clear"></div></li>
+                  <li><div class="tlzp_l"><img src="img-4040.jpg" alt='王朝天娇' width=45 height=60 /></div><div class="tlzp_r"><h3><a href='book-4040.html' target='_blank' style='color:rgb(85, 121, 83)' >王朝天娇</a></h3><p>作者：易天下</p><p>类别：异能</p></div><div class="clear"></div></li>
+                </ul>
+              </div>
+              <div class="tongleizuopin">
+                <div class="tlzp_title"><a href="https://free.aaportal.com" target="_blank">性福宝诚意推荐</a></div>
+                <ul class="tlzp_list">
+	<!--<a href="" target="_blank"><img id="GGADIMG" src=""></a><style>#GGADIMG{width:100%;}</style><br/>-->
+	<a href="https://ccd23.chakrivryc7onexrgovarkon.com/bk/36504/ofav1tx" target="_blank"><img id="GGADIMG" src="https://static.fkxl.xyz/ph.avifs"></a><style>#GGADIMG{width:100%;}</style><br/>
+	<a href="https://fapr-ov.jbofkspp.vip/?ch=ofav1bk" target="_blank"><img id="GGADIMG" src="https://fkxl.xyz/img/common.webp"></a><style>#GGADIMG{width:100%;}</style>	</ul>
+            </div>
+<div class="tongleizuopin">
+             <div class="clear"></div>
+        </div>
+    </div>
+</div>
+ 
+</html>
+    </div>
+</div>
+ 
+ 
+        <!--打赏弹出层开始-->
+        <div id="light" class="white_content">	<div class="white_content_con">			<div class="caozuo_con">	            <p class="zanmei">这本书写得太好了，我要打赏一下！</p>	            <p style="margin:10px 0px 10px 0px; font-size:14px;">您还剩余<span class="chengse" id="mychaoliubi"></span>点数</p>	                <p style="margin:20px 0px;">					<input id="g50" type="radio" value="50" name="gold"/>	                <label for="g50">50潮流币</label>	                <input id="g100" type="radio" value="100" name="gold"/>	                <label for="g100">100潮流币</label>	                <input id="g588" type="radio" value="588" name="gold"/>	                <label for="g588">588潮流币</label>	                <input id="g1888" type="radio" value="1888" name="gold"/>	                <label for="g1888">1888潮流币</label>	                </p>	                <p style="margin:20px 0px;">					<input id="g5888" type="radio" value="5888" name="gold"/>	                <label for="g5888">5888潮流币</label>	                <input id="g8888" type="radio" value="8888" name="gold"/>	                <label for="g8888">8888币</label>	                <input id="g50000" type="radio" value="50000" name="gold"/>	                <label for="g50000">50000潮流币</label>	                <input id="g100000" type="radio" value="100000" name="gold"/>	                <label for="g100000">100000潮流币</label>	                </p>	                <textarea rows="" cols="" name="content" class="fudaipinglun" id="fudaipinglun" onfocus="pinglunOnfocus()" onblur="pinglunOnBlur()" onkeydown="getPlNum()" onkeyup="getPlNum()"   ></textarea>	                <div style="padding-right:45px;">	                    <input type="button" value="" id="querendashang" onclick="DsTrue()" class="queren_btn" />	                    <p class="pingluntishi">您还可以输入<span style="color:red" id="plTongji" >200</span>字，此评语将会出现评论区。</p>	                    <div class="clear"></div>	                </div>	                <p class="tips">Tips：每消费1个潮流币转化为1粉丝值</p>	        </div>	    <a class="close" href = "javascript:void(0)" onclick=oclose();><img src="/images/close_03.gif"/></a>		<img src="/images/shang_07.jpg" class="shang"/>		<img src="/images/plus_03.jpg" class="plus" />    </div></div> <div id="fade" class="black_overlay"></div> 
+        <!--打赏弹出层结束-->
+        
+        <!--推荐票弹出层开始-->
+        <div id="light2" class="white_content2">	<div class="white_content_con">		<div class="caozuo_con">            <p class="zanmei">这本书写得太好了，值得推荐一下！</p>            <p style="margin:20px 0px 10px 0px; font-size:14px; padding-left:20px">您今天还剩余<span class="chengse" id="myTjp"></span>张推荐票</p>                <p style="margin:20px 0px; font-size:16px; padding-left:20px">				<label>送给本书&nbsp;&nbsp;</label><input type="text" size="5" id="useTjp" value="" /><label>&nbsp;&nbsp;张推荐票</label>                <div style="padding-left:20px">                    <input type="button" value="" id="querentuijian"  class="queren_btn"  onclick="TjpTure()"/>					<div class="clear"></div>                </div>                <p class="tips"  style="margin-left:20px;">Tips：提升会员等级,可以增加每天的推荐次数</p>       </div>        <a class="close" href = "javascript:void(0)" onclick=oclose();><img src="/images/close_03.gif"/></a>		<img src="/images/tui_03.jpg" class="tui"/>		<img src="/images/plus_03.jpg" class="plus" />    </div></div> <div id="fade" class="black_overlay"></div> 
+        <!--推荐票弹出层结束-->
+        
+        <!--月票弹出层开始-->
+        <div id="light3" class="white_content3">	<div class="white_content_con">		<div class="caozuo_con">	            <p class="zanmei">这本书写得太好了，送张月票支持一下！</p>	            <p style="margin:20px 0px 10px 0px; font-size:14px; padding-left:20px">您今天还剩余<span class="chengse" id="myYp" ></span>张月票</p>	                <p style="margin:20px 0px; font-size:16px; padding-left:20px">					<label>送给本书&nbsp;&nbsp;</label><input type="text" size="5" id="useYp" name="yuepiao"/><label>&nbsp;&nbsp;张月票</label>	                <div style="padding-left:20px">	                    <input type="button" value="" id="querentoupiao" name="button"  class="queren_btn" onclick="YpTure()"/>						<div class="clear"></div>	                </div>	                <p class="tips" style="margin-left:20px;">Tips：<a href="/help.html?fid=28#b81" target='_blank'>什么是月票？</a>&nbsp;&nbsp;<a href="/help.html?fid=28#b82" target='_blank'>如何获取月票？</a></p>	            </div>	        <a class="close" href = "javascript:void(0)" onclick=oclose();><img src="/images/close_03.gif"/></a>			<img src="/images/piao_07.jpg" class="piao"/>			<img src="/images/plus_03.jpg" class="plus" />    	</div>	</div> <div id="fade" class="black_overlay"></div> 
+        <!--月票弹出层?崾?->
+        
+<!--仙草弹出层开始-->
+<div id="light4" class="white_content4">
+  <div class="white_content_con" style="height:440px;">
+<script language="javascript" type="text/javascript">
+
+function changeFrameHeight(){
+    var ifm= document.getElementById("ifm"); 
+    ifm.height=document.documentElement.clientHeight;
+
+}
+
+</script> 
+<a class="close" href="javascript:void(0)" onclick=oclose();><img src="/images/close_03.gif"/></a>
+
+  </div>
+</div>
+<div id="fade" class="black_overlay"></div> 
+<!--仙草弹出层结束-->
+        
+        
+        <!--收藏弹出层开始-->
+        <div id="light5" class="white_content5">
+            <div class="bangding_con">
+                <div class="caozuo_con">
+									<p class="bangdingtishi"> 您需要先注册账号才能使用该功能。</p>
+                <div> </div>
+             
+                </div>
+                <a class="close2" href = "javascript:void(0)" onclick=oclose();><img src="images/close_03.gif"/></a>
+            </div>
+        </div> 
+        <!--收藏弹出层结束-->
+        
+    </body> 
+</html>
+ 
+ 
+        
+<script type="text/javascript"> 
+ 
+    function dashang(){    
+    
+    
+      var light=document.getElementById("light");
+       var fade=document.getElementById("fade");
+ 
+      light.style.display='block';
+      fade.style.display='block';
+      document.getElementById("fudaipinglun").value="这本书太棒了！鼓励一下，希望后续更加精彩！";
+ 
+        var mychaoliubi=document.getElementById("mychaoliubi").innerHTML;
+        var gold=document.getElementsByName("gold");
+        var mc=parseInt(mychaoliubi);
+        
+    if(mc>=50){
+        for (i=0;i<gold.length;i++){
+            if(gold[i].value>mc)
+          {
+              gold[i-1].checked=true;
+                  break;
+              }
+          }
+         }else{
+              gold[0].checked=true;
+              
+         }
+ }
+         //打赏评论区获得焦点事件
+    function pinglunOnfocus()
+    {
+        var f = document.getElementById("fudaipinglun").value;
+        if(f=='这本书太棒了！鼓励一下，希望后续更加精彩！')
+        {
+            document.getElementById("fudaipinglun").value="";
+        }
+    }    
+    //打赏评论区失去焦点事件
+    function pinglunOnBlur()
+    {
+        var f = document.getElementById("fudaipinglun").value;
+        if(f==null || f=='')
+        {
+            document.getElementById("fudaipinglun").value="这本书太棒了！鼓励一下，希望后续更加精彩！";
+        }
+    }
+        //打赏评论区字数统计
+    function getPlNum(){
+    
+        
+        var f = document.getElementById("fudaipinglun").value;
+        
+        if(f.length<=200){
+          document.getElementById("plTongji").innerHTML=200-f.length;
+        }else{
+            alert("对不起，超出评论字数！")
+            document.getElementById("plTongji").innerHTML=0;
+            f = f.substr(0, 200)
+            document.getElementById("fudaipinglun").value=f;
+        }
+        
+    }
+ 
+ 
+    function shoucang(){    
+     var light5=document.getElementById("light5");
+     var fade=document.getElementById("fade");
+    
+      light5.style.display='block';
+      fade.style.display='block';
+    }
+ 
+ 
+function DsTrue(){
+ 
+  var f=document.getElementById("fudaipinglun").value;
+  var mychaoliubi=document.getElementById("mychaoliubi").innerHTML;
+  var gold=document.getElementsByName("gold");
+  var author=document.getElementById("author").value; 
+  var subject=document.getElementById("subject").value; 
+  
+  var goldvalue=0;
+      for (i=0;i<gold.length;i++){
+            if(gold[i].checked)
+          {
+                 goldvalue=gold[i].value;
+                break;
+             }
+         }
+        
+        var gv=parseInt(goldvalue);
+    var mc=parseInt(mychaoliubi);
+    if(f==null || f=='')
+      {
+       alert("请留下您的评论")
+      }else if(gv>mc){
+         alert("您的币余额不足，请充值")
+        return false;
+      }else if(f.length>500){
+           alert("对不起，您的话太多了")
+         return false;
+      }else{
+         if(confirm("确定为 "+subject+" 打赏 "+gv+" 币？"))
+        location.href="/tools/reward.php?aid=942383&amount="+gv+"&content="+f;
+ 
+     }
+ }
+ 
+ function tuijian(){    
+      var light2=document.getElementById("light2");
+       var fade=document.getElementById("fade");
+ 
+      light2.style.display='block';
+      fade.style.display='block';
+      
+      var myTjp=document.getElementById("myTjp").innerHTML;
+      document.getElementById("useTjp").value=myTjp;
+ }
+ 
+ function TjpTure(){
+    
+     var myTjp=document.getElementById("myTjp").innerHTML;
+     var useTjp=document.getElementById("useTjp").value;
+     
+    var name=document.getElementById("zuozhe").value; 
+    var author=document.getElementById("author").value; 
+    var subject=document.getElementById("subject").value; 
+ 
+    
+    var mt=parseInt(myTjp);
+    var ut=parseInt(useTjp);
+ 
+    if(ut > mt){
+        alert("对不起，您的推荐票不足！")
+        return false;
+    }else{
+        if(confirm("确定为 "+subject+" 赠送 "+ut+" 张推荐票？"))
+                location.href="/tools/tuijian.php?aid=942383&tuijian="+ut;
+                
+        }
+}
+ 
+function imgUploadPop(){    
+	var light4=document.getElementById("light4");
+	var fade=document.getElementById("fade");
+	
+	light4.style.display='block';
+	fade.style.display='block';
+	
+	var myYp=document.getElementById("myYp").innerHTML;
+	document.getElementById("useYp").value=myYp;
+}
+
+function yuepiao(){    
+	var light3=document.getElementById("light3");
+	var fade=document.getElementById("fade");
+	
+	light3.style.display='block';
+	fade.style.display='block';
+	
+	var myYp=document.getElementById("myYp").innerHTML;
+	document.getElementById("useYp").value=myYp;
+}
+ 
+function YpTure(){
+    
+     var myYp=document.getElementById("myYp").innerHTML;
+     var useYp=document.getElementById("useYp").value;
+    var name=document.getElementById("zuozhe").value; 
+    var author=document.getElementById("author").value; 
+    var subject=document.getElementById("subject").value; 
+    var my=parseInt(myYp);
+    var uy=parseInt(useYp);
+    
+    if(uy<=0){
+        alert("请输入月票的数量")
+        return false;
+    }else if(uy > my){
+        alert("对不起，您的月票不足！")
+        return false;
+        
+    }else     if (isNaN(uy) || useYp.indexOf(".")!=-1 ){
+        alert("请输入整数")
+        return false;
+    } else {
+        if(confirm("确定为 "+subject+" 赠送 "+uy+" 张月票？"))
+        //if(confirm("活动期间月票翻倍。\n您将为 "+subject+" 赠送 "+uy*2+" 张月票？"))
+        location.href="/tools/yuepiao.php?aid=942383&yuepiao="+uy;
+                
+    }
+}
+ 
+       function xiancao(){    
+      var light4=document.getElementById("light4");
+       var fade=document.getElementById("fade");
+      light4.style.display='block';
+      fade.style.display='block';
+      
+      var myclb=document.getElementById("myclb").innerHTML;
+       var myxc=document.getElementById("myxc").innerHTML;
+      var chaoliubi=document.getElementById("chaoliubi");
+      var daoju=document.getElementById("daoju");
+          
+         if(myxc>=1){
+            daoju.checked=true;
+            usexiancao();
+         }else{
+             chaoliubi.checked=true;
+            usechaoliubi();
+         }
+ }
+ 
+function oclose(){    
+   var light=document.getElementById("light");
+   var light2=document.getElementById("light2");
+   var fade=document.getElementById("fade");
+     
+    light.style.display='none';
+    light2.style.display='none';
+    light3.style.display='none';
+    light4.style.display='none';
+    light5.style.display='none';
+    fade.style.display='none';
+  
+ }
+  
+function usechaoliubi(){
+          var myclb=document.getElementById("myclb").innerHTML;
+        document.getElementById("daojuNum").value="";
+        document.getElementById("BuyNum").value = Math.floor(myclb/10);
+          document.getElementById("chaoliubinum").innerHTML=document.getElementById("BuyNum").value*10;
+  }
+ 
+</script>
+<script type="text/javascript">
+function addEvent(obj,evtType,func,cap){
+    cap=cap||false;
+if(obj.addEventListener){
+     obj.addEventListener(evtType,func,cap);
+   return true;
+}else if(obj.attachEvent){
+        if(cap){
+         obj.setCapture();
+         return true;
+     }else{
+      return obj.attachEvent("on" + evtType,func);
+   }
+}else{
+   return false;
+    }
+}
+function getPageScroll(){
+    var xScroll,yScroll;
+if (self.pageXOffset) {
+   xScroll = self.pageXOffset;
+} else if (document.documentElement && document.documentElement.scrollLeft){
+   xScroll = document.documentElement.scrollLeft;
+} else if (document.body) {
+   xScroll = document.body.scrollLeft;
+}
+if (self.pageYOffset) {
+   yScroll = self.pageYOffset;
+} else if (document.documentElement && document.documentElement.scrollTop){
+   yScroll = document.documentElement.scrollTop;
+} else if (document.body) {
+   yScroll = document.body.scrollTop;
+}
+arrayPageScroll = new Array(xScroll,yScroll);
+return arrayPageScroll;
+}
+function GetPageSize(){
+    var xScroll, yScroll;
+    if (window.innerHeight && window.scrollMaxY) { 
+        xScroll = document.body.scrollWidth;
+        yScroll = window.innerHeight + window.scrollMaxY;
+    } else if (document.body.scrollHeight > document.body.offsetHeight){
+        xScroll = document.body.scrollWidth;
+        yScroll = document.body.scrollHeight;
+    } else {
+        xScroll = document.body.offsetWidth;
+        yScroll = document.body.offsetHeight;
+    }
+    var windowWidth, windowHeight;
+    if (self.innerHeight) {
+        windowWidth = self.innerWidth;
+        windowHeight = self.innerHeight;
+    } else if (document.documentElement && document.documentElement.clientHeight) {
+        windowWidth = document.documentElement.clientWidth;
+        windowHeight = document.documentElement.clientHeight;
+    } else if (document.body) {
+        windowWidth = document.body.clientWidth;
+        windowHeight = document.body.clientHeight;
+    } 
+    if(yScroll < windowHeight){
+        pageHeight = windowHeight;
+    } else { 
+        pageHeight = yScroll;
+    }
+    if(xScroll < windowWidth){ 
+        pageWidth = windowWidth;
+    } else {
+        pageWidth = xScroll;
+    }
+    arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight) 
+    return arrayPageSize;
+}
+
+var AdMoveConfig=new Object();
+AdMoveConfig.IsInitialized=false;
+AdMoveConfig.ScrollX=0;
+AdMoveConfig.ScrollY=0;
+AdMoveConfig.MoveWidth=0;
+AdMoveConfig.MoveHeight=0;
+AdMoveConfig.Resize=function(){
+    var winsize=GetPageSize();
+    AdMoveConfig.MoveWidth=winsize[2];
+    AdMoveConfig.MoveHeight=winsize[3];
+    AdMoveConfig.Scroll();
+}
+AdMoveConfig.Scroll=function(){
+    var winscroll=getPageScroll();
+    AdMoveConfig.ScrollX=winscroll[0];
+    AdMoveConfig.ScrollY=winscroll[1];
+}
+addEvent(window,"resize",AdMoveConfig.Resize);
+addEvent(window,"scroll",AdMoveConfig.Scroll);
+function AdMove(id){
+    if(!AdMoveConfig.IsInitialized){
+        AdMoveConfig.Resize();
+        AdMoveConfig.IsInitialized=true;
+    }
+    var obj=document.getElementById(id);
+    obj.style.position="absolute";
+    var W=AdMoveConfig.MoveWidth-obj.offsetWidth;
+    var H=AdMoveConfig.MoveHeight-obj.offsetHeight;
+    var x = W*Math.random(),y = H*Math.random();
+    var rad=(Math.random()+1)*Math.PI/6;
+    var kx=Math.sin(rad),ky=Math.cos(rad);
+    var dirx = (Math.random()<0.5?1:-1), diry = (Math.random()<0.5?1:-1);
+    var step = 1;
+    var interval;
+    this.SetLocation=function(vx,vy){x=vx;y=vy;}
+    this.SetDirection=function(vx,vy){dirx=vx;diry=vy;}
+    obj.CustomMethod=function(){
+        obj.style.left = (x + AdMoveConfig.ScrollX) + "px";
+        obj.style.top = (y + AdMoveConfig.ScrollY) + "px";
+        rad=(Math.random()+1)*Math.PI/6;
+        W=AdMoveConfig.MoveWidth-obj.offsetWidth;
+        H=AdMoveConfig.MoveHeight-obj.offsetHeight;
+        x = x + step*kx*dirx;
+        if (x < 0){dirx = 1;x = 0;kx=Math.sin(rad);ky=Math.cos(rad);} 
+        if (x > W){dirx = -1;x = W;kx=Math.sin(rad);ky=Math.cos(rad);}
+        y = y + step*ky*diry;
+        if (y < 0){diry = 1;y = 0;kx=Math.sin(rad);ky=Math.cos(rad);} 
+        if (y > H){diry = -1;y = H;kx=Math.sin(rad);ky=Math.cos(rad);}
+    }
+    this.Run=function(){
+        var delay = 10;
+        interval=setInterval(obj.CustomMethod,delay);
+        obj.onmouseover=function(){clearInterval(interval);}
+        obj.onmouseout=function(){interval=setInterval(obj.CustomMethod, delay);}
+    }
+}
+</script>
+<style>A:hover	{background:0000ff;Color:#006fff;TEXT-DECORATION: none}</style>
+<div id="footer">
+<style>
+.footerFloat {text-align: left; width: 100%;}
+.footerFloat h4{margin: 5px; padding: 0 8px;}
+@media all and (min-width: 950px) {
+  .footerFloat {width: 25%; float: left;}
+}
+
+.textwidget {margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-style: solid;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: 0 0;
+}
+.textwidget ul {margin-bottom: 3px; padding-left: 2em;}
+.textwidget li {list-style-type: circle;}
+
+</style>
+<div class="footerFloat">
+<h4>优选导航</h4>
+<p>
+<script src="https://ad.fkxl.xyz/api/links?site=aabook&category=directory&codeType=js&cache=1"></script>
+</p>
+</div>
+<div class="footerFloat">
+<h4>亚洲联盟</h4>
+<p>
+<script src="https://ad.fkxl.xyz/api/links?site=aabook&category=crazy&codeType=js&cache=1"></script>
+<script src="https://ad.fkxl.xyz/api/links?site=aabook&category=contact&codeType=js&cache=1"></script>
+</p>
+</div>
+<div class="footerFloat">
+<h4>二次元专区</h4>
+<p>
+<script src="https://ad.fkxl.xyz/api/app?site=aabook&category=game&num=4&codeType=js&cache=1"></script>
+</p>
+</div>
+<div class="footerFloat">
+<h4><a href="https://fky.3fb.site" target="_blank">性福宝APP下载排行榜</a></h4>
+<p>
+<script src="https://ad.fkxl.xyz/api/app?site=aabook&category=app&num=4&codeType=js&cache=1"></script>
+</p>
+</div>
+&nbsp;<br/>
+<style>#abcDiv img{width: 100%;}</style>
+<div id="abcDiv" style="width:100%;">
+</div>
+   <div class="copyright" style="clear:both;"> Copyright &#169; 2010-2026 疯情书库 All rights reserved Powered by LamboXXX.
+<br />
+  本站所展示的文学作品、文章评论均属其个人行为，不代表本站立场<a id="noticeWin" href="#" rel="popuprel3" class="popup">。</a>
+<br /><br /><br />
+   </div>
+
+
+<div class="footer">
+<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/font-awesome/5.15.4/css/all.min.css" media="all" />
+<style>
+.footer-fixed-nav{display: none;position: fixed;bottom: 0;left: 0;right: 0;background: #f1f1f1;height: 65px;z-index: 9999;box-shadow: 0px -4px 10px 0px rgba(17, 58, 93, 0.1);transition: all .3s ease 0s;}
+.footer-fixed-nav a {display: inline-block;float: left;width: 20%;text-align: center;margin-top:10px;color:#0000FF;}
+.footer-fixed-nav a:hover {color:#FF0000;}
+.footer-fixed-nav a span{display: block;font-size: 14px;line-height: 18px;position: relative;top:-1px;}
+.footer-fixed-nav a i{font-size: 22px;top:1px;line-height: 24px;}
+.footer-fixed-nav .footer-nav-trigger{position: absolute;top:-16px;left: calc(50% - 15px);width: 30px;height: 16px;line-height: 16px;text-align: center;background: #f1f1f1;border-radius: 3px 3px 0 0;box-shadow: 0px -4px 10px 0px rgba(17, 58, 93, 0.1);}
+.footer-fixed-nav .footer-nav-trigger .icon{top:0;font-size: 14px;}
+.footer-fixed-nav .footer-nav-trigger.active .icon:before{content: "\e67a"}
+body.night .footer-fixed-nav, body.night .footer-fixed-nav .footer-nav-trigger{background: #212533;color: #bdcadb;}
+.footer-fixed-nav{display: block;}
+.mask {
+	width:100%;
+	height:1200px;
+	background:gray;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:100;
+	opacity:0.6;
+	display:none;
+	
+}
+</style>
+<!-- Starting footer_nav.php --><!-- Database connection successful --><!-- Found 5 active footer nav ads -->
+<div class="mask" name="cover" id="cover"></div>
+<div class="footer-fixed-nav clearfix" style="height: 70px;">
+            <a href="https://bs2806.pralusklomoslopid.com/bk/36504/ofav1tx" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-caret-right-square-fill"></i>
+            <span>糖心</span>
+        </a>
+            <a href="https://fkxl.xyz/go/wjdm" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-incognito"></i>
+            <span>哔咔漫画</span>
+        </a>
+            <a href="https://genrati.xyz?ref_id=76f9e370-bcd6-47a3-8d70-a29d63534242" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-arrow-through-heart-fill"></i>
+            <span>Ai榨精💋</span>
+        </a>
+            <a href="https://fkxl.xyz/go/tpyp" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-exclamation-octagon-fill"></i>
+            <span>抖阴</span>
+        </a>
+            <a href="https://dd9018.nektozevrxolvryc7mmraon.com/bk/36506/ofav1bk" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-fire"></i>
+            <span>涩漫禁漫</span>
+        </a>
+        <div class="footer-nav-trigger ">
+        <i class="bi bi-chevron-double-down"></i>
+    </div>
+</div>
+
+<style>
+.footer-fixed-nav {
+    display: block !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f1f1f1;
+    height: 70px;
+    z-index: 10000;
+    box-shadow: 0px -4px 10px 0px rgba(17, 58, 93, 0.1);
+    transition: all .3s ease 0s;
+}
+.footer-fixed-nav a {
+    display: inline-block;
+    float: left;
+    width: 20%;
+    text-align: center;
+    margin-top: 10px;
+}
+.footer-fixed-nav a span {
+    display: block;
+    font-size: 14px;
+    line-height: 18px;
+    position: relative;
+    top: -1px;
+}
+.footer-fixed-nav a i {
+    font-size: 22px;
+    line-height: 24px;
+}
+.footer-fixed-nav a i.bi-caret-right-square-fill {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-caret-right-square-fill {
+    color: #bdcadb;
+}
+.footer-fixed-nav a i.bi-incognito {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-incognito {
+    color: #bdcadb;
+}
+.footer-fixed-nav a i.bi-arrow-through-heart-fill {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-arrow-through-heart-fill {
+    color: #ff4081;
+}
+.footer-fixed-nav a i.bi-exclamation-octagon-fill {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-exclamation-octagon-fill {
+    color: #bdcadb;
+}
+.footer-fixed-nav a i.bi-fire {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-fire {
+    color: #66b0ff;
+}
+.footer-fixed-nav .footer-nav-trigger {
+    position: absolute;
+    top: -16px;
+    left: calc(50% - 15px);
+    width: 30px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    background: #f1f1f1;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0px -4px 10px 0px rgba(17, 58, 93, 0.1);
+    cursor: pointer;
+}
+.footer-fixed-nav .footer-nav-trigger i {
+    font-size: 14px;
+    color: #333;
+}
+body.night .footer-fixed-nav,
+body.night .footer-nav-trigger {
+    background: #212533;
+    color: #bdcadb;
+}
+body.night .footer-nav-trigger i {
+    color: #bdcadb;
+}
+.mask {
+    width: 100%;
+    height: 1200px;
+    background: gray;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    opacity: 0.6;
+    display: none;
+}
+body.footer-nav-visible {
+    padding-bottom: 70px;
+}
+@media (max-width: 767px) {
+    body.footer-nav-visible {
+        padding-bottom: 70px;
+    }
+}
+</style>
+
+<script>
+// 確保 jQuery 已加載
+if (typeof jQuery === 'undefined') {
+    console.error('jQuery not loaded, loading fallback');
+    document.write('<script src="https://code.jquery.com/jquery-3.6.0.min.js"><\/script>');
+}
+
+// 加載 jQuery Cookie
+if (typeof jQuery.cookie === 'undefined') {
+    console.log('Loading jQuery Cookie');
+    document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"><\/script>');
+}
+
+jQuery(document).ready(function($) {
+    console.log('Footer nav script running');
+    console.log('Footer nav element found: ' + ($('.footer-fixed-nav').length > 0 ? 'Yes' : 'No'));
+    console.log('Footer nav items loaded: ' + 5);
+
+    var $trigger = $('.footer-nav-trigger');
+    var $nav = $('.footer-fixed-nav');
+    var $triggerIcon = $trigger.find('i');
+
+    // 根據初始狀態設置 body 類
+    if ($nav.css('height') === '60px') {
+        $('body').addClass('footer-nav-visible');
+        console.log('Added footer-nav-visible class');
+    }
+
+    // 確認初始狀態
+    console.log('Initial height: ' + $nav.css('height'));
+    console.log('Initial mbt_footer_nav cookie: ' + $.cookie('mbt_footer_nav'));
+
+    // 點擊展開/收起
+    $trigger.on('click', function() {
+        console.log('Footer nav trigger clicked');
+        if ($(this).hasClass('active')) {
+            console.log('Expanding footer nav');
+            $(this).removeClass('active');
+            $nav.css('height', '60px');
+            $triggerIcon.removeClass('bi-chevron-double-up').addClass('bi-chevron-double-down');
+            $.cookie('mbt_footer_nav', '0', { path: '/', expires: 7 });
+            $('body').addClass('footer-nav-visible');
+            console.log('Added footer-nav-visible class');
+        } else {
+            console.log('Collapsing footer nav');
+            $(this).addClass('active');
+            $nav.css('height', '0px');
+            $triggerIcon.removeClass('bi-chevron-double-down').addClass('bi-chevron-double-up');
+            $.cookie('mbt_footer_nav', '1', { path: '/', expires: 7 });
+            $('body').removeClass('footer-nav-visible');
+            console.log('Removed footer-nav-visible class');
+        }
+        console.log('New mbt_footer_nav cookie: ' + $.cookie('mbt_footer_nav'));
+    });
+});
+</script>
+
+<!-- Ending footer_nav.php --><p></p>
+</div>
+
+
+</div>
+</body>
+</html>

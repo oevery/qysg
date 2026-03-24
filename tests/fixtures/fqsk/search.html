@@ -1,0 +1,762 @@
+
+
+<!DOCTYPE HTML>
+<head>
+<link rel="Shortcut Icon" href="/favicon.ico"  type="image/x-icon" />
+<link rel="Bookmark" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.0/font/bootstrap-icons.css">
+<meta name="juicyads-site-verification" content="81a9836dcb90a872e2de583f641344e6">
+<meta name="trafficjunky-site-verification" content="uuq8wyw58" />
+<meta name="exoclick-site-verification" content="2aee36b3278f016004781373b43e5280">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript" src="/js/jquery-2.min.js"></script>
+<style>#preload-01 { background: url(../images/navbg_03.png) no-repeat -9999px -9999px; }</style>
+<!-- Starting ad_banner.php --><!-- Ad banner: 1 ads loaded --><div id="apk-ad-banner" class="apk-ad-banner">
+    <div class="apk-ad-content" id="apk-ad-content">
+                    <div class="apk-ad-slide" style="display: flex;" data-index="0">
+                <a href="https://cdn.xaavideo.com" class="apk-ad-link" target="_blank" rel="noopener noreferrer">
+                    <img src="https://xaavideo.com/logo_s.png" alt="Ad Icon" class="apk-ad-icon">
+                </a>
+                <p class="apk-ad-text">
+                    <a href="https://cdn.xaavideo.com" class="apk-ad-link" target="_blank" rel="noopener noreferrer">
+                        全新播放體驗，超多A片，支持下載！                    </a>
+                </p>
+                <button class="apk-ad-close" aria-label="關閉廣告">×</button>
+            </div>
+            </div>
+</div>
+
+<style>
+.apk-ad-banner {
+    display: block !important;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
+    text-align: center;
+    box-shadow: none;
+}
+.apk-ad-banner.apk-ad-hidden {
+    display: none !important;
+}
+.apk-ad-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.apk-ad-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease-in-out;
+}
+.apk-ad-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+.apk-ad-text {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+}
+.apk-ad-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.apk-ad-link:hover {
+    text-decoration: underline;
+}
+.apk-ad-close {
+    background: none !important;
+    border: none !important;
+    font-size: 18px;
+    line-height: 30px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #ffffff;
+    padding: 6px 10px;
+    min-width: 30px;
+}
+.apk-ad-close:hover {
+    color: #ff0000;
+}
+body.apk-ad-visible {
+    padding-top: 50px;
+}
+@media (max-width: 767px) {
+    .apk-ad-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .apk-ad-icon {
+        width: 32px;
+        height: 32px;
+        margin-right: 6px;
+        vertical-align: middle;
+    }
+    .apk-ad-text {
+        margin: 0;
+        display: inline-flex;
+        align-items: center;
+    }
+    .apk-ad-link {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    .apk-ad-close {
+        font-size: 16px;
+        line-height: 28px;
+        padding: 8px 12px;
+        min-width: 36px;
+    }
+    body.apk-ad-visible {
+        padding-top: 50px;
+    }
+}
+</style>
+
+<script>
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Ad banner script running, slides count: ' + document.querySelectorAll('.apk-ad-slide').length);
+        var slides = document.querySelectorAll('.apk-ad-slide');
+        if (slides.length === 0) {
+            console.log('No ad slides found');
+            return;
+        }
+
+        // 添加 body 類以推下頭部
+        document.body.classList.add('apk-ad-visible');
+
+        var currentSlide = 0;
+        var slideInterval;
+
+        function showSlide(index) {
+            console.log('Showing slide: ' + index);
+            slides.forEach(function(slide, i) {
+                slide.style.display = i === index ? 'flex' : 'none';
+                slide.style.opacity = i === index ? '1' : '0';
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function startCarousel() {
+            if (slides.length > 1) {
+                console.log('Starting carousel with ' + slides.length + ' slides');
+                slideInterval = setInterval(nextSlide, 5000);
+            } else {
+                console.log('Only one slide, carousel not started');
+            }
+        }
+
+        function stopCarousel() {
+            console.log('Stopping carousel');
+            if (slideInterval) {
+                clearInterval(slideInterval);
+            }
+        }
+
+        showSlide(currentSlide);
+        startCarousel();
+
+        // 關閉按鈕事件
+        var closeButtons = document.querySelectorAll('.apk-ad-close');
+        console.log('Found ' + closeButtons.length + ' close buttons');
+        closeButtons.forEach(function(button, index) {
+            button.addEventListener('click', function(event) {
+                event.stopPropagation();
+                console.log('Close button ' + index + ' clicked');
+                try {
+                    var banner = document.getElementById('apk-ad-banner');
+                    if (banner) {
+                        banner.classList.add('apk-ad-hidden');
+                        banner.style.display = 'none';
+                        console.log('Banner hidden');
+                    } else {
+                        console.error('Banner element not found');
+                    }
+                    document.body.classList.remove('apk-ad-visible');
+                    console.log('Removed apk-ad-visible class');
+                    document.cookie = 'hide_apk_ad=1; max-age=' + (7 * 24 * 60 * 60) + '; path=/; SameSite=Lax';
+                    console.log('Cookie set: hide_apk_ad=1');
+                    stopCarousel();
+                    setTimeout(function() {
+                        if (banner && window.getComputedStyle(banner).display !== 'none') {
+                            console.error('Banner still visible after hide attempt');
+                        }
+                    }, 100);
+                } catch (error) {
+                    console.error('Error in close button handler: ' + error.message);
+                }
+            });
+        });
+
+        var adContent = document.getElementById('apk-ad-content');
+        if (adContent) {
+            adContent.addEventListener('mouseenter', stopCarousel);
+            adContent.addEventListener('mouseleave', startCarousel);
+        } else {
+            console.log('Ad content element not found');
+        }
+    });
+})();
+</script>
+<!-- Ending ad_banner.php --><TITLE>疯情书库 - 站内搜索</TITLE>
+<link href="./css/style.css" rel="stylesheet" />
+<link href="./css/search.css" rel="stylesheet" />
+<script type="text/javascript" src="./js/index.js"></script>
+<script type="text/javascript" src="./js/search.js"></script>
+
+<!--[if IE 6]><script type="text/javascript" src="/js/DD_belatedPNG.js">
+</script>
+<script>
+ DD_belatedPNG.fix(".pngFix,.pngFix:hover,.pngFix img");
+</script>
+<![endif]-->
+<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/8a468c0ebf54706b27613292e/b3867f2f91ace7f741a79ec70.js");</script>
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//counter.aabook.net/matomo/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Code -->
+</head>
+<body>
+<script>
+  function loadGoogleAnalytics() {
+    // 检查是否能访问Google服务
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', '//www.google-analytics.com/analytics.js', true);
+    xhr.timeout = 1000; // 设置超时1秒
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          // 如果可以访问，加载GA脚本
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', 'UA-67871248-1', 'auto');
+          ga('send', 'pageview');
+        } else {
+          console.log('Google Analytics不可用，跳过加载');
+        }
+      }
+    };
+    xhr.ontimeout = function () {
+      console.log('Google Analytics加载超时，跳过');
+    };
+    xhr.send();
+  }
+
+  // 页面加载完成后执行
+  window.onload = function() {
+    loadGoogleAnalytics();
+  };
+</script>
+<div id="top" >
+  <div class="top_inner">
+    <div class="left orangea"><div style="float:left; height:20px; line-height:20px;"><img src="./images/time.gif" align="absmiddle" />
+      <script type="text/javascript"  src="/js/time.js"></script>&nbsp;<span><script type="text/javascript" src="/js/language.js"></script></span>  </div>
+      <div style="float:right; width:650px;">
+      <!--script type="text/javascript" src="./login.php?mode=js"></script-->
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<div id="header">
+<div class="header_l"><br>
+<a href="https://aabook.xyz"><img src="./images/newlogo_03.png" alt="疯情书库"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+<div class="header_m">
+</div>
+<div class="header_r">
+    <a href="https://aabook.xyz/m/?view=wap" class="pngFix" target="_blank"><img src="./images/mobile.png" /></a>
+</div>
+<div style="float:left;padding:18px 20px 0 40px;">
+</div>
+<div class="clear"></div>
+<div style='position: absolute;cursor: pointer;width: 468px; height: 60px;right: 20px;top: 15px;'><a href="https://fky.3fb.site" target="_blank"><img src="https://static.r2dev.store/sis.webp" width=468 height=60></a></div>
+</div>
+<div id="nav">
+<ul class="nav_ul" style="position:relative;">
+
+    <li class="shouye"><a href="/">首页</a></li>
+    <li class="quanbensk"><a href="category.html">书库检索</a></li>
+    <li class="xiaoshuoph"><a  href="toplist.html">排行榜</a></li>
+<!--    <li class="chaoliuzhi"><a href="help.php" target="_blank">帮助</a></li>
+<li class="chaoliuzhi"><a href="" target="_blank">短篇</a></li>-->
+    <!--<li class="chongzhizx"><a href="http://www.talkfiction.net/" target="_blank">讨论区</a></li>
+  	<li class="chongzhizx"><a href="https://www.mimi2022.pw" target="_blank">秘密入口</a></li>-->
+	<li class="chongzhizx"><a href="https://fkxl.xyz/go/btcy" target="_blank">半糖次元</a></li>
+	<li class="chongzhizx"><a href="https://fkxl.xyz/go/zgpz" target="_blank">中国P站</a></li>
+	<li class="chongzhizx"><img style="position: absolute; top: 10px;padding-left: 10px;" src="images/tpd-b-24px.png"><a href="https://theporndude.com/zh" target="_blank" rel="nofollow" style="padding-left:40px;">PornDude</a></li>
+    <div class="clear"></div>
+</ul>
+<div class="sousuo">
+    <form id="searchform" action="/search.html" method="get"  target="_blank">
+        <input type="submit" class="search-btn" value=""/>
+        <input type="text" name="searchword" value="搜索" class="search-l" id="sousuo" onfocus="sousuoOnfocus()" onblur="sousuoOnBlur()" />
+    </form>
+    
+</div>
+<div class="clear"></div>
+</div>
+<style>.m-textalert { border: #fc9 solid 1px; background-color: #ffc;width: 960px;margin: 0 auto;}
+.m-textalert p { padding: 6px 15px; font-size: 14px; line-height: 20px; color: #ff5600;}
+.m-textalert a.wrap { display: block;}
+.m-textalert a.wrap em { color: #4672af; font-weight: normal;}</style>
+<div class="m-textalert"><p><a class="wrap" href="https://myaavideonet.neocities.org/aabook.html" target="_blank" style="display:inline;"><em>请收藏地址发布页</em></a>&nbsp;|&nbsp;最新网址：<em>aabook.net  fqsk.xyz  aavbook.cc  czbook.xyz&nbsp;&nbsp;fqbook.cc&nbsp;&nbsp;aabook.cc&nbsp;&nbsp;aabook.cyou&nbsp;&nbsp;</em></a></p></div>
+
+<div class="sub_nav">
+    <div class="sub_nav_inner">
+        <p style=" float:left;padding-right:30px;font-size:14px;">小说分类 &gt;
+   <a href="category.html?catId=chuanyue">穿越</a>
+   <a href="category.html?catId=yineng">异能</a>
+   <a href="category.html?catId=yanqing">言情</a>
+   <a href="category.html?catId=xuanhuan">玄幻</a>
+   <a href="category.html?catId=xiaoyuan">校园</a>
+   <a href="category.html?catId=xianxia">仙侠</a>
+   <a href="category.html?catId=xiangtu">乡土</a>
+   <a href="category.html?catId=wuxia">武侠</a>
+   <a href="category.html?catId=wangyou">网游</a>
+   <a href="category.html?catId=tongren">同人</a>
+   <a href="category.html?catId=nvzun">女尊</a>
+   <a href="category.html?catId=lishi">历史</a>
+   <a href="category.html?catId=jingsong">惊悚</a>
+   <a href="category.html?catId=gudian">古典</a>
+   <a href="category.html?catId=guanchang">官场</a>
+   <a href="category.html?catId=dushi">都市</a>
+   <a href="category.html?catId=danpian">单篇</a>
+   <a href="category.html?catId=danmei">耽美</a>
+   <a href="category.html?catId=zhichang">职场</a>
+<!--          仙侠>武侠>都市>竞技>网游>惊悚>出版</a> -->
+        <div class="clear"></div>
+    </div>
+</div>
+<div id="main">
+    <div class="main_inner">
+        <a target="_blank" href="" >
+        <img src="/images/ad/ad_long2.jpg" class="box"/>
+        </a>
+        <div class="maincon">
+            <div class="maincon_l" id="box">
+                <div class="search_title">
+                    <i class="clxssousuo">疯情书库搜索</i><div class="clear"></div>
+                </div>
+                <div class="search_type">
+                    <form name="searchform" id="searchform" METHOD="GET" action="/search.php">
+<!--                        <p>搜索方式：&nbsp;&nbsp;
+                        <input type="radio" name="s" id="sid_searchmode_subject" value="subject" checked="checked"/>&nbsp;标题&nbsp;&nbsp;
+                        <input type="radio" name="s" id="sid_searchmode_mname" value="author" />&nbsp;作者&nbsp;&nbsp;
+                        <input type="radio" name="s" id="sid_searchmode_keywords" value="tag"/>&nbsp;关键词</p>
+
+
+                        <p>内容类型：&nbsp;&nbsp;
+                        <input type="radio" name="c" id="sid_chid_0" value="" checked="checked"/>&nbsp;不限&nbsp;&nbsp;
+                        <input type="radio" name="c" id="sid_chid_4" value="book" />&nbsp;连载小说&nbsp;&nbsp;
+                        <input type="radio" name="c" id="sid_chid_1" value="chapter" />&nbsp;章节内容</p>
+
+                        
+                        <p style="padding-left:2em">时间：&nbsp;&nbsp;
+                        <input type="radio" name="i" id="sid_indays_0" value="" checked="checked"/>&nbsp;不限&nbsp;&nbsp;
+                        <input type="radio" name="i" id="sid_indays_7" value="7" />&nbsp;一周内&nbsp;&nbsp;
+                        <input type="radio" name="i" id="sid_indays_30" value="30" />&nbsp;一个月内&nbsp;&nbsp;
+                        <input type="radio" name="i" id="sid_indays_90" value="90" />&nbsp;三个月内&nbsp;&nbsp;
+                        <input type="radio" name="i" id="sid_indays_180" value="180" />&nbsp;半年内&nbsp;&nbsp;
+                        <input type="radio" name="i" id="sid_indays_365" value="365" />&nbsp;一年内</p>
+                        
+
+                         <p style="padding-left:2em">排序：
+                       &nbsp;&nbsp; <input type="radio" name="ob" id="sid_orderby_createdate" checked="checked" value="update" />&nbsp;按更新时间
+                       &nbsp;&nbsp; <input type="radio" name="ob"  id="sid_orderby_comments" value="comments" />&nbsp;按评数论
+                       &nbsp;&nbsp;  <input type="radio" name="ob"  id="sid_orderby_clicks" value="click" />&nbsp;按点击数</p>
+-->                         
+                         <p style="padding-left:1em;">关键词：&nbsp;&nbsp;<input type="text" size="20" name="searchword" value="我的">&nbsp;&nbsp;
+                         <input type="submit" name="searchsubmit" value="搜索" /></p>
+                     </form>
+                </div>
+                <div class="sousuojieguo">
+                    <p class="sousuojieguo_title">共有  <span style="color:red;">332</span> 条搜索结果。</p>
+<p style="height:26px; background:#eeeeee; font-size:14px; line-height:26px; padding:5px; margin: 0px 0px 20px 25px;">
+ &nbsp;<b>排序方式</b>：
+&nbsp;&nbsp;<a style='margin:10px;color:red; font-weight:bold; border: 1px solid #ff0000;padding:1px 5px;background:#fff;' href="/search.html?page=1&searchword=我的&ob=0">默认</a>&nbsp;&nbsp;<a style='margin:10px;font-size:14px;' href="/search.html?page=1&searchword=我的&ob=9">作品字数</a>&nbsp;&nbsp;<a style='margin:10px;font-size:14px;' href="/search.html?page=1&searchword=我的&ob=17">总点击数</a>&nbsp;&nbsp;<a style='margin:10px;font-size:14px;' href="/search.html?page=1&searchword=我的&ob=3">更新时间</a>&nbsp;&nbsp;<a style='margin:10px;font-size:14px;' href="/search.html?page=1&searchword=我的&ob=4">发布时间</a></p>
+                    <ul>
+  <li><cite>完本小说</cite>[乡土] <a href="book-15.html" title="我的支书生涯" class="biaoti" target="_blank">我的支书生涯 </a> <a class="zuozhe">ageliu</a> </li>
+  <li><cite>完本小说</cite>[都市] <a href="book-80.html" title="我的红杏人生" class="biaoti" target="_blank">我的红杏人生 </a> <a class="zuozhe">BuXiang</a> </li>
+  <li><cite>完本小说</cite>[都市] <a href="book-197.html" title="情欲缠绵：我的出轨自白" class="biaoti" target="_blank">情欲缠绵：我的出轨自白 </a> <a class="zuozhe">多情女郎</a> </li>
+  <li><cite>连载小说</cite>[都市] <a href="book-217.html" title="我的情人" class="biaoti" target="_blank">我的情人 </a> <a class="zuozhe">狼行之天下</a> </li>
+  <li><cite>连载小说</cite>[校园] <a href="book-218.html" title="我的大学女友" class="biaoti" target="_blank">我的大学女友 </a> <a class="zuozhe">敏为我奴(stukas)</a> </li>
+  <li><cite>连载小说</cite>[乡土] <a href="book-291.html" title="欲乱：我的寂寞后妈" class="biaoti" target="_blank">欲乱：我的寂寞后妈 </a> <a class="zuozhe">红杏出墙</a> </li>
+  <li><cite>连载小说</cite>[校园] <a href="book-333.html" title="我的生活故事" class="biaoti" target="_blank">我的生活故事 </a> <a class="zuozhe">tarcy198</a> </li>
+  <li><cite>完本小说</cite>[都市] <a href="book-341.html" title="舅妈，我的至爱" class="biaoti" target="_blank">舅妈，我的至爱 </a> <a class="zuozhe">牛0016</a> </li>
+  <li><cite>完本小说</cite>[校园] <a href="book-378.html" title="我的前桌是天使" class="biaoti" target="_blank">我的前桌是天使 </a> <a class="zuozhe">东亚小小鱼</a> </li>
+  <li><cite>完本小说</cite>[都市] <a href="book-412.html" title="我的大奶女友小依" class="biaoti" target="_blank">我的大奶女友小依 </a> <a class="zuozhe">agal</a> </li>
+  <li><cite>完本小说</cite>[校园] <a href="book-414.html" title="我的同学小爸爸" class="biaoti" target="_blank">我的同学小爸爸 </a> <a class="zuozhe">Asd176</a> </li>
+  <li><cite>完本小说</cite>[乡土] <a href="book-455.html" title="我的娇妻与爱女" class="biaoti" target="_blank">我的娇妻与爱女 </a> <a class="zuozhe">weilehaowan</a> </li>
+  <li><cite>完本小说</cite>[都市] <a href="book-482.html" title="我的七同事" class="biaoti" target="_blank">我的七同事 </a> <a class="zuozhe">aexanut</a> </li>
+  <li><cite>完本小说</cite>[都市] <a href="book-493.html" title="我的出租车生涯" class="biaoti" target="_blank">我的出租车生涯 </a> <a class="zuozhe">交大一哥</a> </li>
+  <li><cite>完本小说</cite>[武侠] <a href="book-494.html" title="我的天下" class="biaoti" target="_blank">我的天下 </a> <a class="zuozhe">michanll&英雄</a> </li>
+  <li><cite>完本小说</cite>[都市] <a href="book-497.html" title="我的师娘和师妹" class="biaoti" target="_blank">我的师娘和师妹 </a> <a class="zuozhe">春妮妮</a> </li>
+  <li><cite>完本小说</cite>[校园] <a href="book-524.html" title="我和我的母亲（寄印传奇）" class="biaoti" target="_blank">我和我的母亲（寄印传奇） </a> <a class="zuozhe">气功大师</a> </li>
+  <li><cite>连载小说</cite>[女尊] <a href="book-539.html" title="我的男友是中学生" class="biaoti" target="_blank">我的男友是中学生 </a> <a class="zuozhe">luoiltmes</a> </li>
+  <li><cite>完本小说</cite>[都市] <a href="book-581.html" title="小梅和我的故事" class="biaoti" target="_blank">小梅和我的故事 </a> <a class="zuozhe">arms</a> </li>
+  <li><cite>完本小说</cite>[校园] <a href="book-598.html" title="我的高中生涯" class="biaoti" target="_blank">我的高中生涯 </a> <a class="zuozhe">老周(zhoujie2011)</a> </li>
+  <li><cite>完本小说</cite>[仙侠] <a href="book-619.html" title="我的妈妈是大明星" class="biaoti" target="_blank">我的妈妈是大明星 </a> <a class="zuozhe">luqi7540</a> </li>
+  <li><cite>完本小说</cite>[惊悚] <a href="book-709.html" title="我的五年私奴生活" class="biaoti" target="_blank">我的五年私奴生活 </a> <a class="zuozhe">月奴烙印</a> </li>
+  <li><cite>完本小说</cite>[都市] <a href="book-720.html" title="谁能告诉我，该怎么拯救我的痴母啊" class="biaoti" target="_blank">谁能告诉我，该怎么拯救我的痴母啊 </a> <a class="zuozhe">qwert79268</a> </li>
+  <li><cite>完本小说</cite>[校园] <a href="book-733.html" title="我的秘密女友+续" class="biaoti" target="_blank">我的秘密女友+续 </a> <a class="zuozhe">时旭</a> </li>
+  <li><cite>完本小说</cite>[校园] <a href="book-750.html" title="我的高中生活" class="biaoti" target="_blank">我的高中生活 </a> <a class="zuozhe">後龍澤秀明</a> </li>
+  <li><cite>连载小说</cite>[校园] <a href="book-784.html" title="我的妈妈李彤彤" class="biaoti" target="_blank">我的妈妈李彤彤 </a> <a class="zuozhe">人后龌龊&芻狗達人（黃河之水）&师兄早&szwszq</a> </li>
+  <li><cite>连载小说</cite>[仙侠] <a href="book-802.html" title="我的总监生涯（我的艳遇生涯）" class="biaoti" target="_blank">我的总监生涯（我的艳遇生涯） </a> <a class="zuozhe">绝伦</a> </li>
+  <li><cite>完本小说</cite>[同人] <a href="book-884.html" title="我的美女总裁老婆（绿帽版）" class="biaoti" target="_blank">我的美女总裁老婆（绿帽版） </a> <a class="zuozhe">lxs333333</a> </li>
+  <li><cite>连载小说</cite>[穿越] <a href="book-913.html" title="我的女友何雅熙" class="biaoti" target="_blank">我的女友何雅熙 </a> <a class="zuozhe">Oliver</a> </li>
+  <li><cite>连载小说</cite>[都市] <a href="book-914.html" title="我的女友（暴露调教）" class="biaoti" target="_blank">我的女友（暴露调教） </a> <a class="zuozhe">梵天</a> </li>
+                    </ul>
+
+<style>
+.firstPageBtn {display:block; float:left; border: 1px #999 solid; background: #FFF; padding: 0 5px;margin:3px; width:40px;}
+.pageBtn {display:block; float:left; border: 1px #999 solid; background: #FFF; padding: 0 5px;margin:3px; width:20px;}
+</style>
+<div style="text-align:center; border:1px solid #ddd; margin:20px 10px -10px 10px; padding:5px; background:#eee; height:40px;line-height:30px;font-size:16px;"><a class='firstPageBtn' style='background:#eee;color:#ccc;'>首页</a><a style='background:#eee;color:#ccc;' class='pageBtn'>1</a>
+<a href='/search.html?page=2&searchword=我的&ob=0' style='' class='pageBtn'>2</a>
+<a href='/search.html?page=3&searchword=我的&ob=0' style='' class='pageBtn'>3</a>
+<a href='/search.html?page=4&searchword=我的&ob=0' style='' class='pageBtn'>4</a>
+<a href='/search.html?page=5&searchword=我的&ob=0' style='' class='pageBtn'>5</a>
+<span style ='display:block;float:left;color:#999;margin:10px 0;'>……</span><a href='/search.html?page=12&searchword=我的&ob=0' class='firstPageBtn'>尾页</a></div>                </div>
+            </div>
+            <div class="maincon_r" >
+                
+                <div class="contact" id="box">
+                    <table class="biaoge">
+                    <!--<tr>
+                      <td>客服QQ:</td>
+                      <td><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=111111&site=qq&menu=yes" rel="nofollow"><img src="/images/qq_kefu.gif" /></a></td>
+                    </tr>
+                    <tr>
+                      <td>编辑QQ:</td>
+                      <td><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=222222&site=qq&menu=yes"  rel="nofollow" ><img src="/images/qq_kefu.gif" /></a></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td><a target="_blank" href="tencent://message/?uin=333333&Site=-&Menu=yes"  rel="nofollow" ><img src="/images/qq_kefu.gif" /></a></td>
+                    </tr>
+                    <tr>
+                      <td>投稿邮箱:</td>
+                      <td><p class="red">&nbsp;admin#aabook<dot>club</p></td>
+                    </tr>-->
+                    </table>
+	<a href="" target="_blank"><img id="GGADIMG" src=""></a><style>#GGADIMG{width:100%;}</style>                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<div class="blank9"></div>
+<div id="footer">
+<style>
+.footerFloat {text-align: left; width: 100%;}
+.footerFloat h4{margin: 5px; padding: 0 8px;}
+@media all and (min-width: 950px) {
+  .footerFloat {width: 25%; float: left;}
+}
+
+.textwidget {margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-style: solid;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: 0 0;
+}
+.textwidget ul {margin-bottom: 3px; padding-left: 2em;}
+.textwidget li {list-style-type: circle;}
+
+</style>
+<div class="footerFloat">
+<h4>优选导航</h4>
+<p>
+<script src="https://ad.fkxl.xyz/api/links?site=aabook&category=directory&codeType=js&cache=1"></script>
+</p>
+</div>
+<div class="footerFloat">
+<h4>亚洲联盟</h4>
+<p>
+<script src="https://ad.fkxl.xyz/api/links?site=aabook&category=crazy&codeType=js&cache=1"></script>
+<script src="https://ad.fkxl.xyz/api/links?site=aabook&category=contact&codeType=js&cache=1"></script>
+</p>
+</div>
+<div class="footerFloat">
+<h4>二次元专区</h4>
+<p>
+<script src="https://ad.fkxl.xyz/api/app?site=aabook&category=game&num=4&codeType=js&cache=1"></script>
+</p>
+</div>
+<div class="footerFloat">
+<h4><a href="https://fky.3fb.site" target="_blank">性福宝APP下载排行榜</a></h4>
+<p>
+<script src="https://ad.fkxl.xyz/api/app?site=aabook&category=app&num=4&codeType=js&cache=1"></script>
+</p>
+</div>
+&nbsp;<br/>
+<style>#abcDiv img{width: 100%;}</style>
+<div id="abcDiv" style="width:100%;">
+</div>
+   <div class="copyright" style="clear:both;"> Copyright &#169; 2010-2026 疯情书库 All rights reserved Powered by LamboXXX.
+<br />
+  本站所展示的文学作品、文章评论均属其个人行为，不代表本站立场<a id="noticeWin" href="#" rel="popuprel3" class="popup">。</a>
+<br /><br /><br />
+   </div>
+
+
+<div class="footer">
+<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/font-awesome/5.15.4/css/all.min.css" media="all" />
+<style>
+.footer-fixed-nav{display: none;position: fixed;bottom: 0;left: 0;right: 0;background: #f1f1f1;height: 65px;z-index: 9999;box-shadow: 0px -4px 10px 0px rgba(17, 58, 93, 0.1);transition: all .3s ease 0s;}
+.footer-fixed-nav a {display: inline-block;float: left;width: 20%;text-align: center;margin-top:10px;color:#0000FF;}
+.footer-fixed-nav a:hover {color:#FF0000;}
+.footer-fixed-nav a span{display: block;font-size: 14px;line-height: 18px;position: relative;top:-1px;}
+.footer-fixed-nav a i{font-size: 22px;top:1px;line-height: 24px;}
+.footer-fixed-nav .footer-nav-trigger{position: absolute;top:-16px;left: calc(50% - 15px);width: 30px;height: 16px;line-height: 16px;text-align: center;background: #f1f1f1;border-radius: 3px 3px 0 0;box-shadow: 0px -4px 10px 0px rgba(17, 58, 93, 0.1);}
+.footer-fixed-nav .footer-nav-trigger .icon{top:0;font-size: 14px;}
+.footer-fixed-nav .footer-nav-trigger.active .icon:before{content: "\e67a"}
+body.night .footer-fixed-nav, body.night .footer-fixed-nav .footer-nav-trigger{background: #212533;color: #bdcadb;}
+.footer-fixed-nav{display: block;}
+.mask {
+	width:100%;
+	height:1200px;
+	background:gray;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:100;
+	opacity:0.6;
+	display:none;
+	
+}
+</style>
+<!-- Starting footer_nav.php --><!-- Database connection successful --><!-- Found 5 active footer nav ads -->
+<div class="mask" name="cover" id="cover"></div>
+<div class="footer-fixed-nav clearfix" style="height: 70px;">
+            <a href="https://bs2806.pralusklomoslopid.com/bk/36504/ofav1tx" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-caret-right-square-fill"></i>
+            <span>糖心</span>
+        </a>
+            <a href="https://fkxl.xyz/go/wjdm" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-incognito"></i>
+            <span>哔咔漫画</span>
+        </a>
+            <a href="https://genrati.xyz?ref_id=76f9e370-bcd6-47a3-8d70-a29d63534242" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-arrow-through-heart-fill"></i>
+            <span>Ai榨精💋</span>
+        </a>
+            <a href="https://fkxl.xyz/go/tpyp" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-exclamation-octagon-fill"></i>
+            <span>抖阴</span>
+        </a>
+            <a href="https://dd9018.nektozevrxolvryc7mmraon.com/bk/36506/ofav1bk" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-fire"></i>
+            <span>涩漫禁漫</span>
+        </a>
+        <div class="footer-nav-trigger ">
+        <i class="bi bi-chevron-double-down"></i>
+    </div>
+</div>
+
+<style>
+.footer-fixed-nav {
+    display: block !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f1f1f1;
+    height: 70px;
+    z-index: 10000;
+    box-shadow: 0px -4px 10px 0px rgba(17, 58, 93, 0.1);
+    transition: all .3s ease 0s;
+}
+.footer-fixed-nav a {
+    display: inline-block;
+    float: left;
+    width: 20%;
+    text-align: center;
+    margin-top: 10px;
+}
+.footer-fixed-nav a span {
+    display: block;
+    font-size: 14px;
+    line-height: 18px;
+    position: relative;
+    top: -1px;
+}
+.footer-fixed-nav a i {
+    font-size: 22px;
+    line-height: 24px;
+}
+.footer-fixed-nav a i.bi-caret-right-square-fill {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-caret-right-square-fill {
+    color: #bdcadb;
+}
+.footer-fixed-nav a i.bi-incognito {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-incognito {
+    color: #bdcadb;
+}
+.footer-fixed-nav a i.bi-arrow-through-heart-fill {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-arrow-through-heart-fill {
+    color: #ff4081;
+}
+.footer-fixed-nav a i.bi-exclamation-octagon-fill {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-exclamation-octagon-fill {
+    color: #bdcadb;
+}
+.footer-fixed-nav a i.bi-fire {
+    color: #e91e63;
+}
+body.night .footer-fixed-nav a i.bi-fire {
+    color: #66b0ff;
+}
+.footer-fixed-nav .footer-nav-trigger {
+    position: absolute;
+    top: -16px;
+    left: calc(50% - 15px);
+    width: 30px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    background: #f1f1f1;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0px -4px 10px 0px rgba(17, 58, 93, 0.1);
+    cursor: pointer;
+}
+.footer-fixed-nav .footer-nav-trigger i {
+    font-size: 14px;
+    color: #333;
+}
+body.night .footer-fixed-nav,
+body.night .footer-nav-trigger {
+    background: #212533;
+    color: #bdcadb;
+}
+body.night .footer-nav-trigger i {
+    color: #bdcadb;
+}
+.mask {
+    width: 100%;
+    height: 1200px;
+    background: gray;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    opacity: 0.6;
+    display: none;
+}
+body.footer-nav-visible {
+    padding-bottom: 70px;
+}
+@media (max-width: 767px) {
+    body.footer-nav-visible {
+        padding-bottom: 70px;
+    }
+}
+</style>
+
+<script>
+// 確保 jQuery 已加載
+if (typeof jQuery === 'undefined') {
+    console.error('jQuery not loaded, loading fallback');
+    document.write('<script src="https://code.jquery.com/jquery-3.6.0.min.js"><\/script>');
+}
+
+// 加載 jQuery Cookie
+if (typeof jQuery.cookie === 'undefined') {
+    console.log('Loading jQuery Cookie');
+    document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"><\/script>');
+}
+
+jQuery(document).ready(function($) {
+    console.log('Footer nav script running');
+    console.log('Footer nav element found: ' + ($('.footer-fixed-nav').length > 0 ? 'Yes' : 'No'));
+    console.log('Footer nav items loaded: ' + 5);
+
+    var $trigger = $('.footer-nav-trigger');
+    var $nav = $('.footer-fixed-nav');
+    var $triggerIcon = $trigger.find('i');
+
+    // 根據初始狀態設置 body 類
+    if ($nav.css('height') === '60px') {
+        $('body').addClass('footer-nav-visible');
+        console.log('Added footer-nav-visible class');
+    }
+
+    // 確認初始狀態
+    console.log('Initial height: ' + $nav.css('height'));
+    console.log('Initial mbt_footer_nav cookie: ' + $.cookie('mbt_footer_nav'));
+
+    // 點擊展開/收起
+    $trigger.on('click', function() {
+        console.log('Footer nav trigger clicked');
+        if ($(this).hasClass('active')) {
+            console.log('Expanding footer nav');
+            $(this).removeClass('active');
+            $nav.css('height', '60px');
+            $triggerIcon.removeClass('bi-chevron-double-up').addClass('bi-chevron-double-down');
+            $.cookie('mbt_footer_nav', '0', { path: '/', expires: 7 });
+            $('body').addClass('footer-nav-visible');
+            console.log('Added footer-nav-visible class');
+        } else {
+            console.log('Collapsing footer nav');
+            $(this).addClass('active');
+            $nav.css('height', '0px');
+            $triggerIcon.removeClass('bi-chevron-double-down').addClass('bi-chevron-double-up');
+            $.cookie('mbt_footer_nav', '1', { path: '/', expires: 7 });
+            $('body').removeClass('footer-nav-visible');
+            console.log('Removed footer-nav-visible class');
+        }
+        console.log('New mbt_footer_nav cookie: ' + $.cookie('mbt_footer_nav'));
+    });
+});
+</script>
+
+<!-- Ending footer_nav.php --><p></p>
+</div>
+
+
+</div>
+</body>
+</html>
