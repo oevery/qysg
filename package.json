@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@10.32.1",
+  "packageManager": "pnpm@10.33.0",
   "description": "轻悦时光书源",
   "author": "oevery",
   "license": "AGPL-3.0-only",
@@ -30,11 +30,11 @@
     "@types/node": "^25.5.0",
     "esbuild": "^0.27.4",
     "eslint": "^10.1.0",
-    "happy-dom": "^20.8.4",
+    "happy-dom": "^20.8.9",
     "lint-staged": "^16.4.0",
     "simple-git-hooks": "^2.13.1",
     "tsx": "^4.21.0",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.2"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
