@@ -47,5 +47,24 @@
     "scss",
     "pcss",
     "postcss"
+  ],
+
+  // GitHub Copilot Chat commit message generation instructions
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Always Use Simplified Chinese; keep only fixed technical terms in English"
+    },
+    {
+      "text": "Use Conventional Commits format."
+    },
+    {
+      "text": "Subject line: maximum 50 characters, imperative mood, no period."
+    },
+    {
+      "text": "If the change is simple, provide only the subject line."
+    },
+    {
+      "text": "If the change is complex, use a bulleted list (-) in the body for details, keeping each point very short."
+    }
   ]
 }
