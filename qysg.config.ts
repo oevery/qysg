@@ -1,8 +1,11 @@
 import type { SourceMeta } from './utils/define'
-import { author } from './package.json'
+import { author, homepage } from './package.json'
 
 /** 部署后 HTML 文件的 URL 前缀，可通过环境变量覆盖 */
 export const BASE_URL = 'https://qysg.pages.dev'
+
+/** 项目主页 url，会在 gethelp 弹窗和生成的 html 中展示 */
+export const HOMEPAGE = homepage
 
 /** 默认 UA */
 export const DEFAULT_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
