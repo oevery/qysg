@@ -52,7 +52,7 @@
   // GitHub Copilot Chat commit message generation instructions
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
-      "text": "Always Use Simplified Chinese; keep only fixed technical terms in English"
+      "text": "Always Use Simplified Chinese."
     },
     {
       "text": "Use Conventional Commits format."
