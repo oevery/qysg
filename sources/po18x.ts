@@ -1,8 +1,7 @@
 import type { Book, Chapter, Find } from '../utils/define'
 import { defineSource } from '../utils/define'
 import { percentEncodeGBK } from '../utils/encoding'
-import { fetchPage, parseChapters, parsePage, replacePlaceholders, resolveUrl } from '../utils/helpers'
-import { extractContent } from '../utils/html'
+import { extractChapters, extractContent, fetchPage, parsePage, resolvePagination, resolveUrl } from '../utils/helpers'
 
 const baseUrl = 'https://wap.po18x.vip'
 
@@ -129,7 +128,7 @@ export default defineSource({
         const $tempContainer = await fetchPage(currentUrl, pageIndex === 0 ? 2 : undefined)
 
         const $chapterItems = $tempContainer.findAll('ul.chapters li a')
-        chapters.push(...parseChapters(baseUrl, $chapterItems, chapters.length))
+        chapters.push(...extractChapters(baseUrl, $chapterItems, chapters.length))
 
         // 查找下一页链接
         const $nextPage = $tempContainer.findAll('.page a')
@@ -212,7 +211,7 @@ export default defineSource({
 
   async find(url, page) {
     try {
-      const finalUrl = replacePlaceholders(url, { page })
+      const finalUrl = resolvePagination(url, page)
       const $tempContainer = await fetchPage(finalUrl)
 
       const books: Book[] = []

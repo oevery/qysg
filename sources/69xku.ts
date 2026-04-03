@@ -1,8 +1,7 @@
 import type { Book, Find } from '../utils/define'
 import type { q } from '../utils/html'
 import { defineSource } from '../utils/define'
-import { fetchPage, parseChapters, replacePlaceholders, resolveUrl } from '../utils/helpers'
-import { extractContent } from '../utils/html'
+import { extractChapters, extractContent, fetchPage, resolvePagination, resolveUrl } from '../utils/helpers'
 
 const baseUrl = 'https://www.69xku.com'
 
@@ -105,7 +104,7 @@ export default defineSource({
     try {
       const $tempContainer = await fetchPage(tocUrl, 2)
       const $chapterItems = $tempContainer.findAll('#list-chapterAll dd a')
-      return JSON.stringify(parseChapters(baseUrl, $chapterItems))
+      return JSON.stringify(extractChapters(baseUrl, $chapterItems))
     }
     catch (e) {
       flutterBridge.log(`获取章节目录错误: ${e.message}`)
@@ -158,7 +157,7 @@ export default defineSource({
 
   async find(url, page) {
     try {
-      const finalUrl = replacePlaceholders(url, { page })
+      const finalUrl = resolvePagination(url, page)
       const $tempContainer = await fetchPage(finalUrl, 0)
 
       return JSON.stringify(parseBooks($tempContainer))

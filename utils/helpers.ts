@@ -7,8 +7,7 @@
 
 import type { DebugType, HttpOptions } from './bridge'
 import type { Chapter } from './define'
-import type { Q } from './html'
-import { q, sanitizeHtml } from './html'
+import { Q, q, sanitizeHtml } from './html'
 
 /**
  * 将 HTML 字符串净化并解析为 Q 对象，可选发送调试数据到 App
@@ -92,7 +91,24 @@ export function resolvePagination(url: string, page: number): string {
 }
 
 /**
- * 从链接元素列表中解析章节目录
+ * url 处理函数，将相对路径转为绝对路径并且编码
+ * @param base - 基础 URL（如书源主页 URL）
+ * @param relative - 需要处理的 URL（可能是相对路径）
+ * @returns 处理后的绝对 URL
+ */
+export function resolveUrl(base: string, relative: string): string {
+  try {
+    if (!base || !relative)
+      return ''
+    return new URL(relative, base).href
+  }
+  catch {
+    return relative
+  }
+}
+
+/**
+ * 从链接元素列表中提取章节目录
  *
  * 适用于常见的 `<a href="...">章节标题</a>` 列表结构。
  *
@@ -100,7 +116,7 @@ export function resolvePagination(url: string, page: number): string {
  * @param $items - 包含章节链接的 Q 对象数组
  * @param startIndex - 起始索引（用于分页拼接时的偏移）
  */
-export function parseChapters(baseUrl: string, $items: Q[], startIndex = 0): Chapter[] {
+export function extractChapters(baseUrl: string, $items: Q[], startIndex = 0): Chapter[] {
   const chapters: Chapter[] = []
   $items.forEach(($item) => {
     const name = $item.text().trim()
@@ -120,19 +136,98 @@ export function parseChapters(baseUrl: string, $items: Q[], startIndex = 0): Cha
   return chapters
 }
 
+const CRLF = '\r\n'
+const DOUBLE_CRLF = '\r\n\r\n'
+
+const CONTENT_SKIP_TAGS = new Set(['script', 'style', 'nav', 'footer', 'header', 'iframe', 'noscript'])
+const RE_CONTENT_SKIP_CLASS = /\b(?:ad|ads|advert|nav|sidebar|footer|header|menu|toolbar)\b/i
+const RE_CONTENT_AD_TEXT = /(?:收藏|永久|地址|网址|书签|请记住|最新|访问|发布)[^\n]{0,20}[a-z\d][-a-z\d]*\.[a-z]{2,}/i
+
 /**
- * url 处理函数，将相对路径转为绝对路径并且编码
- * @param base - 基础 URL（如书源主页 URL）
- * @param relative - 需要处理的 URL（可能是相对路径）
- * @returns 处理后的绝对 URL
+ * 判断一个元素是否应该在提取内容时被跳过，主要用于过滤掉不相关的导航、广告等元素
+ * @param el 要检查的元素
+ * @returns 如果元素应该被跳过则返回 `true`，否则返回 `false`
  */
-export function resolveUrl(base: string, relative: string): string {
-  try {
-    if (!base || !relative)
-      return ''
-    return new URL(relative, base).href
+function contentNodeShouldSkip(el: Element): boolean {
+  const tag = el.tagName.toLowerCase()
+  if (CONTENT_SKIP_TAGS.has(tag))
+    return true
+  if (tag === 'a' && el.getAttribute('href')?.startsWith('javascript:'))
+    return true
+  const cls = el.className?.toLowerCase() ?? ''
+  if (RE_CONTENT_SKIP_CLASS.test(cls))
+    return true
+  return false
+}
+
+/**
+ * 判断文本内容是否可能是广告，主要通过检测常见的广告关键词和 URL 模式来识别
+ * @param text 要检查的文本内容
+ * @returns 如果文本内容可能是广告则返回 `true`，否则返回 `false`
+ */
+function contentNodeTextIsAd(text: string): boolean {
+  return text.length < 40 && RE_CONTENT_AD_TEXT.test(text)
+}
+
+interface ExtractContentOptions {
+  /** 是否对内容进行净化，去除广告 */
+  sanitize?: boolean
+}
+
+/**
+ * 从HTML容器中提取文本内容，保留段落和换行结构，并将图片标签转换为特定格式的文本
+ * @param container HTML容器，可以是 `Q` 对象或原生 `Element`
+ * @param opts 提取内容的选项
+ * @returns 提取后的纯文本内容，段落之间以双换行分隔，图片以特定格式表示
+ */
+export function extractContent(container: Q | Element, opts: ExtractContentOptions = { sanitize: false }): string {
+  const el = container instanceof Q ? container.raw : container
+  if (!el)
+    return ''
+
+  const parts: string[] = []
+
+  function walk(parent: Element) {
+    for (const node of Array.from(parent.childNodes)) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent?.trim()
+        if (text && (!opts.sanitize || !contentNodeTextIsAd(text)))
+          parts.push(text)
+        continue
+      }
+
+      if (node.nodeType !== Node.ELEMENT_NODE)
+        continue
+
+      const child = node as Element
+      if (contentNodeShouldSkip(child))
+        continue
+
+      const tag = child.tagName.toLowerCase()
+
+      if (tag === 'p') {
+        const before = parts.length
+        walk(child)
+        if (parts.length > before)
+          parts.push(DOUBLE_CRLF)
+      }
+      else if (tag === 'br') {
+        parts.push(CRLF)
+      }
+      else if (tag === 'img') {
+        const src = child.getAttribute('src') || child.getAttribute('data-src') || ''
+        if (src) {
+          parts.push(`<img src="${src}" />`)
+          parts.push(CRLF)
+        }
+      }
+      else {
+        walk(child)
+      }
+    }
   }
-  catch {
-    return relative
-  }
+
+  walk(el)
+
+  return parts.join('').replace(/(\r\n){3,}/g, DOUBLE_CRLF).trim()
 }

@@ -53,7 +53,7 @@ async function main() {
   const url = await ask('网站 URL（如 https://example.com）')
   const hasLogin = await confirm('需要登录功能？')
   const hasFind = await confirm('需要发现页？', true)
-  const searchMethod = (await ask('搜索请求方式', 'GET')).toUpperCase() as 'GET' | 'POST'
+  const searchMethod = (await ask('搜索请求方式', 'GET/POST')).toUpperCase() as 'GET' | 'POST'
 
   rl.close()
 
@@ -89,14 +89,13 @@ export function generateTemplate(opts: TemplateOptions): string {
   const typeImports = ['Book']
   if (hasFind)
     typeImports.push('Find')
-  const helperImports = ['fetchPage', 'parseChapters', 'replacePlaceholders', 'resolveUrl']
+  const helperImports = ['extractChapters', 'extractContent', 'fetchPage', 'resolvePagination', 'resolveUrl']
 
   const lines: string[] = []
 
   lines.push(`import type { ${typeImports.join(', ')} } from '../utils/define'`)
   lines.push(`import { defineSource } from '../utils/define'`)
   lines.push(`import { ${helperImports.join(', ')} } from '../utils/helpers'`)
-  lines.push(`import { extractContent } from '../utils/html'`)
   lines.push(``)
   lines.push(`const baseUrl = '${baseUrl}'`)
   lines.push(``)
@@ -194,7 +193,7 @@ export function generateTemplate(opts: TemplateOptions): string {
   lines.push(`      const $ = await fetchPage(tocUrl, 2)`)
   lines.push(`      // TODO: 章节列表选择器`)
   lines.push(`      const $links = $.findAll('.chapter-list a')`)
-  lines.push(`      const chapters = parseChapters(baseUrl, $links)`)
+  lines.push(`      const chapters = extractChapters(baseUrl, $links)`)
   lines.push(`      return JSON.stringify(chapters)`)
   lines.push(`    }`)
   lines.push(`    catch (e) {`)
@@ -233,7 +232,7 @@ export function generateTemplate(opts: TemplateOptions): string {
     lines.push(`  async find(url, page) {`)
     lines.push(`    try {`)
     lines.push(`      const books: Book[] = []`)
-    lines.push(`      const finalUrl = replacePlaceholders(url, { page })`)
+    lines.push(`      const finalUrl = resolvePagination(url, page)`)
     lines.push(`      const $ = await fetchPage(finalUrl)`)
     lines.push(`      // TODO: 根据发现页页面结构解析书籍列表`)
     lines.push(`      return JSON.stringify(books)`)
@@ -249,14 +248,32 @@ export function generateTemplate(opts: TemplateOptions): string {
   if (hasLogin) {
     lines.push(``)
     lines.push(`  async getloginurl() {`)
-    lines.push(`    // TODO: 返回登录页 URL 或 Login[] 配置`)
-    lines.push(`    return resolveUrl(baseUrl, '/login')`)
+    lines.push(`    // TODO: 替换 /login.html 为实际的登录页 URL`)
+    lines.push(`    const loginUrl = resolveUrl(baseUrl, '/login.html')`)
+    lines.push(`    try {`)
+    lines.push(`      const cookies = await cookie.get(baseUrl)`)
+    lines.push(`      if (cookies && cookies.length > 50) {`)
+    lines.push(`        return baseUrl`)
+    lines.push(`      }`)
+    lines.push(`      return loginUrl`)
+    lines.push(`    }`)
+    lines.push(`    catch {`)
+    lines.push(`      return loginUrl`)
+    lines.push(`    }`)
     lines.push(`  },`)
     lines.push(``)
     lines.push(`  async login() {`)
-    lines.push(`    // TODO: 实现登录状态检测`)
-    lines.push(`    const cookieStr = await cookie.get(baseUrl)`)
-    lines.push(`    return !!cookieStr`)
+    lines.push(`    try {`)
+    lines.push(`      const res = await http.get(baseUrl)`)
+    lines.push(`      // TODO: 根据实际情况判断登录是否成功，以下示例仅供参考`)
+    lines.push(`      if (res.data.includes('退出登录')) {`)
+    lines.push(`        return true`)
+    lines.push(`      }`)
+    lines.push(`      return false`)
+    lines.push(`    }`)
+    lines.push(`    catch (e) {`)
+    lines.push(`      return false`)
+    lines.push(`    }`)
     lines.push(`  },`)
   }
 
@@ -269,8 +286,8 @@ export function generateTemplate(opts: TemplateOptions): string {
     const importLine = lines[2]
     if (!importLine.includes('parsePage')) {
       lines[2] = importLine.replace(
-        'fetchPage, parseChapters',
-        'fetchPage, parseChapters, parsePage',
+        'fetchPage, extractChapters',
+        'fetchPage, extractChapters, parsePage',
       )
     }
   }
