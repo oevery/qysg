@@ -46,6 +46,9 @@ describe('alicesw - content', () => {
     mockHttpGet(mocks, loadFixture(id, 'content'))
     const result = await source.content(seeds!.content!)
     expect(result.length).toBeGreaterThan(0)
+    expect(result).toContain('仙者，入山长生。')
+    expect(result).not.toContain('作者感言')
+    expect(result).not.toContain('读者交流群')
   })
 })
 

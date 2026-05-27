@@ -119,7 +119,9 @@ export default defineSource({
   async content(url) {
     try {
       const $tempContainer = await fetchPage(url, 3)
-      const content = extractContent($tempContainer.find('div.read-content, .j_readContent, .user_ad_content'))
+      const contentEl = $tempContainer.find('div.read-content, .j_readContent, .user_ad_content').raw?.cloneNode(true) as Element | undefined
+      contentEl?.querySelectorAll('#user_ad, .author-say-wrap').forEach(el => el.remove())
+      const content = extractContent(contentEl)
       return content
     }
     catch (e) {
