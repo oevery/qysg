@@ -66,5 +66,6 @@
     {
       "text": "If the change is complex, use a bulleted list (-) in the body for details, keeping each point very short."
     }
-  ]
+  ],
+  "js/ts.tsdk.path": "node_modules/typescript/lib"
 }
